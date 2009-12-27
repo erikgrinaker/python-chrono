@@ -64,6 +64,14 @@ class Date(object):
 		elif isinstance(date, str):
 			self.set_iso(date)
 
+	def __repr__(self):
+
+		if self.is_set():
+			return "chrono.Date('{0}')".format(self.isodate())
+
+		else:
+			return "chrono.Date()"
+
 	def format(self, format):
 		"""
 		Formats the date, according to formatting rules for :func:`time.strftime`

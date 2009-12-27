@@ -93,6 +93,20 @@ class DateTest(test.TestCase):
 		self.assertEquals(d.month,	dt.month)
 		self.assertEquals(d.day,	dt.day)
 
+	def test__repr(self):
+		"Date.__repr__() shows code to recreate object"
+
+		d = chrono.Date("2009-12-27")
+
+		self.assertEquals(str(d),	"chrono.Date('2009-12-27')")
+
+	def test__repr_empty(self):
+		"Date.__repr__() handles empty dates"
+
+		d = chrono.Date()
+
+		self.assertEquals(str(d),	"chrono.Date()")
+
 	def test_format(self):
 		"Date.format() formats date according to time.strftime()"
 
