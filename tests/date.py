@@ -42,6 +42,33 @@ class DateTest(test.TestCase):
 		self.assertEquals(d.month,	12)
 		self.assertEquals(d.day,	27)
 
+	def test__init_kwargs(self):
+		"Date.__init__() accepts keyword arguments" 
+
+		d = chrono.Date(year = 2009, month = 12, day = 27)
+
+		self.assertEquals(d.year,	2009)
+		self.assertEquals(d.month,	12)
+		self.assertEquals(d.day,	27)
+
+	def test__init_kwargs_date(self):
+		"Date.__init__() uses kwargs over date"
+
+		d = chrono.Date(1261892718, year = 2009, month = 12, day = 26)
+
+		self.assertEquals(d.year,	2009)
+		self.assertEquals(d.month,	12)
+		self.assertEquals(d.day,	26)
+
+	def test__init_kwargs_date(self):
+		"Date.__init__() uses date if kwargs is partial"
+
+		d = chrono.Date(1261892718, year = 2005, month = 8)
+
+		self.assertEquals(d.year,	2009)
+		self.assertEquals(d.month,	12)
+		self.assertEquals(d.day,	27)
+
 	def test__init_true(self):
 		"Date.__init__() with True parameter uses current date"
 

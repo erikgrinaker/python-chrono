@@ -28,6 +28,14 @@ class Date(object):
 
 	* **None**: creates a date with empty attributes
 	* **True**: sets the date to the current date
+
+	The class can also be initialized using the keyword arguments
+	*year*, *month*, and *day*, like this::
+
+		Date(year = 2000, month = 10, day = 16)
+
+	When initializing using keywords, all keywords must be specified.
+	If both *date* and keywords are specified, keywords take precedence.
 	"""
 
 	day = None
@@ -39,14 +47,18 @@ class Date(object):
 	year = None
 	"Year number, 0000 - 9999"
 
-	def __init__(self, date = None):
+	def __init__(self, date = None, **kwargs):
 
-		if date is True:
+		if "year" in kwargs and "month" in kwargs and "day" in kwargs:
+			self.year = kwargs["year"]
+			self.month = kwargs["month"]
+			self.day = kwargs["day"]
+
+		elif date is True:
 			self.set_now()
 
 		elif isinstance(date, int):
 			self.set_integer(date)
-
 
 	def format(self, format):
 		"""
