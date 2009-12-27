@@ -33,6 +33,15 @@ class DateTest(test.TestCase):
 		self.assertNone(d.month)
 		self.assertNone(d.year)
 
+	def test__init_integer(self):
+		"Date.__init__() with integer parameter assumes UNIX timestamp"
+
+		d = chrono.Date(1261892718)
+
+		self.assertEquals(d.year,	2009)
+		self.assertEquals(d.month,	12)
+		self.assertEquals(d.day,	27)
+
 	def test__init_true(self):
 		"Date.__init__() with True parameter uses current date"
 
@@ -42,6 +51,16 @@ class DateTest(test.TestCase):
 		self.assertEquals(d.year,	dt.year)
 		self.assertEquals(d.month,	dt.month)
 		self.assertEquals(d.day,	dt.day)
+
+	def test_set_integer(self):
+		"Date.set_integer() sets date from UNIX timestamp"
+
+		d = chrono.Date()
+		d.set_integer(1261892718)
+
+		self.assertEquals(d.year,	2009)
+		self.assertEquals(d.month,	12)
+		self.assertEquals(d.day,	27)
 
 	def test_set_now(self):
 		"Date.set_now() sets date to current date"

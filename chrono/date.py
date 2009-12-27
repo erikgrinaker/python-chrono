@@ -17,6 +17,7 @@
 #
 
 import datetime
+import time
 
 
 class Date(object):
@@ -43,6 +44,8 @@ class Date(object):
 		if date is True:
 			self.set_now()
 
+		elif isinstance(date, int):
+			self.set_integer(date)
 
 	def set_now(self):
 		"""
@@ -54,4 +57,15 @@ class Date(object):
 		self.year = d.year
 		self.month = d.month
 		self.day = d.day
+
+	def set_integer(self, secs):
+		"""
+		Sets the date from an integer UNIX timestamp
+		"""
+
+		t = time.localtime(secs)
+
+		self.year = t.tm_year
+		self.month = t.tm_mon
+		self.day = t.tm_mday
 
