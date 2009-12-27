@@ -222,6 +222,36 @@ class Date(object):
 		if self.is_set():
 			return self.datetime().isocalendar()[0]
 
+	def yearday(self):
+		"""
+		Returns the day number of the date in the set year
+		"""
+
+		if not self.is_set():
+			return
+
+		offsets = [
+			0,
+			31,
+			59,
+			90,
+			120,
+			151,
+			181,
+			212,
+			243,
+			273,
+			304,
+			334
+		]
+
+		offset = offsets[self.month - 1]
+
+		if self.leap():
+			offset += 1
+
+		return offset + self.day
+
 	def yeardays(self):
 		"""
 		Returns the number of days in the year

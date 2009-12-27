@@ -473,6 +473,27 @@ class DateTest(test.TestCase):
 
 		self.assertEquals(d.weekyear(), 2009)
 
+	def test_yearday(self):
+		"Date.yearday() returns 5 for 2009-01-05"
+
+		d = chrono.Date("2009-01-05")
+
+		self.assertEquals(d.yearday(),	5)
+
+	def test_yearday__last(self):
+		"Date.yearday() returns 365 for 2009-12-31"
+
+		d = chrono.Date("2009-12-31")
+
+		self.assertEquals(d.yearday(),	365)
+
+	def test_yearday__leap(self):
+		"Date.yearday() returns 366 for 2008-12-31"
+
+		d = chrono.Date("2008-12-31")
+
+		self.assertEquals(d.yearday(),	366)
+
 	def test_yeardays(self):
 		"Date.yeardays() returns 366 for 2008"
 
