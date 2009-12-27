@@ -91,6 +91,13 @@ class Date(object):
 
 		return self.format("%Y-%m")
 
+	def isoyear(self):
+		"""
+		Formats the date as an ISO year (yyyy)
+		"""
+
+		return self.format("%Y")
+
 	def set_now(self):
 		"""
 		Sets the date to the current date
