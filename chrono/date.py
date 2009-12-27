@@ -18,6 +18,7 @@
 
 import datetime
 import time
+from . import parser
 
 
 class Date(object):
@@ -59,6 +60,9 @@ class Date(object):
 
 		elif isinstance(date, int):
 			self.set_integer(date)
+
+		elif isinstance(date, str):
+			self.set_iso(date)
 
 	def format(self, format):
 		"""
@@ -131,4 +135,13 @@ class Date(object):
 		self.year = t.tm_year
 		self.month = t.tm_mon
 		self.day = t.tm_mday
+
+	def set_iso(self, date):
+		"""
+		Sets the date from an ISO date string (yyyy-mm-dd)
+
+		Raises :exc: ValueError on invalid value
+		"""
+
+		self.year, self.month, self.day = parser.isodate(date)
 

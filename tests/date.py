@@ -42,6 +42,20 @@ class DateTest(test.TestCase):
 		self.assertEquals(d.month,	12)
 		self.assertEquals(d.day,	27)
 
+	def test__init_iso(self):
+		"Date.__init__() with string parameter assumes ISO date"
+
+		d = chrono.Date("2009-12-27")
+
+		self.assertEquals(d.year,	2009)
+		self.assertEquals(d.month,	12)
+		self.assertEquals(d.day,	27)
+
+	def test__init_iso_invalid(self):
+		"Date.__init__() with invalid string parameter raises ValueError"
+
+		self.assertRaises(ValueError, chrono.Date, "2009-12-")
+
 	def test__init_kwargs(self):
 		"Date.__init__() accepts keyword arguments" 
 
@@ -146,6 +160,23 @@ class DateTest(test.TestCase):
 		self.assertEquals(d.year,	2009)
 		self.assertEquals(d.month,	12)
 		self.assertEquals(d.day,	27)
+
+	def test_set_iso(self):
+		"Date.set_iso() sets date from ISO date"
+
+		d = chrono.Date()
+		d.set_iso("2009-12-27")
+
+		self.assertEquals(d.year,	2009)
+		self.assertEquals(d.month,	12)
+		self.assertEquals(d.day,	27)
+
+	def test_set_iso__invalid(self):
+		"Date.set_iso() raises ValueError on invalid format"
+
+		d = chrono.Date()
+
+		self.assertRaises(ValueError, d.set_iso, "2009-12-")
 
 	def test_set_now(self):
 		"Date.set_now() sets date to current date"
