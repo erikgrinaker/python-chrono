@@ -213,6 +213,25 @@ class Date(object):
 		if self.is_set():
 			return calendar.weekday(self.year, self.month, self.day) + 1
 
+	def weeks(self):
+		"""
+		Returns the number of weeks in the set year
+		"""
+
+		if not self.is_set():
+			return
+
+		d = Date(year = self.year, month = 1, day = 1)
+
+		if d.leap() and d.weekday() == 3:
+			return 53
+
+		elif not d.leap() and d.weekday() == 4:
+			return 53
+
+		else:
+			return 52
+
 	def weekyear(self):
 		"""
 		Returns the year that the current week belongs to (for dates where

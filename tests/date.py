@@ -452,6 +452,27 @@ class DateTest(test.TestCase):
 
 		self.assertEquals(d.weekday(), 7)
 
+	def test_weeks(self):
+		"Date.weeks() returns 52 for 2008"
+
+		d = chrono.Date("2008-07-15")
+
+		self.assertEquals(d.weeks(), 52)
+
+	def test_weeks__leap(self):
+		"Date.weeks() returns 53 for 2020"
+
+		d = chrono.Date("2020-07-15")
+
+		self.assertEquals(d.weeks(), 53)
+
+	def test_weeks__thursday(self):
+		"Date.weeks() returns 53 for 2009"
+
+		d = chrono.Date("2009-07-15")
+
+		self.assertEquals(d.weeks(), 53)
+
 	def test_weekyear(self):
 		"Date.weekyear() returns 2009 for 2009-07-15"
 
