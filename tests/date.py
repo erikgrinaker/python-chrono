@@ -79,6 +79,24 @@ class DateTest(test.TestCase):
 		self.assertNone(d.month)
 		self.assertNone(d.year)
 
+	def test__init_date(self):
+		"Date.__init__() with Date instance parameter copies attributes"
+
+		d = chrono.Date(chrono.Date("2009-12-27"))
+
+		self.assertEquals(d.year,	2009)
+		self.assertEquals(d.month,	12)
+		self.assertEquals(d.day,	27)
+
+	def test__init_datetime_date(self):
+		"Date.__init__() with datetime.date instance parameter copies attributes"
+
+		d = chrono.Date(datetime.date(2009, 12, 27))
+
+		self.assertEquals(d.year,	2009)
+		self.assertEquals(d.month,	12)
+		self.assertEquals(d.day,	27)
+
 	def test__init_integer(self):
 		"Date.__init__() with integer parameter assumes UNIX timestamp"
 

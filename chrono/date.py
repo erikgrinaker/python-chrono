@@ -69,6 +69,11 @@ class Date(object):
 			self.month = kwargs["month"]
 			self.day = kwargs["day"]
 
+		elif isinstance(date, Date) or isinstance(date, datetime.date):
+			self.year = date.year
+			self.month = date.month
+			self.day = date.day
+
 		elif date is True:
 			self.set_now()
 
