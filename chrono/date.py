@@ -189,4 +189,11 @@ class Date(object):
 		if self.is_set():
 			return time.struct_time(self.datetime.timetuple())
 
+	def yeardays(self):
+		"""
+		Returns the number of days in the year
+		"""
+
+		if self.is_set():
+			return self.leap() and 366 or 365
 

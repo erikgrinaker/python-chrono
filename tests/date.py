@@ -347,6 +347,20 @@ class DateTest(test.TestCase):
 
 		self.assertNone(d.struct_time())
 
+	def test_yeardays(self):
+		"Date.yeardays() returns 366 for 2008"
+
+		d = chrono.Date("2008-01-01")
+
+		self.assertEquals(d.yeardays(),	366)
+
+	def test_yeardays__normal(self):
+		"Date.yeardays() returns 365 for 2007"
+
+		d = chrono.Date("2007-01-01")
+
+		self.assertEquals(d.yeardays(),	365)
+
 
 if __name__ == "__main__":
 	test.main()
