@@ -22,13 +22,6 @@ import re
 RE_ISODATE = re.compile('^\s*(\d{1,4})-(\d{1,2})-(\d{1,2})\s*$')
 
 
-class ParserError(ValueError):
-	"""
-	A parser error
-	"""
-	pass
-
-
 def isodate(date):
 	"""
 	Parses an ISO date (yyyy-mm-dd), returns a tuple with year, month,
@@ -38,7 +31,7 @@ def isodate(date):
 	match = RE_ISODATE.match(date)
 
 	if not match:
-		raise ParserError("Invalid ISO date '{0}'".format(date))
+		raise ValueError("Invalid ISO date '{0}'".format(date))
 
 	return (
 		int(match.group(1)),

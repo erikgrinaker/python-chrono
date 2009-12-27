@@ -24,9 +24,9 @@ import test
 class isodateTest(test.TestCase):
 
 	def test_invalid(self):
-		"isodate() raises ParserError on invalid format"
+		"isodate() raises ValueError on invalid format"
 
-		self.assertRaises(chrono.parser.ParserError, chrono.parser.isodate, "xx-yy-zz")
+		self.assertRaises(ValueError, chrono.parser.isodate, "xx-yy-zz")
 
 	def test_isodate(self):
 		"isodate() parses proper ISO dates"
