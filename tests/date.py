@@ -243,16 +243,6 @@ class DateTest(test.TestCase):
 
 		self.assertEquals(d.isoyear(), "2009")
 
-	def test_set_integer(self):
-		"Date.set_integer() sets date from UNIX timestamp"
-
-		d = chrono.Date()
-		d.set_integer(1261892718)
-
-		self.assertEquals(d.year,	2009)
-		self.assertEquals(d.month,	12)
-		self.assertEquals(d.day,	27)
-
 	def test_set_iso(self):
 		"Date.set_iso() sets date from ISO date"
 
@@ -281,6 +271,16 @@ class DateTest(test.TestCase):
 		self.assertEquals(d.year,	dt.year)
 		self.assertEquals(d.month,	dt.month)
 		self.assertEquals(d.day,	dt.day)
+
+	def test_set_unix(self):
+		"Date.set_unix() sets date from UNIX timestamp"
+
+		d = chrono.Date()
+		d.set_unix(1261892718)
+
+		self.assertEquals(d.year,	2009)
+		self.assertEquals(d.month,	12)
+		self.assertEquals(d.day,	27)
 
 	def test_struct_time(self):
 		"Date.struct_time() returns a proper struct_time"

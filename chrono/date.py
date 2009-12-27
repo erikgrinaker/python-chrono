@@ -78,7 +78,7 @@ class Date(object):
 			self.set_now()
 
 		elif isinstance(date, int):
-			self.set_integer(date)
+			self.set_unix(date)
 
 		elif isinstance(date, str):
 			self.set_iso(date)
@@ -148,7 +148,16 @@ class Date(object):
 		self.month = d.month
 		self.day = d.day
 
-	def set_integer(self, secs):
+	def set_iso(self, date):
+		"""
+		Sets the date from an ISO date string (yyyy-mm-dd)
+
+		Raises :exc: ValueError on invalid value
+		"""
+
+		self.year, self.month, self.day = parser.isodate(date)
+
+	def set_unix(self, secs):
 		"""
 		Sets the date from an integer UNIX timestamp
 		"""
@@ -158,15 +167,6 @@ class Date(object):
 		self.year = dt.year
 		self.month = dt.month
 		self.day = dt.day
-
-	def set_iso(self, date):
-		"""
-		Sets the date from an ISO date string (yyyy-mm-dd)
-
-		Raises :exc: ValueError on invalid value
-		"""
-
-		self.year, self.month, self.day = parser.isodate(date)
 
 	def struct_time(self):
 		"""
