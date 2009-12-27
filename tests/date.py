@@ -250,35 +250,10 @@ class DateTest(test.TestCase):
 
 		self.assertTrue(chrono.Date("2008-01-01").leap())
 
-	def test_leap__not(self):
-		"Date.leap() returns False for 2007"
-
-		self.assertFalse(chrono.Date("2007-01-01").leap())
-
 	def test_monthdays(self):
-		"Date.monthdays() returns 31 for 2009-01"
-
-		self.assertEquals(chrono.Date("2009-01-01").monthdays(), 31)
-
-	def test_monthdays__april(self):
-		"Date.monthdays() returns 30 for 2009-04"
-
-		self.assertEquals(chrono.Date("2009-04-01").monthdays(), 30)
-
-	def test_monthdays__february(self):
-		"Date.monthdays() returns 28 for 2009-02"
-
-		self.assertEquals(chrono.Date("2009-02-01").monthdays(), 28)
-
-	def test_monthdays__february_leap(self):
 		"Date.monthdays() returns 29 for 2008-02"
 
 		self.assertEquals(chrono.Date("2008-02-01").monthdays(), 29)
-
-	def test_monthdays__none(self):
-		"Date.monthdays() returns None for empty dates"
-
-		self.assertNone(chrono.Date().monthdays())
 
 	def test_set_iso(self):
 		"Date.set_iso() sets date from ISO date"
@@ -340,96 +315,26 @@ class DateTest(test.TestCase):
 		self.assertNone(chrono.Date().struct_time())
 
 	def test_week(self):
-		"Date.week() returns 29 for 2009-07-15"
-
-		self.assertEquals(chrono.Date("2009-07-15").week(), 29)
-
-	def test_week(self):
-		"Date.week() returns 29 for 2009-07-15"
-
-		self.assertEquals(chrono.Date("2009-07-15").week(), 29)
-
-	def test_week__2009_01_01(self):
-		"Date.week() returns 1 for 2009-01-01"
-
-		self.assertEquals(chrono.Date("2009-01-01").week(), 1)
-
-	def test_week__2009_12_31(self):
-		"Date.week() returns 53 for 2009-12-31"
-
-		self.assertEquals(chrono.Date("2009-12-31").week(), 53)
-
-	def test_week__2010_01_01(self):
 		"Date.week() returns 53 for 2010-01-01"
 
 		self.assertEquals(chrono.Date("2010-01-01").week(), 53)
 
-	def test_week__2010_01_04(self):
-		"Date.week() returns 1 for 2010-01-04"
-
-		self.assertEquals(chrono.Date("2010-01-04").week(), 1)
-
-	def test_week__2010_12_31(self):
-		"Date.week() returns 52 for 2010-12-31"
-
-		self.assertEquals(chrono.Date("2010-12-31").week(), 52)
-
 	def test_weekday(self):
-		"Date.weekday() returns 1 for 2009-12-28"
-
-		self.assertEquals(chrono.Date("2009-12-28").weekday(), 1)
-
-	def test_weekday__none(self):
-		"Date.weekday() returns None when date is empty"
-
-		self.assertNone(chrono.Date().weekday())
-
-	def test_weekday__sunday(self):
 		"Date.weekday() returns 7 for 2009-12-27"
 
 		self.assertEquals(chrono.Date("2009-12-27").weekday(), 7)
 
 	def test_weeks(self):
-		"Date.weeks() returns 52 for 2008"
-
-		self.assertEquals(chrono.Date("2008-07-15").weeks(), 52)
-
-	def test_weeks__leap(self):
-		"Date.weeks() returns 53 for 2020"
-
-		self.assertEquals(chrono.Date("2020-07-15").weeks(), 53)
-
-	def test_weeks__thursday(self):
 		"Date.weeks() returns 53 for 2009"
 
 		self.assertEquals(chrono.Date("2009-07-15").weeks(), 53)
 
 	def test_weekyear(self):
-		"Date.weekyear() returns 2009 for 2009-07-15"
-
-		self.assertEquals(chrono.Date("2009-07-15").weekyear(), 2009)
-
-	def test_weekyear__next(self):
-		"Date.weekyear() returns 2009 for 2008-12-31"
-
-		self.assertEquals(chrono.Date("2008-12-31").weekyear(), 2009)
-
-	def test_weekyear__previous(self):
 		"Date.weekyear() returns 2009 for 2010-01-01"
 
 		self.assertEquals(chrono.Date("2010-01-01").weekyear(), 2009)
 
 	def test_yearday(self):
-		"Date.yearday() returns 5 for 2009-01-05"
-
-		self.assertEquals(chrono.Date("2009-01-05").yearday(), 5)
-
-	def test_yearday__last(self):
-		"Date.yearday() returns 365 for 2009-12-31"
-
-		self.assertEquals(chrono.Date("2009-12-31").yearday(), 365)
-
-	def test_yearday__leap(self):
 		"Date.yearday() returns 366 for 2008-12-31"
 
 		self.assertEquals(chrono.Date("2008-12-31").yearday(), 366)
@@ -438,11 +343,6 @@ class DateTest(test.TestCase):
 		"Date.yeardays() returns 366 for 2008"
 
 		self.assertEquals(chrono.Date("2008-01-01").yeardays(), 366)
-
-	def test_yeardays__normal(self):
-		"Date.yeardays() returns 365 for 2007"
-
-		self.assertEquals(chrono.Date("2007-01-01").yeardays(), 365)
 
 
 if __name__ == "__main__":

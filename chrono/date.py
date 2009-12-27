@@ -16,9 +16,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import calendar
 import datetime
 import time
+from . import calendar
 from . import parser
 
 
@@ -38,6 +38,12 @@ class Date(object):
 
 	When initializing using keywords, all keywords must be specified.
 	If both *date* and keywords are specified, keywords take precedence.
+	"""
+
+	calendar = calendar.ISOCalendar()
+	"""
+	Calendar to be used for calendar-related operations (a class instance
+	from the calendar subpackage)
 	"""
 
 	day = None
@@ -148,7 +154,7 @@ class Date(object):
 		"""
 
 		if self.is_set():
-			return calendar.isleap(self.year)
+			return self.calendar.leap(self.year)
 
 	def monthdays(self):
 		"""
@@ -156,7 +162,7 @@ class Date(object):
 		"""
 
 		if self.is_set():
-			return calendar.monthrange(self.year, self.month)[1]
+			return self.calendar.monthdays(self.year, self.month)
 
 	def set_iso(self, date):
 		"""
@@ -203,7 +209,7 @@ class Date(object):
 		"""
 
 		if self.is_set():
-			return int(self.datetime().isocalendar()[1])
+			return self.calendar.week(self.year, self.month, self.day)
 
 	def weekday(self):
 		"""
@@ -211,26 +217,15 @@ class Date(object):
 		"""
 
 		if self.is_set():
-			return calendar.weekday(self.year, self.month, self.day) + 1
+			return self.calendar.weekday(self.year, self.month, self.day)
 
 	def weeks(self):
 		"""
 		Returns the number of weeks in the set year
 		"""
 
-		if not self.is_set():
-			return
-
-		d = Date(year = self.year, month = 1, day = 1)
-
-		if d.leap() and d.weekday() == 3:
-			return 53
-
-		elif not d.leap() and d.weekday() == 4:
-			return 53
-
-		else:
-			return 52
+		if self.is_set():
+			return self.calendar.weeks(self.year)
 
 	def weekyear(self):
 		"""
@@ -239,37 +234,15 @@ class Date(object):
 		"""
 
 		if self.is_set():
-			return self.datetime().isocalendar()[0]
+			return self.calendar.weekyear(self.year, self.month, self.day)
 
 	def yearday(self):
 		"""
 		Returns the day number of the date in the set year
 		"""
 
-		if not self.is_set():
-			return
-
-		offsets = [
-			0,
-			31,
-			59,
-			90,
-			120,
-			151,
-			181,
-			212,
-			243,
-			273,
-			304,
-			334
-		]
-
-		offset = offsets[self.month - 1]
-
-		if self.leap():
-			offset += 1
-
-		return offset + self.day
+		if self.is_set():
+			return self.calendar.yearday(self.year, self.month, self.day)
 
 	def yeardays(self):
 		"""
@@ -277,5 +250,5 @@ class Date(object):
 		"""
 
 		if self.is_set():
-			return self.leap() and 366 or 365
+			return self.calendar.yeardays(self.year)
 
