@@ -178,12 +178,12 @@ class Date(object):
 		self.month = d.month
 		self.day = d.day
 
-	def set_unix(self, secs):
+	def set_unix(self, timestamp):
 		"""
 		Sets the date from an integer UNIX timestamp
 		"""
 
-		dt = datetime.date.today()
+		dt = datetime.date.fromtimestamp(timestamp)
 
 		self.year = dt.year
 		self.month = dt.month
