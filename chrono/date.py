@@ -95,18 +95,22 @@ class Date(object):
 
 		return self.isodate() or ""
 
+	def datetime(self):
+		"""
+		Returns a datetime.date instance based on the current date, or **None**
+		if date isn't set
+		"""
+
+		if self.is_set():
+			return datetime.date(self.year, self.month, self.day)
+
 	def format(self, format):
 		"""
 		Formats the date, according to formatting rules for :func:`time.strftime`
 		"""
 
 		if self.is_set():
-			dt = datetime.date(self.year, self.month, self.day)
-
-			return dt.strftime(format)
-
-		else:
-			return None
+			return self.datetime().strftime(format)
 
 	def is_set(self):
 		"""
@@ -173,10 +177,7 @@ class Date(object):
 		Returns a struct_time for the date, as expected by many Python functions
 		"""
 
-		if not self.is_set():
-			return None
+		if self.is_set():
+			return time.struct_time(self.datetime.timetuple())
 
-		dt = datetime.date(self.year, self.month, self.day)
-
-		return time.struct_time(dt.timetuple())
 

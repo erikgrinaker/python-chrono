@@ -185,6 +185,33 @@ class DateTest(test.TestCase):
 
 		self.assertEquals(str(d),	"")
 
+	def test_datetime(self):
+		"Date.datetime() returns a datetime.date instance"
+
+		d = chrono.Date("2009-12-27")
+		dt = d.datetime()
+
+		self.assertType(dt,		datetime.date)
+		self.assertEquals(dt.year,	2009)
+		self.assertEquals(dt.month,	12)
+		self.assertEquals(dt.day,	27)
+
+	def test_datetime__empty(self):
+		"Date.datetime() returns None for empty dates"
+
+		d = chrono.Date()
+
+		self.assertNone(d.datetime())
+
+	def test_datetime__partial(self):
+		"Date.datetime() returns None for partial dates"
+
+		d = chrono.Date()
+		d.month = 12
+		d.day = 27
+
+		self.assertNone(d.datetime())
+
 	def test_format(self):
 		"Date.format() formats date according to time.strftime()"
 
