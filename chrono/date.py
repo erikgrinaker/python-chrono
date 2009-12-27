@@ -96,7 +96,9 @@ class Date(object):
 		"""
 
 		if self.is_set():
-			return time.strftime(format, self.struct_time())
+			dt = datetime.date(self.year, self.month, self.day)
+
+			return dt.strftime(format)
 
 		else:
 			return None
@@ -146,11 +148,11 @@ class Date(object):
 		Sets the date from an integer UNIX timestamp
 		"""
 
-		t = time.localtime(secs)
+		dt = datetime.date.today()
 
-		self.year = t.tm_year
-		self.month = t.tm_mon
-		self.day = t.tm_mday
+		self.year = dt.year
+		self.month = dt.month
+		self.day = dt.day
 
 	def set_iso(self, date):
 		"""
