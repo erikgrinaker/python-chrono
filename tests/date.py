@@ -270,6 +270,20 @@ class DateTest(test.TestCase):
 
 		self.assertEquals(d.isoyear(), "2009")
 
+	def test_leap(self):
+		"Date.leap() returns True for 2008"
+
+		d = chrono.Date("2008-01-01")
+
+		self.assertTrue(d.leap())
+
+	def test_leap__not(self):
+		"Date.leap() returns False for 2007"
+
+		d = chrono.Date("2007-01-01")
+
+		self.assertFalse(d.leap())
+
 	def test_set_iso(self):
 		"Date.set_iso() sets date from ISO date"
 

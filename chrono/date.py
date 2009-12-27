@@ -16,6 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+import calendar
 import datetime
 import time
 from . import parser
@@ -140,6 +141,14 @@ class Date(object):
 		"""
 
 		return self.format("%Y")
+
+	def leap(self):
+		"""
+		Returns True if the date is in a leap year
+		"""
+
+		if self.is_set():
+			return calendar.isleap(self.year)
 
 	def set_iso(self, date):
 		"""
