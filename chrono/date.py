@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #
 # python-chrono - a date/time module for python
 #
