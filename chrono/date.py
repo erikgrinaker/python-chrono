@@ -20,21 +20,34 @@ import datetime
 
 
 class Date(object):
-	"Date class"
+	"""
+	Represents a date
+	
+	Valid values for *date* can be:
 
-	day	= None
-	month	= None
-	year	= None
+	* **None**: creates a date with empty attributes
+	* **True**: sets the date to the current date
+	"""
+
+	day = None
+	"Day number, 1 - 31 depending on month"
+
+	month = None
+	"Month number, 1 - 12"
+
+	year = None
+	"Year number, 0000 - 9999"
 
 	def __init__(self, date = None):
-		"Creates a Date object"
 
 		if date is True:
 			self.set_now()
 
 
 	def set_now(self):
-		"Sets the date to the current date"
+		"""
+		Sets the date to the current date
+		"""
 
 		d = datetime.date.today()
 
