@@ -213,6 +213,15 @@ class Date(object):
 		if self.is_set():
 			return calendar.weekday(self.year, self.month, self.day) + 1
 
+	def weekyear(self):
+		"""
+		Returns the year that the current week belongs to (for dates where
+		the week number belongs to a different year)
+		"""
+
+		if self.is_set():
+			return self.datetime().isocalendar()[0]
+
 	def yeardays(self):
 		"""
 		Returns the number of days in the year
