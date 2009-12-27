@@ -137,6 +137,15 @@ class Date(object):
 
 		return self.format("%Y")
 
+	def set_iso(self, date):
+		"""
+		Sets the date from an ISO date string (yyyy-mm-dd)
+
+		Raises :exc: ValueError on invalid value
+		"""
+
+		self.year, self.month, self.day = parser.isodate(date)
+
 	def set_now(self):
 		"""
 		Sets the date to the current date
@@ -147,15 +156,6 @@ class Date(object):
 		self.year = d.year
 		self.month = d.month
 		self.day = d.day
-
-	def set_iso(self, date):
-		"""
-		Sets the date from an ISO date string (yyyy-mm-dd)
-
-		Raises :exc: ValueError on invalid value
-		"""
-
-		self.year, self.month, self.day = parser.isodate(date)
 
 	def set_unix(self, secs):
 		"""
