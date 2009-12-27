@@ -160,36 +160,27 @@ class DateTest(test.TestCase):
 	def test__repr(self):
 		"Date.__repr__() shows code to recreate object"
 
-		d = chrono.Date("2009-12-27")
-
-		self.assertEquals(repr(d),	"chrono.Date('2009-12-27')")
+		self.assertEquals(repr(chrono.Date("2009-12-27")), "chrono.Date('2009-12-27')")
 
 	def test__repr_empty(self):
 		"Date.__repr__() handles empty dates"
 
-		d = chrono.Date()
-
-		self.assertEquals(repr(d),	"chrono.Date()")
+		self.assertEquals(repr(chrono.Date()), "chrono.Date()")
 
 	def test__str(self):
 		"Date.__str__() returns iso date"
 
-		d = chrono.Date("2009-12-27")
-
-		self.assertEquals(str(d),	"2009-12-27")
+		self.assertEquals(str(chrono.Date("2009-12-27")), "2009-12-27")
 
 	def test__str_empty(self):
 		"Date.__str__() handles empty dates"
 
-		d = chrono.Date()
-
-		self.assertEquals(str(d),	"")
+		self.assertEquals(str(chrono.Date()), "")
 
 	def test_datetime(self):
 		"Date.datetime() returns a datetime.date instance"
 
-		d = chrono.Date("2009-12-27")
-		dt = d.datetime()
+		dt = chrono.Date("2009-12-27").datetime()
 
 		self.assertType(dt,		datetime.date)
 		self.assertEquals(dt.year,	2009)
@@ -199,9 +190,7 @@ class DateTest(test.TestCase):
 	def test_datetime__empty(self):
 		"Date.datetime() returns None for empty dates"
 
-		d = chrono.Date()
-
-		self.assertNone(d.datetime())
+		self.assertNone(chrono.Date().datetime())
 
 	def test_datetime__partial(self):
 		"Date.datetime() returns None for partial dates"
@@ -215,30 +204,22 @@ class DateTest(test.TestCase):
 	def test_format(self):
 		"Date.format() formats date according to time.strftime()"
 
-		d = chrono.Date(1261892718)
-
-		self.assertEquals(d.format("%Y-%m-%d"),	"2009-12-27")
+		self.assertEquals(chrono.Date(1261892718).format("%Y-%m-%d"), "2009-12-27")
 
 	def test_format__nodate(self):
 		"Date.format() returns None if no date is set"
 
-		d = chrono.Date()
-
-		self.assertNone(d.format("%Y-%m-%d"))
+		self.assertNone(chrono.Date().format("%Y-%m-%d"))
 
 	def test_is_set(self):
 		"Date.is_set() returns True if date is set"
 
-		d = chrono.Date(True)
-
-		self.assertTrue(d.is_set())
+		self.assertTrue(chrono.Date(True).is_set())
 
 	def test_is_set__empty(self):
 		"Date.is_set() returns False if no attributes are set"
 
-		d = chrono.Date()
-
-		self.assertFalse(d.is_set())
+		self.assertFalse(chrono.Date().is_set())
 
 	def test_is_set__partial(self):
 		"Date.is_set() returns False if only some attributes are set"
@@ -252,72 +233,52 @@ class DateTest(test.TestCase):
 	def test_isodate(self):
 		"Date.isodate() returns date in ISO format"
 
-		d = chrono.Date(1261892718)
-
-		self.assertEquals(d.isodate(), "2009-12-27")
+		self.assertEquals(chrono.Date("2009-12-27").isodate(), "2009-12-27")
 
 	def test_isomonth(self):
 		"Date.isomonth() returns month in ISO format"
 
-		d = chrono.Date(1261892718)
-
-		self.assertEquals(d.isomonth(), "2009-12")
+		self.assertEquals(chrono.Date("2009-12-27").isomonth(), "2009-12")
 
 	def test_isoyear(self):
 		"Date.isoyear() returns month in ISO format"
 
-		d = chrono.Date(1261892718)
-
-		self.assertEquals(d.isoyear(), "2009")
+		self.assertEquals(chrono.Date("2009-12-27").isoyear(), "2009")
 
 	def test_leap(self):
 		"Date.leap() returns True for 2008"
 
-		d = chrono.Date("2008-01-01")
-
-		self.assertTrue(d.leap())
+		self.assertTrue(chrono.Date("2008-01-01").leap())
 
 	def test_leap__not(self):
 		"Date.leap() returns False for 2007"
 
-		d = chrono.Date("2007-01-01")
-
-		self.assertFalse(d.leap())
+		self.assertFalse(chrono.Date("2007-01-01").leap())
 
 	def test_monthdays(self):
 		"Date.monthdays() returns 31 for 2009-01"
 
-		d = chrono.Date("2009-01-01")
-
-		self.assertEquals(d.monthdays(), 31)
+		self.assertEquals(chrono.Date("2009-01-01").monthdays(), 31)
 
 	def test_monthdays__april(self):
 		"Date.monthdays() returns 30 for 2009-04"
 
-		d = chrono.Date("2009-04-01")
-
-		self.assertEquals(d.monthdays(), 30)
+		self.assertEquals(chrono.Date("2009-04-01").monthdays(), 30)
 
 	def test_monthdays__february(self):
 		"Date.monthdays() returns 28 for 2009-02"
 
-		d = chrono.Date("2009-02-01")
-
-		self.assertEquals(d.monthdays(), 28)
+		self.assertEquals(chrono.Date("2009-02-01").monthdays(), 28)
 
 	def test_monthdays__february_leap(self):
 		"Date.monthdays() returns 29 for 2008-02"
 
-		d = chrono.Date("2008-02-01")
-
-		self.assertEquals(d.monthdays(), 29)
+		self.assertEquals(chrono.Date("2008-02-01").monthdays(), 29)
 
 	def test_monthdays__none(self):
 		"Date.monthdays() returns None for empty dates"
 
-		d = chrono.Date()
-
-		self.assertNone(d.monthdays())
+		self.assertNone(chrono.Date().monthdays())
 
 	def test_set_iso(self):
 		"Date.set_iso() sets date from ISO date"
@@ -332,9 +293,7 @@ class DateTest(test.TestCase):
 	def test_set_iso__invalid(self):
 		"Date.set_iso() raises ValueError on invalid format"
 
-		d = chrono.Date()
-
-		self.assertRaises(ValueError, d.set_iso, "2009-12-")
+		self.assertRaises(ValueError, chrono.Date().set_iso, "2009-12-")
 
 	def test_set_now(self):
 		"Date.set_now() sets date to current date"
@@ -378,156 +337,112 @@ class DateTest(test.TestCase):
 	def test_struct_time(self):
 		"Date.struct_time() returns None with empty date"
 
-		d = chrono.Date()
-
-		self.assertNone(d.struct_time())
+		self.assertNone(chrono.Date().struct_time())
 
 	def test_week(self):
 		"Date.week() returns 29 for 2009-07-15"
 
-		d = chrono.Date("2009-07-15")
-
-		self.assertEquals(d.week(), 29)
+		self.assertEquals(chrono.Date("2009-07-15").week(), 29)
 
 	def test_week(self):
 		"Date.week() returns 29 for 2009-07-15"
 
-		d = chrono.Date("2009-07-15")
-
-		self.assertEquals(d.week(), 29)
+		self.assertEquals(chrono.Date("2009-07-15").week(), 29)
 
 	def test_week__2009_01_01(self):
 		"Date.week() returns 1 for 2009-01-01"
 
-		d = chrono.Date("2009-01-01")
-
-		self.assertEquals(d.week(), 1)
+		self.assertEquals(chrono.Date("2009-01-01").week(), 1)
 
 	def test_week__2009_12_31(self):
 		"Date.week() returns 53 for 2009-12-31"
 
-		d = chrono.Date("2009-12-31")
-
-		self.assertEquals(d.week(), 53)
+		self.assertEquals(chrono.Date("2009-12-31").week(), 53)
 
 	def test_week__2010_01_01(self):
 		"Date.week() returns 53 for 2010-01-01"
 
-		d = chrono.Date("2010-01-01")
-
-		self.assertEquals(d.week(), 53)
+		self.assertEquals(chrono.Date("2010-01-01").week(), 53)
 
 	def test_week__2010_01_04(self):
 		"Date.week() returns 1 for 2010-01-04"
 
-		d = chrono.Date("2010-01-04")
-
-		self.assertEquals(d.week(), 1)
+		self.assertEquals(chrono.Date("2010-01-04").week(), 1)
 
 	def test_week__2010_12_31(self):
 		"Date.week() returns 52 for 2010-12-31"
 
-		d = chrono.Date("2010-12-31")
-
-		self.assertEquals(d.week(), 52)
+		self.assertEquals(chrono.Date("2010-12-31").week(), 52)
 
 	def test_weekday(self):
 		"Date.weekday() returns 1 for 2009-12-28"
 
-		d = chrono.Date("2009-12-28")
-
-		self.assertEquals(d.weekday(), 1)
+		self.assertEquals(chrono.Date("2009-12-28").weekday(), 1)
 
 	def test_weekday__none(self):
 		"Date.weekday() returns None when date is empty"
 
-		d = chrono.Date()
-
-		self.assertNone(d.weekday())
+		self.assertNone(chrono.Date().weekday())
 
 	def test_weekday__sunday(self):
 		"Date.weekday() returns 7 for 2009-12-27"
 
-		d = chrono.Date("2009-12-27")
-
-		self.assertEquals(d.weekday(), 7)
+		self.assertEquals(chrono.Date("2009-12-27").weekday(), 7)
 
 	def test_weeks(self):
 		"Date.weeks() returns 52 for 2008"
 
-		d = chrono.Date("2008-07-15")
-
-		self.assertEquals(d.weeks(), 52)
+		self.assertEquals(chrono.Date("2008-07-15").weeks(), 52)
 
 	def test_weeks__leap(self):
 		"Date.weeks() returns 53 for 2020"
 
-		d = chrono.Date("2020-07-15")
-
-		self.assertEquals(d.weeks(), 53)
+		self.assertEquals(chrono.Date("2020-07-15").weeks(), 53)
 
 	def test_weeks__thursday(self):
 		"Date.weeks() returns 53 for 2009"
 
-		d = chrono.Date("2009-07-15")
-
-		self.assertEquals(d.weeks(), 53)
+		self.assertEquals(chrono.Date("2009-07-15").weeks(), 53)
 
 	def test_weekyear(self):
 		"Date.weekyear() returns 2009 for 2009-07-15"
 
-		d = chrono.Date("2009-07-15")
-
-		self.assertEquals(d.weekyear(), 2009)
+		self.assertEquals(chrono.Date("2009-07-15").weekyear(), 2009)
 
 	def test_weekyear__next(self):
 		"Date.weekyear() returns 2009 for 2008-12-31"
 
-		d = chrono.Date("2008-12-31")
-
-		self.assertEquals(d.weekyear(), 2009)
+		self.assertEquals(chrono.Date("2008-12-31").weekyear(), 2009)
 
 	def test_weekyear__previous(self):
 		"Date.weekyear() returns 2009 for 2010-01-01"
 
-		d = chrono.Date("2010-01-01")
-
-		self.assertEquals(d.weekyear(), 2009)
+		self.assertEquals(chrono.Date("2010-01-01").weekyear(), 2009)
 
 	def test_yearday(self):
 		"Date.yearday() returns 5 for 2009-01-05"
 
-		d = chrono.Date("2009-01-05")
-
-		self.assertEquals(d.yearday(),	5)
+		self.assertEquals(chrono.Date("2009-01-05").yearday(), 5)
 
 	def test_yearday__last(self):
 		"Date.yearday() returns 365 for 2009-12-31"
 
-		d = chrono.Date("2009-12-31")
-
-		self.assertEquals(d.yearday(),	365)
+		self.assertEquals(chrono.Date("2009-12-31").yearday(), 365)
 
 	def test_yearday__leap(self):
 		"Date.yearday() returns 366 for 2008-12-31"
 
-		d = chrono.Date("2008-12-31")
-
-		self.assertEquals(d.yearday(),	366)
+		self.assertEquals(chrono.Date("2008-12-31").yearday(), 366)
 
 	def test_yeardays(self):
 		"Date.yeardays() returns 366 for 2008"
 
-		d = chrono.Date("2008-01-01")
-
-		self.assertEquals(d.yeardays(),	366)
+		self.assertEquals(chrono.Date("2008-01-01").yeardays(), 366)
 
 	def test_yeardays__normal(self):
 		"Date.yeardays() returns 365 for 2007"
 
-		d = chrono.Date("2007-01-01")
-
-		self.assertEquals(d.yeardays(),	365)
+		self.assertEquals(chrono.Date("2007-01-01").yeardays(), 365)
 
 
 if __name__ == "__main__":
