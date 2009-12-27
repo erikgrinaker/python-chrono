@@ -284,6 +284,41 @@ class DateTest(test.TestCase):
 
 		self.assertFalse(d.leap())
 
+	def test_monthdays(self):
+		"Date.monthdays() returns 31 for 2009-01"
+
+		d = chrono.Date("2009-01-01")
+
+		self.assertEquals(d.monthdays(), 31)
+
+	def test_monthdays__april(self):
+		"Date.monthdays() returns 30 for 2009-04"
+
+		d = chrono.Date("2009-04-01")
+
+		self.assertEquals(d.monthdays(), 30)
+
+	def test_monthdays__february(self):
+		"Date.monthdays() returns 28 for 2009-02"
+
+		d = chrono.Date("2009-02-01")
+
+		self.assertEquals(d.monthdays(), 28)
+
+	def test_monthdays__february_leap(self):
+		"Date.monthdays() returns 29 for 2008-02"
+
+		d = chrono.Date("2008-02-01")
+
+		self.assertEquals(d.monthdays(), 29)
+
+	def test_monthdays__none(self):
+		"Date.monthdays() returns None for empty dates"
+
+		d = chrono.Date()
+
+		self.assertNone(d.monthdays())
+
 	def test_set_iso(self):
 		"Date.set_iso() sets date from ISO date"
 

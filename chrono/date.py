@@ -150,6 +150,14 @@ class Date(object):
 		if self.is_set():
 			return calendar.isleap(self.year)
 
+	def monthdays(self):
+		"""
+		Returns the number of days in the set month
+		"""
+
+		if self.is_set():
+			return calendar.monthrange(self.year, self.month)[1]
+
 	def set_iso(self, date):
 		"""
 		Sets the date from an ISO date string (yyyy-mm-dd)
