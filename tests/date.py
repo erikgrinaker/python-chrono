@@ -177,30 +177,6 @@ class DateTest(test.TestCase):
 
 		self.assertEquals(str(chrono.Date()), "")
 
-	def test_datetime(self):
-		"Date.datetime() returns a datetime.date instance"
-
-		dt = chrono.Date("2009-12-27").datetime()
-
-		self.assertType(dt,		datetime.date)
-		self.assertEquals(dt.year,	2009)
-		self.assertEquals(dt.month,	12)
-		self.assertEquals(dt.day,	27)
-
-	def test_datetime__empty(self):
-		"Date.datetime() returns None for empty dates"
-
-		self.assertNone(chrono.Date().datetime())
-
-	def test_datetime__partial(self):
-		"Date.datetime() returns None for partial dates"
-
-		d = chrono.Date()
-		d.month = 12
-		d.day = 27
-
-		self.assertNone(d.datetime())
-
 	def test_format(self):
 		"Date.format() formats date according to time.strftime()"
 
@@ -210,6 +186,66 @@ class DateTest(test.TestCase):
 		"Date.format() returns None if no date is set"
 
 		self.assertNone(chrono.Date().format("%Y-%m-%d"))
+
+	def test_get_datetime(self):
+		"Date.get_datetime() returns a datetime.date instance"
+
+		dt = chrono.Date("2009-12-27").get_datetime()
+
+		self.assertType(dt,		datetime.date)
+		self.assertEquals(dt.year,	2009)
+		self.assertEquals(dt.month,	12)
+		self.assertEquals(dt.day,	27)
+
+	def test_get_datetime__empty(self):
+		"Date.get_datetime() returns None for empty dates"
+
+		self.assertNone(chrono.Date().get_datetime())
+
+	def test_get_datetime__partial(self):
+		"Date.get_datetime() returns None for partial dates"
+
+		d = chrono.Date()
+		d.month = 12
+		d.day = 27
+
+		self.assertNone(d.get_datetime())
+
+	def test_iso(self):
+		"Date.get_iso() returns date in ISO format"
+
+		self.assertEquals(chrono.Date("2009-12-27").get_iso(), "2009-12-27")
+
+	def test_get_iso_month(self):
+		"Date.get_iso_month() returns month in ISO format"
+
+		self.assertEquals(chrono.Date("2009-12-27").get_iso_month(), "2009-12")
+
+	def test_get_iso_year(self):
+		"Date.get_iso_year() returns month in ISO format"
+
+		self.assertEquals(chrono.Date("2009-12-27").get_iso_year(), "2009")
+
+	def test_get_struct_time(self):
+		"Date.get_struct_time() returns a proper struct_time"
+
+		s = chrono.Date("2009-12-27").get_struct_time()
+
+		self.assertType(s,		time.struct_time)
+		self.assertEquals(s.tm_year,	2009)
+		self.assertEquals(s.tm_mon,	12)
+		self.assertEquals(s.tm_mday,	27)
+		self.assertEquals(s.tm_hour,	0)
+		self.assertEquals(s.tm_min,	0)
+		self.assertEquals(s.tm_sec,	0)
+		self.assertEquals(s.tm_wday,	6)
+		self.assertEquals(s.tm_yday,	361)
+		self.assertEquals(s.tm_isdst,	-1)
+
+	def test_get_struct_time__none(self):
+		"Date.get_struct_time() returns None with empty date"
+
+		self.assertNone(chrono.Date().get_struct_time())
 
 	def test_is_set(self):
 		"Date.is_set() returns True if date is set"
@@ -229,21 +265,6 @@ class DateTest(test.TestCase):
 		d.day = 27
 
 		self.assertFalse(d.is_set())
-
-	def test_isodate(self):
-		"Date.isodate() returns date in ISO format"
-
-		self.assertEquals(chrono.Date("2009-12-27").isodate(), "2009-12-27")
-
-	def test_isomonth(self):
-		"Date.isomonth() returns month in ISO format"
-
-		self.assertEquals(chrono.Date("2009-12-27").isomonth(), "2009-12")
-
-	def test_isoyear(self):
-		"Date.isoyear() returns month in ISO format"
-
-		self.assertEquals(chrono.Date("2009-12-27").isoyear(), "2009")
 
 	def test_leap(self):
 		"Date.leap() returns True for 2008"
@@ -291,28 +312,6 @@ class DateTest(test.TestCase):
 		self.assertEquals(d.year,	2009)
 		self.assertEquals(d.month,	12)
 		self.assertEquals(d.day,	27)
-
-	def test_struct_time(self):
-		"Date.struct_time() returns a proper struct_time"
-
-		d = chrono.Date("2009-12-27")
-		s = d.struct_time()
-
-		self.assertType(s,		time.struct_time)
-		self.assertEquals(s.tm_year,	2009)
-		self.assertEquals(s.tm_mon,	12)
-		self.assertEquals(s.tm_mday,	27)
-		self.assertEquals(s.tm_hour,	0)
-		self.assertEquals(s.tm_min,	0)
-		self.assertEquals(s.tm_sec,	0)
-		self.assertEquals(s.tm_wday,	6)
-		self.assertEquals(s.tm_yday,	361)
-		self.assertEquals(s.tm_isdst,	-1)
-
-	def test_struct_time(self):
-		"Date.struct_time() returns None with empty date"
-
-		self.assertNone(chrono.Date().struct_time())
 
 	def test_week(self):
 		"Date.week() returns 53 for 2010-01-01"

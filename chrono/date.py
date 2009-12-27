@@ -58,13 +58,13 @@ class Date(object):
 	def __cmp__(self, other):
 
 		if isinstance(other, Date):
-			return cmp(self.isodate(), other.isodate())
+			return cmp(self.get_iso(), other.get_iso())
 
 		elif isinstance(other, str):
-			return cmp(self.isodate(), other)
+			return cmp(self.get_iso(), other)
 
 		elif other is None:
-			return cmp(self.isodate(), other)
+			return cmp(self.get_iso(), other)
 
 		else:
 			raise TypeError("Invalid type '{0}' for comparison".format(type(other)))
@@ -93,16 +93,24 @@ class Date(object):
 	def __repr__(self):
 
 		if self.is_set():
-			return "chrono.Date('{0}')".format(self.isodate())
+			return "chrono.Date('{0}')".format(self.get_iso())
 
 		else:
 			return "chrono.Date()"
 
 	def __str__(self):
 
-		return self.isodate() or ""
+		return self.get_iso() or ""
 
-	def datetime(self):
+	def format(self, format):
+		"""
+		Formats the date, according to formatting rules for :func:`time.strftime`
+		"""
+
+		if self.is_set():
+			return self.get_datetime().strftime(format)
+
+	def get_datetime(self):
 		"""
 		Returns a datetime.date instance based on the current date, or **None**
 		if date isn't set
@@ -111,13 +119,38 @@ class Date(object):
 		if self.is_set():
 			return datetime.date(self.year, self.month, self.day)
 
-	def format(self, format):
+	def get_iso(self):
 		"""
-		Formats the date, according to formatting rules for :func:`time.strftime`
+		Returns a ISO date (yyyy-mm-dd) representation of the date, or None
+		if date isn't set
+		"""
+
+		return self.format("%Y-%m-%d")
+
+	def get_iso_month(self):
+		"""
+		Returns a ISO month (yyyy-mm) representation of the date, or None
+		if date isn't set
+		"""
+
+		return self.format("%Y-%m")
+
+	def get_iso_year(self):
+		"""
+		Returns a ISO year (yyyy) representation of the date, or None
+		if date isn't set
+		"""
+
+		return self.format("%Y")
+
+	def get_struct_time(self):
+		"""
+		Returns a struct_time representation of the date (expected as input
+		to many Python functions), or None if date isn't set
 		"""
 
 		if self.is_set():
-			return self.datetime().strftime(format)
+			return time.struct_time(self.get_datetime().timetuple())
 
 	def is_set(self):
 		"""
@@ -126,27 +159,6 @@ class Date(object):
 		"""
 
 		return self.year != None and self.month != None and self.day != None
-
-	def isodate(self):
-		"""
-		Formats the date as an ISO date (yyyy-mm-dd)
-		"""
-
-		return self.format("%Y-%m-%d")
-
-	def isomonth(self):
-		"""
-		Formats the date as an ISO month (yyyy-mm)
-		"""
-
-		return self.format("%Y-%m")
-
-	def isoyear(self):
-		"""
-		Formats the date as an ISO year (yyyy)
-		"""
-
-		return self.format("%Y")
 
 	def leap(self):
 		"""
@@ -194,14 +206,6 @@ class Date(object):
 		self.year = dt.year
 		self.month = dt.month
 		self.day = dt.day
-
-	def struct_time(self):
-		"""
-		Returns a struct_time for the date, as expected by many Python functions
-		"""
-
-		if self.is_set():
-			return time.struct_time(self.datetime.timetuple())
 
 	def week(self):
 		"""
