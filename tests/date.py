@@ -52,6 +52,20 @@ class DateTest(test.TestCase):
 		self.assertEquals(d.month,	dt.month)
 		self.assertEquals(d.day,	dt.day)
 
+	def test_format(self):
+		"Date.format() formats date according to time.strftime()"
+
+		d = chrono.Date(1261892718)
+
+		self.assertEquals(d.format("%Y-%m-%d"),	"2009-12-27")
+
+	def test_format__nodate(self):
+		"Date.format() returns None if no date is set"
+
+		d = chrono.Date()
+
+		self.assertNone(d.format("%Y-%m-%d"))
+
 	def test_is_set(self):
 		"Date.is_set() returns True if date is set"
 

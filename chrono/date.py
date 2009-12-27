@@ -47,6 +47,28 @@ class Date(object):
 		elif isinstance(date, int):
 			self.set_integer(date)
 
+
+	def format(self, format):
+		"""
+		Formats the date, according to formatting rules for :func:`time.strftime`
+		"""
+
+		if self.is_set():
+			return time.strftime(format, (
+				self.year,
+				self.month,
+				self.day,
+				0,
+				0,
+				0,
+				0,
+				1,
+				0
+			))
+
+		else:
+			return None
+
 	def is_set(self):
 		"""
 		Checks if a date is set, ie if the attributes *year*, *month*,
