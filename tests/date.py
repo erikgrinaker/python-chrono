@@ -24,6 +24,51 @@ import test
 
 class DateTest(test.TestCase):
 
+	def test__cmp_equal(self):
+		"Date.__cmp__() handles equality"
+
+		self.assertTrue(chrono.Date("2009-12-27") == chrono.Date("2009-12-27"))
+
+	def test__cmp_gt(self):
+		"Date.__cmp__() handles > comparison"
+
+		self.assertTrue(chrono.Date("2009-12-28") > chrono.Date("2009-12-27"))
+
+	def test__cmp_lt(self):
+		"Date.__cmp__() handles < comparison"
+
+		self.assertTrue(chrono.Date("2009-12-26") < chrono.Date("2009-12-27"))
+
+	def test__cmp_none_equal(self):
+		"Date.__cmp__() handles equality with None"
+
+		self.assertTrue(chrono.Date() == None)
+
+	def test__cmp_none_gt(self):
+		"Date.__cmp__() handles > comparison with None"
+
+		self.assertTrue(chrono.Date("2009-12-28") > None)
+
+	def test__cmp_none_lt(self):
+		"Date.__cmp__() handles < comparison with None"
+
+		self.assertFalse(chrono.Date() < None)
+
+	def test__cmp_str_equal(self):
+		"Date.__cmp__() handles equality with strings"
+
+		self.assertTrue(chrono.Date("2009-12-27") == "2009-12-27")
+
+	def test__cmp_str_gt(self):
+		"Date.__cmp__() handles > comparison with strings"
+
+		self.assertTrue(chrono.Date("2009-12-28") > "2009-12-27")
+
+	def test__cmp_str_lt(self):
+		"Date.__cmp__() handles < comparison with strings"
+
+		self.assertTrue(chrono.Date("2009-12-26") < "2009-12-27")
+
 	def test__init(self):
 		"Date.__init__() sets up Date"
 

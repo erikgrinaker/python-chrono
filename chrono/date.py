@@ -48,6 +48,20 @@ class Date(object):
 	year = None
 	"Year number, 0000 - 9999"
 
+	def __cmp__(self, other):
+
+		if isinstance(other, Date):
+			return cmp(self.isodate(), other.isodate())
+
+		elif isinstance(other, str):
+			return cmp(self.isodate(), other)
+
+		elif other is None:
+			return cmp(self.isodate(), other)
+
+		else:
+			raise TypeError("Invalid type '{0}' for comparison".format(type(other)))
+
 	def __init__(self, date = None, **kwargs):
 
 		if "year" in kwargs and "month" in kwargs and "day" in kwargs:
