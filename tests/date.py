@@ -382,6 +382,28 @@ class DateTest(test.TestCase):
 
 		self.assertNone(d.struct_time())
 
+	def test_weekday(self):
+		"Date.weekday() returns 1 for 2009-12-28"
+
+		d = chrono.Date("2009-12-28")
+
+		self.assertEquals(d.weekday(), 1)
+
+	def test_weekday__none(self):
+		"Date.weekday() returns None when date is empty"
+
+		d = chrono.Date()
+
+		self.assertNone(d.weekday())
+
+	def test_weekday__sunday(self):
+		"Date.weekday() returns 7 for 2009-12-27"
+
+		d = chrono.Date("2009-12-27")
+
+		self.assertEquals(d.weekday(), 7)
+
+
 	def test_yeardays(self):
 		"Date.yeardays() returns 366 for 2008"
 
