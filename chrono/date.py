@@ -39,9 +39,6 @@ class Date(object):
 	If both *date* and keywords are specified, keywords take precedence.
 	"""
 
-	__datetime = None
-	"Datetime object, for internal use"
-
 	day = None
 	"Day number, 1 - 31 depending on month"
 
@@ -94,27 +91,6 @@ class Date(object):
 		else:
 			return "chrono.Date()"
 
-	def __setattr__(self, name, value):
-
-		# mirror the attribute to datetime instance
-		if name in ( "year", "month", "day" ):
-
-			# create dummy datetime instance if not set
-			if not self.__datetime:
-				args = {
-					"year": 1,
-					"month": 1,
-					"day": 1,
-				}
-				self.__datetime = datetime.date(**args)
-
-			args = {name: value}
-
-			self.__datetime = self.__datetime.replace(**args)
-
-		# set attribute value on this instance
-		object.__setattr__(self, name, value)
-
 	def __str__(self):
 
 		return self.isodate() or ""
@@ -125,7 +101,9 @@ class Date(object):
 		"""
 
 		if self.is_set():
-			return self.__datetime.strftime(format)
+			dt = datetime.date(self.year, self.month, self.day)
+
+			return dt.strftime(format)
 
 		else:
 			return None
@@ -198,5 +176,7 @@ class Date(object):
 		if not self.is_set():
 			return None
 
-		return time.struct_time(self.__datetime.timetuple())
+		dt = datetime.date(self.year, self.month, self.day)
+
+		return time.struct_time(dt.timetuple())
 
