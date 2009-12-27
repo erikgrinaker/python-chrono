@@ -84,6 +84,13 @@ class Date(object):
 
 		return self.format("%Y-%m-%d")
 
+	def isomonth(self):
+		"""
+		Formats the date as an ISO month (yyyy-mm)
+		"""
+
+		return self.format("%Y-%m")
+
 	def set_now(self):
 		"""
 		Sets the date to the current date

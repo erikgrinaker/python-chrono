@@ -96,6 +96,13 @@ class DateTest(test.TestCase):
 
 		self.assertEquals(d.isodate(), "2009-12-27")
 
+	def test_isomonth(self):
+		"Date.isomonth() returns month in ISO format"
+
+		d = chrono.Date(1261892718)
+
+		self.assertEquals(d.isomonth(), "2009-12")
+
 	def test_set_integer(self):
 		"Date.set_integer() sets date from UNIX timestamp"
 
