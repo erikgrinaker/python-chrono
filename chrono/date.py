@@ -197,6 +197,14 @@ class Date(object):
 		if self.is_set():
 			return time.struct_time(self.datetime.timetuple())
 
+	def week(self):
+		"""
+		Returns the week number of the set date (weeks starting monday)
+		"""
+
+		if self.is_set():
+			return int(self.datetime().isocalendar()[1])
+
 	def weekday(self):
 		"""
 		Returns the week day of the set date (1 is Monday, 7 is Sunday)

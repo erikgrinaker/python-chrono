@@ -382,6 +382,55 @@ class DateTest(test.TestCase):
 
 		self.assertNone(d.struct_time())
 
+	def test_week(self):
+		"Date.week() returns 29 for 2009-07-15"
+
+		d = chrono.Date("2009-07-15")
+
+		self.assertEquals(d.week(), 29)
+
+	def test_week(self):
+		"Date.week() returns 29 for 2009-07-15"
+
+		d = chrono.Date("2009-07-15")
+
+		self.assertEquals(d.week(), 29)
+
+	def test_week__2009_01_01(self):
+		"Date.week() returns 1 for 2009-01-01"
+
+		d = chrono.Date("2009-01-01")
+
+		self.assertEquals(d.week(), 1)
+
+	def test_week__2009_12_31(self):
+		"Date.week() returns 53 for 2009-12-31"
+
+		d = chrono.Date("2009-12-31")
+
+		self.assertEquals(d.week(), 53)
+
+	def test_week__2010_01_01(self):
+		"Date.week() returns 53 for 2010-01-01"
+
+		d = chrono.Date("2010-01-01")
+
+		self.assertEquals(d.week(), 53)
+
+	def test_week__2010_01_04(self):
+		"Date.week() returns 1 for 2010-01-04"
+
+		d = chrono.Date("2010-01-04")
+
+		self.assertEquals(d.week(), 1)
+
+	def test_week__2010_12_31(self):
+		"Date.week() returns 52 for 2010-12-31"
+
+		d = chrono.Date("2010-12-31")
+
+		self.assertEquals(d.week(), 52)
+
 	def test_weekday(self):
 		"Date.weekday() returns 1 for 2009-12-28"
 
