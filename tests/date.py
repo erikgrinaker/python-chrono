@@ -98,14 +98,28 @@ class DateTest(test.TestCase):
 
 		d = chrono.Date("2009-12-27")
 
-		self.assertEquals(str(d),	"chrono.Date('2009-12-27')")
+		self.assertEquals(repr(d),	"chrono.Date('2009-12-27')")
 
 	def test__repr_empty(self):
 		"Date.__repr__() handles empty dates"
 
 		d = chrono.Date()
 
-		self.assertEquals(str(d),	"chrono.Date()")
+		self.assertEquals(repr(d),	"chrono.Date()")
+
+	def test__str(self):
+		"Date.__str__() returns iso date"
+
+		d = chrono.Date("2009-12-27")
+
+		self.assertEquals(str(d),	"2009-12-27")
+
+	def test__str_empty(self):
+		"Date.__str__() handles empty dates"
+
+		d = chrono.Date()
+
+		self.assertEquals(str(d),	"")
 
 	def test_format(self):
 		"Date.format() formats date according to time.strftime()"

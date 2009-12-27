@@ -72,6 +72,10 @@ class Date(object):
 		else:
 			return "chrono.Date()"
 
+	def __str__(self):
+
+		return self.isodate() or ""
+
 	def format(self, format):
 		"""
 		Formats the date, according to formatting rules for :func:`time.strftime`
