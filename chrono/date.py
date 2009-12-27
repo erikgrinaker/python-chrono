@@ -47,6 +47,14 @@ class Date(object):
 		elif isinstance(date, int):
 			self.set_integer(date)
 
+	def is_set(self):
+		"""
+		Checks if a date is set, ie if the attributes *year*, *month*,
+		and *day* are not None
+		"""
+
+		return self.year != None and self.month != None and self.day != None
+
 	def set_now(self):
 		"""
 		Sets the date to the current date

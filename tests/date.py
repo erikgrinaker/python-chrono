@@ -52,6 +52,29 @@ class DateTest(test.TestCase):
 		self.assertEquals(d.month,	dt.month)
 		self.assertEquals(d.day,	dt.day)
 
+	def test_is_set(self):
+		"Date.is_set() returns True if date is set"
+
+		d = chrono.Date(True)
+
+		self.assertTrue(d.is_set())
+
+	def test_is_set__empty(self):
+		"Date.is_set() returns False if no attributes are set"
+
+		d = chrono.Date()
+
+		self.assertFalse(d.is_set())
+
+	def test_is_set__partial(self):
+		"Date.is_set() returns False if only some attributes are set"
+
+		d = chrono.Date()
+		d.year = 2009
+		d.day = 27
+
+		self.assertFalse(d.is_set())
+
 	def test_set_integer(self):
 		"Date.set_integer() sets date from UNIX timestamp"
 
