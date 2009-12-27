@@ -96,17 +96,7 @@ class Date(object):
 		"""
 
 		if self.is_set():
-			return time.strftime(format, (
-				self.year,
-				self.month,
-				self.day,
-				0,
-				0,
-				0,
-				0,
-				1,
-				0
-			))
+			return time.strftime(format, self.struct_time())
 
 		else:
 			return None
@@ -170,4 +160,16 @@ class Date(object):
 		"""
 
 		self.year, self.month, self.day = parser.isodate(date)
+
+	def struct_time(self):
+		"""
+		Returns a struct_time for the date, as expected by many Python functions
+		"""
+
+		if not self.is_set():
+			return None
+
+		dt = datetime.date(self.year, self.month, self.day)
+
+		return time.struct_time(dt.timetuple())
 

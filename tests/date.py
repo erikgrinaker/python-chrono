@@ -20,6 +20,7 @@
 import chrono
 import datetime
 import test
+import time
 
 
 class DateTest(test.TestCase):
@@ -262,6 +263,30 @@ class DateTest(test.TestCase):
 		self.assertEquals(d.year,	dt.year)
 		self.assertEquals(d.month,	dt.month)
 		self.assertEquals(d.day,	dt.day)
+
+	def test_struct_time(self):
+		"Date.struct_time() returns a proper struct_time"
+
+		d = chrono.Date("2009-12-27")
+		s = d.struct_time()
+
+		self.assertType(s,		time.struct_time)
+		self.assertEquals(s.tm_year,	2009)
+		self.assertEquals(s.tm_mon,	12)
+		self.assertEquals(s.tm_mday,	27)
+		self.assertEquals(s.tm_hour,	0)
+		self.assertEquals(s.tm_min,	0)
+		self.assertEquals(s.tm_sec,	0)
+		self.assertEquals(s.tm_wday,	6)
+		self.assertEquals(s.tm_yday,	361)
+		self.assertEquals(s.tm_isdst,	-1)
+
+	def test_struct_time(self):
+		"Date.struct_time() returns None with empty date"
+
+		d = chrono.Date()
+
+		self.assertNone(d.struct_time())
 
 
 if __name__ == "__main__":
