@@ -102,6 +102,40 @@ class ISOParser_compactweekTest(unittest.TestCase):
 		)
 
 
+class ISOParser_compactweekdateTest(unittest.TestCase):
+
+	def test_lowercase(self):
+		"ISOParser.compactweekdate() accepts lowercase input"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.compactweekdate("2009w124"),
+			(2009, 12, 4)
+		)
+
+	def test_invalid_format(self):
+		"ISOParser.compactweekdate() raises ValueError on invalid format"
+
+		self.assertRaises(ValueError, chrono.parser.ISOParser.compactweekdate, "2009Wxxy")
+
+	def test_invalid_compactweekdate(self):
+		"ISOParser.compactweekdate() raises ValueError on invalid weekdate"
+
+		self.assertRaises(ValueError, chrono.parser.ISOParser.compactweekdate, "2008W528")
+
+	def test_none(self):
+		"ISOParser.compactweekdate() raises TypeError on None"
+
+		self.assertRaises(TypeError, chrono.parser.ISOParser.compactweekdate, None)
+
+	def test_parse(self):
+		"ISOParser.compactweekdate() parses proper ISO weekdate dates (yyyyWwwd)"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.compactweekdate("2009W123"),
+			(2009, 12, 3)
+		)
+
+
 class ISOParser_dateTest(unittest.TestCase):
 
 	def test_invalid_date(self):

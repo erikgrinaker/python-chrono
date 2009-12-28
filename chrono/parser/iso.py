@@ -47,6 +47,14 @@ class ISOParser(parser.Parser):
 		\s*$			# ignore whitespace at end
 	''', re.VERBOSE | re.IGNORECASE)
 
+	re_compactweekdate = re.compile('''
+		^\s*			# ignore whitespace at start
+		(?P<year>\d{4})		# year
+		W(?P<week>\d{2})	# week
+		(?P<day>\d)		# day
+		\s*$			# ignore whitespace at end
+	''', re.VERBOSE | re.IGNORECASE)
+
 	re_date = re.compile('''
 		^\s*			# ignore whitespace at start
 		(?P<year>\d{1,4})	# year
@@ -123,6 +131,23 @@ class ISOParser(parser.Parser):
 		)
 
 		return (match["year"], match["week"])
+
+	@classmethod
+	def compactweekdate(cls, date):
+		"""
+		"Parses a compact ISO weekdate (*yyyyWwwd*), and returns a tuple with year,
+		week, and weekday.
+		"""
+
+		match = cls.int(cls.regexp(cls.re_compactweekdate, date))
+
+		calendar.ISOCalendar.validate_weekdate(
+			match["year"],
+			match["week"],
+			match["day"]
+		)
+
+		return (match["year"], match["week"], match["day"])
 
 	@classmethod
 	def date(cls, date):
