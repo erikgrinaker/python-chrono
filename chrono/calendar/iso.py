@@ -58,6 +58,16 @@ class ISOCalendar(Calendar):
 			)
 
 	@classmethod
+	def validate_weekdate(cls, year, week, weekday):
+		"""
+		Validates a weekdate: *week* must be in range 1-53, depending on *year*,
+		and *weekday* must be in range 1-7.
+		"""
+
+		cls.validate_week(year, week)
+		cls.validate_weekday(weekday)
+
+	@classmethod
 	def week(cls, year, month, day):
 		"""
 		Returns the ISO week number containing the given date.

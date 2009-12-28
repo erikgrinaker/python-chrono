@@ -69,6 +69,58 @@ class ISOCalendar_validate_weekTest(unittest.TestCase):
 		chrono.calendar.ISOCalendar.validate_week("2009", "32")
 
 
+class ISOCalendar_validate_weekdateTest(unittest.TestCase):
+
+	def test_invalid_week(self):
+		"ISOCalendar.validate_weekdate() raises ValueError for 2008-W53-3"
+
+		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.validate_weekdate, 2008, 53, 3)
+
+	def test_invalid_weekday(self):
+		"ISOCalendar.validate_weekdate() raises ValueError for 2009-W32-8"
+
+		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.validate_weekdate, 2009, 32, 8)
+
+	def test_invalid_year(self):
+		"ISOCalendar.validate_weekdate() raises ValueError for 10000-W32-4"
+
+		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.validate_weekdate, 10000, 32, 4)
+
+	def test_leap(self):
+		"ISOCalendar.validate_weekdate() accepts 2009-W53-4"
+
+		chrono.calendar.ISOCalendar.validate_weekdate(2009, 53, 4)
+
+	def test_max(self):
+		"ISOCalendar.validate_weekdate() accepts 2008-W52-7"
+
+		chrono.calendar.ISOCalendar.validate_weekdate(2008, 52, 7)
+
+	def test_nonnumeric(self):
+		"ISOCalendar.validate_weekdate() raises ValueError for non-numeric string"
+
+		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.validate_weekdate, "abc", 32, 4)
+		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.validate_weekdate, 2009, "abc", 4)
+		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.validate_weekdate, 2009, 32, "abc")
+
+	def test_none(self):
+		"ISOCalendar.validate_weekdate() raises TypeError for None"
+
+		self.assertRaises(TypeError, chrono.calendar.ISOCalendar.validate_weekdate, None, 32, 4)
+		self.assertRaises(TypeError, chrono.calendar.ISOCalendar.validate_weekdate, 2009, None, 4)
+		self.assertRaises(TypeError, chrono.calendar.ISOCalendar.validate_weekdate, 2009, 32, None)
+
+	def test_weekdate(self):
+		"ISOCalendar.validate_weekdate() accepts 2009-W32-4"
+
+		chrono.calendar.ISOCalendar.validate_weekdate(2009, 32, 4)
+
+	def test_string(self):
+		"ISOCalendar.validate_weekdate() accepts string inputs"
+
+		chrono.calendar.ISOCalendar.validate_weekdate("2009", "32", "4")
+
+
 class ISOCalendar_weekTest(unittest.TestCase):
 
 	def test_2009_01_01(self):

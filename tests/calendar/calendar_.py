@@ -307,6 +307,14 @@ class Calendar_validate_weekTest(unittest.TestCase):
 		self.assertRaises(NotImplementedError, chrono.calendar.Calendar.validate_week, 2009, 32)
 
 
+class Calendar_validate_weekdateTest(unittest.TestCase):
+
+	def test_notimplemented(self):
+		"Calendar.validate_weekdate() raises NotImplementedError"
+
+		self.assertRaises(NotImplementedError, chrono.calendar.Calendar.validate_weekdate, 2009, 32, 4)
+
+
 class Calendar_validate_weekdayTest(unittest.TestCase):
 
 	def test_0(self):

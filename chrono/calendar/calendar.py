@@ -164,6 +164,21 @@ class Calendar(object):
 		)
 
 	@classmethod
+	def validate_weekdate(cls, year, week, weekday):
+		"""
+		Validates a weekdate: *week* must be in range 1-53, depending on *year*,
+		and *weekday* must be in range 1-7.
+
+		.. note:: This is a placeholder method which just raises
+		   :exc:`NotImplementedError`, it is implemented in
+		   calendar-specific subclasses.
+		"""
+
+		raise NotImplementedError(
+			"This is a calendar-specific method to be handled in subclasses"
+		)
+
+	@classmethod
 	def validate_weekday(cls, day):
 		"""
 		Validates a week day: *day* must be in range 1-7.
