@@ -84,6 +84,9 @@ class Date(object):
 		elif isinstance(date, datetime.date):
 			self.set_datetime(date)
 
+		elif isinstance(date, time.struct_time):
+			self.set_struct_time(date)
+
 		elif date is True:
 			self.set_now()
 
@@ -216,6 +219,15 @@ class Date(object):
 		self.year = d.year
 		self.month = d.month
 		self.day = d.day
+
+	def set_struct_time(self, struct_time):
+		"""
+		Sets the date from a struct_time (as returned by various Python functions)
+		"""
+
+		self.year = struct_time.tm_year
+		self.month = struct_time.tm_mon
+		self.day = struct_time.tm_mday
 
 	def set_unix(self, timestamp):
 		"""

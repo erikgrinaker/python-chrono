@@ -120,6 +120,15 @@ class DateTest(test.TestCase):
 
 		self.assertRaises(ValueError, chrono.Date, "2009-12-")
 
+	def test__init_struct_time(self):
+		"Date.__init__() accepts struct_time input"
+
+		d = chrono.Date(time.localtime(1261892718))
+
+		self.assertEquals(d.year,	2009)
+		self.assertEquals(d.month,	12)
+		self.assertEquals(d.day,	27)
+
 	def test__init_kwargs(self):
 		"Date.__init__() accepts keyword arguments" 
 
@@ -322,6 +331,16 @@ class DateTest(test.TestCase):
 		self.assertEquals(d.year,	dt.year)
 		self.assertEquals(d.month,	dt.month)
 		self.assertEquals(d.day,	dt.day)
+
+	def test_set_struct_time(self):
+		"Date.set_struct_time() sets date from a struct_time"
+
+		d = chrono.Date()
+		d.set_struct_time(time.localtime(1261892718))
+
+		self.assertEquals(d.year,	2009)
+		self.assertEquals(d.month,	12)
+		self.assertEquals(d.day,	27)
 
 	def test_set_unix(self):
 		"Date.set_unix() sets date from UNIX timestamp"
