@@ -120,6 +120,32 @@ class ISOParser_monthTest(unittest.TestCase):
 		)
 
 
+class ISOParser_ordinalTest(unittest.TestCase):
+
+	def test_invalid_ordinal(self):
+		"ISOParser.ordinal() raises ValueError on invalid ordinal date"
+
+		self.assertRaises(ValueError, chrono.parser.ISOParser.ordinal, "2009-366")
+
+	def test_invalid_format(self):
+		"ISOParser.ordinal() raises ValueError on invalid format"
+
+		self.assertRaises(ValueError, chrono.parser.ISOParser.ordinal, "2009-abc")
+
+	def test_none(self):
+		"ISOParser.ordinal() raises TypeError on None"
+
+		self.assertRaises(TypeError, chrono.parser.ISOParser.ordinal, None)
+
+	def test_parse(self):
+		"ISOParser.ordinal() parses proper ISO ordinal dates (yyyy-ddd)"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.ordinal("2009-202"),
+			(2009, 202)
+		)
+
+
 class ISOParser_yearTest(unittest.TestCase):
 
 	def test_invalid_year(self):

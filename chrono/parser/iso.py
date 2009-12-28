@@ -52,6 +52,13 @@ class ISOParser(parser.Parser):
 		\s*$			# ignore whitespace at end
 	''', re.VERBOSE)
 
+	re_ordinal = re.compile('''
+		^\s*			# ignore whitespace at start
+		(?P<year>\d{4})		# year
+		-(?P<day>\d{3})		# day
+		\s*$			# ignore whitespace at end
+	''', re.VERBOSE)
+
 	re_year = re.compile('''
 		^\s*			# ignore whitespace at start
 		(?P<year>\d{1,4})	# year
@@ -107,6 +114,22 @@ class ISOParser(parser.Parser):
 		calendar.ISOCalendar.validate_month(match["month"])
 
 		return (match["year"], match["month"])
+
+	@classmethod
+	def ordinal(cls, date):
+		"""
+		Parses an ISO ordinal date (*yyyy-ddd*), and returns a tuple with
+		year and ordinal day.
+		"""
+
+		match = cls.int(cls.regexp(cls.re_ordinal, date))
+
+		calendar.ISOCalendar.validate_ordinal(
+			match["year"],
+			match["day"]
+		)
+
+		return (match["year"], match["day"])
 
 	@classmethod
 	def year(cls, date):
