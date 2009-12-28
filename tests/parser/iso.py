@@ -146,6 +146,45 @@ class ISOParser_ordinalTest(unittest.TestCase):
 		)
 
 
+class ISOParser_weekTest(unittest.TestCase):
+
+	def test_lowercase(self):
+		"ISOParser.week() accepts lowercase input"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.week("2009-w12"),
+			(2009, 12)
+		)
+
+	def test_invalid_format(self):
+		"ISOParser.week() raises ValueError on invalid format"
+
+		self.assertRaises(ValueError, chrono.parser.ISOParser.week, "2009-Wxx")
+
+	def test_invalid_week(self):
+		"ISOParser.week() raises ValueError on invalid week"
+
+		self.assertRaises(ValueError, chrono.parser.ISOParser.week, "2008-W53")
+
+	def test_invalid_year(self):
+		"ISOParser.week() raises ValueError on invalid year"
+
+		self.assertRaises(ValueError, chrono.parser.ISOParser.week, "10000-W12")
+
+	def test_none(self):
+		"ISOParser.week() raises TypeError on None"
+
+		self.assertRaises(TypeError, chrono.parser.ISOParser.week, None)
+
+	def test_parse(self):
+		"ISOParser.week() parses proper ISO week dates (yyyy-Www)"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.week("2009-W12"),
+			(2009, 12)
+		)
+
+
 class ISOParser_yearTest(unittest.TestCase):
 
 	def test_invalid_year(self):

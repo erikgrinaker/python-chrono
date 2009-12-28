@@ -59,6 +59,13 @@ class ISOParser(parser.Parser):
 		\s*$			# ignore whitespace at end
 	''', re.VERBOSE)
 
+	re_week = re.compile('''
+		^\s*			# ignore whitespace at start
+		(?P<year>\d{1,4})	# year
+		-W(?P<week>\d{1,2})	# week
+		\s*$			# ignore whitespace at end
+	''', re.VERBOSE | re.IGNORECASE)
+
 	re_year = re.compile('''
 		^\s*			# ignore whitespace at start
 		(?P<year>\d{1,4})	# year
@@ -130,6 +137,22 @@ class ISOParser(parser.Parser):
 		)
 
 		return (match["year"], match["day"])
+
+	@classmethod
+	def week(cls, date):
+		"""
+		"Parses an ISO week (*yyyy-Www*), and returns a tuple with year
+		and week number.
+		"""
+
+		match = cls.int(cls.regexp(cls.re_week, date))
+
+		calendar.ISOCalendar.validate_week(
+			match["year"],
+			match["week"]
+		)
+
+		return (match["year"], match["week"])
 
 	@classmethod
 	def year(cls, date):
