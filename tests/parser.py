@@ -17,31 +17,36 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import chrono.parser
+import chrono
 import test
 
 
-class isodateTest(test.TestCase):
+class ISOParserTest(test.TestCase):
 
-	def test_invalid(self):
-		"isodate() raises ValueError on invalid format"
-
-		self.assertRaises(ValueError, chrono.parser.isodate, "xx-yy-zz")
-
-	def test_isodate(self):
-		"isodate() parses proper ISO dates"
+	def test_date(self):
+		"ISOParser.date() parses proper ISO dates"
 
 		self.assertEquals(
 			(2009, 12, 27),
-			chrono.parser.isodate("2009-12-27")
+			chrono.ISOParser.date("2009-12-27")
 		)
 
-	def test_nozero(self):
-		"isodate() parses dates without leading zeroes"
+	def test_date__invalid_date(self):
+		"ISOParser.date() raises ValueError on invalid date"
+
+		self.assertRaises(ValueError, chrono.ISOParser.date, "2009-02-29")
+
+	def test_date__invalid_format(self):
+		"ISOParser.date() raises ValueError on invalid format"
+
+		self.assertRaises(ValueError, chrono.ISOParser.date, "xx-yy-zz")
+
+	def test_date__nozero(self):
+		"ISOParser.date() parses dates without leading zeroes"
 
 		self.assertEquals(
 			(2009, 7, 3),
-			chrono.parser.isodate("2009-7-3")
+			chrono.ISOParser.date("2009-7-3")
 		)
 
 

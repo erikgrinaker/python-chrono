@@ -16,26 +16,37 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+from . import calendar
+
 import re
 
 
-RE_ISODATE = re.compile('^\s*(\d{1,4})-(\d{1,2})-(\d{1,2})\s*$')
-
-
-def isodate(date):
+class ISOParser(object):
 	"""
-	Parses an ISO date (yyyy-mm-dd), returns a tuple with year, month,
-	and day
+	An ISO date parser
 	"""
 
-	match = RE_ISODATE.match(date)
+	re_date = re.compile('^\s*(\d{1,4})-(\d{1,2})-(\d{1,2})\s*$')
 
-	if not match:
-		raise ValueError("Invalid ISO date '{0}'".format(date))
+	@classmethod
+	def date(cls, date):
+		"""
+		Parses an ISO date (yyyy-mm-dd), returns a tuple with year, month,
+		and day
+		"""
 
-	return (
-		int(match.group(1)),
-		int(match.group(2)),
-		int(match.group(3))
-	)
+		match = cls.re_date.match(date)
+
+		if not match:
+			raise ValueError("Invalid ISO date '{0}'".format(date))
+
+		year, month, day = (
+			int(match.group(1)),
+			int(match.group(2)),
+			int(match.group(3))
+		)
+
+		calendar.ISOCalendar.validate(year, month, day)
+
+		return (year, month, day)
 
