@@ -222,6 +222,113 @@ class ISOParser(parser.Parser):
 		return (match["year"], match["day"])
 
 	@classmethod
+	def parse_date(cls, date):
+		"""
+		Parses an ISO date in any of the formats listed below, and returns
+		a tuple with year, month, and day. For formats which doesn't provide
+		data with day precision the earliest possible day is used - for example,
+		*2009-W32* would return (2009, 8, 3), the Monday of week 32 2009.
+
+		* yyyy-mm-dd
+		* yyyy-ddd
+		* yyyy-Www-d
+		* yyyy-Www
+		* yyyy-mm
+		* yyyy
+		* yyyymmdd
+		* yyyyddd
+		* yyyyWwwd
+		* yyyyWww
+		"""
+
+		# date (yyyy-mm-dd)
+		try:
+			return cls.date(date)
+
+		except ValueError:
+			pass
+
+		# compact date (yyyymmdd)
+		try:
+			return cls.compactdate(date)
+
+		except ValueError:
+			pass
+
+		# month (yyyy-mm)
+		try:
+			y, m = cls.month(date)
+
+			return (y, m, 1)
+
+		except ValueError:
+			pass
+
+		# year (yyyy)
+		try:
+			return (cls.year(date), 1, 1)
+
+		except ValueError:
+			pass
+
+		# week (yyyy-Www)
+		try:
+			y, w = cls.week(date)
+
+			return calendar.ISOCalendar.week_to_date(y, w)
+
+		except ValueError:
+			pass
+
+		# compact week (yyyyWww)
+		try:
+			y, w = cls.compactweek(date)
+
+			return calendar.ISOCalendar.week_to_date(y, w)
+
+		except ValueError:
+			pass
+
+		# weekdate (yyyy-Www-d)
+		try:
+			y, w, d = cls.weekdate(date)
+
+			return calendar.ISOCalendar.weekdate_to_date(y, w, d)
+
+		except ValueError:
+			pass
+
+		# compact weekdate (yyyyWwwd)
+		try:
+			y, w, d = cls.compactweekdate(date)
+
+			return calendar.ISOCalendar.weekdate_to_date(y, w, d)
+
+		except ValueError:
+			pass
+
+		# ordinal (yyyy-ddd)
+		try:
+			y, d = cls.ordinal(date)
+
+			return calendar.ISOCalendar.ordinal_to_date(y, d)
+
+		except ValueError:
+			pass
+
+		# compact ordinal (yyyy-ddd)
+		try:
+			y, d = cls.compactordinal(date)
+
+			return calendar.ISOCalendar.ordinal_to_date(y, d)
+
+		except ValueError:
+			pass
+
+		# handle unknown formats
+		raise ValueError("Invalid ISO date format for date '{0}'".format(date))
+
+	@classmethod
 	def week(cls, date):
 		"""
 		Parses an ISO week (*yyyy-Www*), and returns a tuple with year

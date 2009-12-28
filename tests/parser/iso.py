@@ -253,6 +253,99 @@ class ISOParser_ordinalTest(unittest.TestCase):
 		)
 
 
+class ISOParser_parse_dateTest(unittest.TestCase):
+
+	def test_compactdate(self):
+		"ISOParser.parse_date() parses compact ISO dates (yyyymmdd)"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.parse_date("20091227"),
+			(2009, 12, 27)
+		)
+
+	def test_compactordinal(self):
+		"ISOParser.parse_date() parses compact ISO ordinal dates (yyyyddd)"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.parse_date("2009202"),
+			(2009, 7, 21)
+		)
+
+	def test_compactweek(self):
+		"ISOParser.parse_date() parses compact ISO week dates (yyyyWww)"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.parse_date("2009W32"),
+			(2009, 8, 3)
+		)
+
+	def test_compactweekdate(self):
+		"ISOParser.parse_date() parses compact ISO weekdates (yyyyWwwd)"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.parse_date("2009W324"),
+			(2009, 8, 6)
+		)
+
+	def test_date(self):
+		"ISOParser.parse_date() parses ISO dates (yyyy-mm-dd)"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.parse_date("2009-12-27"),
+			(2009, 12, 27)
+		)
+
+	def test_month(self):
+		"ISOParser.parse_date() parses ISO month dates (yyyy-mm)"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.parse_date("2009-07"),
+			(2009, 7, 1)
+		)
+
+	def test_none(self):
+		"ISOParser.parse_date() raises TypeError on None"
+
+		self.assertRaises(TypeError, chrono.parser.ISOParser.parse_date, None)
+
+	def test_ordinal(self):
+		"ISOParser.parse_date() parses ISO ordinal dates (yyyy-ddd)"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.parse_date("2009-202"),
+			(2009, 7, 21)
+		)
+
+	def test_unknown(self):
+		"ISOParser.parse_date() raises ValueError for unknown date formats"
+
+		self.assertRaises(ValueError, chrono.parser.ISOParser.parse_date, "abc")
+
+	def test_week(self):
+		"ISOParser.parse_date() parses ISO week dates (yyyy-Www)"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.parse_date("2009-W32"),
+			(2009, 8, 3)
+		)
+
+	def test_weekdate(self):
+		"ISOParser.parse_date() parses ISO weekdates (yyyy-Www-d)"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.parse_date("2009-W32-4"),
+			(2009, 8, 6)
+		)
+
+	def test_year(self):
+		"ISOParser.parse_date() parses ISO year dates (yyyy)"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.parse_date("2009"),
+			(2009, 1, 1)
+		)
+
+
 class ISOParser_weekTest(unittest.TestCase):
 
 	def test_lowercase(self):
