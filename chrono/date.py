@@ -207,7 +207,7 @@ class Date(object):
 		Raises :exc: ValueError on invalid value
 		"""
 
-		self.year, self.month, self.day = parser.isodate(date)
+		self.year, self.month, self.day = parser.ISOParser.date(date)
 
 	def set_now(self):
 		"""
