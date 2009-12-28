@@ -16,3 +16,4 @@
 #
 
 from .iso import ISOParser
+from .parser import Parser
