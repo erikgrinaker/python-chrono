@@ -29,7 +29,7 @@ yyyy-mm             2009-12             Month
 yyyy-Www            2009-W36            Week
 yyyy-Www-d          2009-W36-3          Week and day
 yyyyWww             2009W36             Compact week
-yyyyWwwd            2009-W363           Compact week and day
+yyyyWwwd            2009W363            Compact week and day
 yyyy-ddd            2009-163            Ordinal day
 =================== =================== =======================
 
