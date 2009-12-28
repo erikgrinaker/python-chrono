@@ -53,6 +53,85 @@ class CalendarTest(test.TestCase):
 
 		self.assertEquals(Calendar.monthdays(2008, 2), 29)
 
+	def test_validate(self):
+		"Calendar.validate() accepts 2009-12-27"
+
+		Calendar.validate(2009, 12, 27)
+
+	def test_validate__2008_02_29(self):
+		"Calendar.validate() accepts 2008-02-29"
+
+		Calendar.validate(2008, 2, 29)
+
+	def test_validate__2009_02_29(self):
+		"Calendar.validate() raises ValueError for 2009-02-29"
+
+		self.assertRaises(ValueError, Calendar.validate, 2009, 2, 29)
+
+	def test_validate__nonnumeric(self):
+		"Calendar.validate() raises TypeError for non-numeric string"
+
+		self.assertRaises(ValueError, Calendar.validate, "abc", 12, 27)
+		self.assertRaises(ValueError, Calendar.validate, 2009, "abc", 27)
+		self.assertRaises(ValueError, Calendar.validate, 2009, 12, "abc")
+
+	def test_validate__type(self):
+		"Calendar.validate() raises TypeError for invalid types"
+
+		self.assertRaises(TypeError, Calendar.validate, None, 12, 27)
+		self.assertRaises(TypeError, Calendar.validate, 2009, None, 27)
+		self.assertRaises(TypeError, Calendar.validate, 2009, 12, None)
+
+	def test_validate_month(self):
+		"Calendar.validate_month() accepts 7"
+
+		Calendar.validate_month(7)
+
+	def test_validate_month__0(self):
+		"Calendar.validate_month() raises ValueError for 0"
+
+		self.assertRaises(ValueError, Calendar.validate_month, 0)
+
+	def test_validate_month__13(self):
+		"Calendar.validate_month() raises ValueError for 13"
+
+		self.assertRaises(ValueError, Calendar.validate_month, 13)
+
+	def test_validate_month__nonnumeric(self):
+		"Calendar.validate_month() raises TypeError for non-numeric string"
+
+		self.assertRaises(ValueError, Calendar.validate_month, "abc")
+
+	def test_validate_month__type(self):
+		"Calendar.validate_month() raises TypeError for invalid types"
+
+		self.assertRaises(TypeError, Calendar.validate_month, None)
+
+	def test_validate_year(self):
+		"Calendar.validate_year() accepts 2009"
+
+		Calendar.validate_year(2009)
+
+	def test_validate_year__0(self):
+		"Calendar.validate_year() raises ValueError for 0"
+
+		self.assertRaises(ValueError, Calendar.validate_year, 0)
+
+	def test_validate_year__10000(self):
+		"Calendar.validate_year() raises ValueError for 10000"
+
+		self.assertRaises(ValueError, Calendar.validate_year, 10000)
+
+	def test_validate_year__nonnumeric(self):
+		"Calendar.validate_year() raises TypeError for non-numeric string"
+
+		self.assertRaises(ValueError, Calendar.validate_year, "abc")
+
+	def test_validate_year__type(self):
+		"Calendar.validate_year() raises TypeError for invalid types"
+
+		self.assertRaises(TypeError, Calendar.validate_year, None)
+
 	def test_week(self):
 		"Calendar.week() raises NotImplementedError"
 

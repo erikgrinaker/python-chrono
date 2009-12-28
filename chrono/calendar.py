@@ -48,6 +48,69 @@ class Calendar(object):
 		return calendar.monthrange(year, month)[1]
 
 	@classmethod
+	def validate(cls, year, month, day):
+		"""
+		Validates a date
+		"""
+
+		cls.validate_year(year)
+		cls.validate_month(month)
+
+		try:
+			day = int(day)
+
+		except TypeError:
+			raise TypeError("Invalid day type, must be int or string")
+
+		except ValueError:
+			raise ValueError("Invalid day value '{0}'".format(day))
+
+		monthdays = cls.monthdays(year, month)
+
+		if not 1 <= day <= monthdays:
+			raise ValueError("Day must be in range 1 to {0} for year {1} month {2}".format(
+				monthdays,
+				year,
+				month
+			))
+
+	@classmethod
+	def validate_month(cls, month):
+		"""
+		Validates a month
+		"""
+
+		try:
+			month = int(month)
+
+		except TypeError:
+			raise TypeError("Invalid month type, must be int or string")
+
+		except ValueError:
+			raise ValueError("Invalid month value '{0}'".format(month))
+
+		if not 1 <= month <= 12:
+			raise ValueError("Month must be in range 1 - 12")
+
+	@classmethod
+	def validate_year(cls, year):
+		"""
+		Validates a year
+		"""
+
+		try:
+			year = int(year)
+
+		except TypeError:
+			raise TypeError("Invalid year type, must be int or string")
+
+		except ValueError:
+			raise ValueError("Invalid year value '{0}'".format(year))
+
+		if not 1 <= year <= 9999:
+			raise ValueError("Year must be in range 1 - 9999")
+
+	@classmethod
 	def week(cls, year, month, day):
 		"""
 		Returns the week number containing the given date
