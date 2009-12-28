@@ -409,7 +409,15 @@ class Calendar_week_to_dateTest(unittest.TestCase):
 	def test_notimplemented(self):
 		"Calendar.week_to_date() raises NotImplementedError"
 
-		self.assertRaises(NotImplementedError, chrono.calendar.Calendar.week, 2009, 12, 28)
+		self.assertRaises(NotImplementedError, chrono.calendar.Calendar.week_to_date, 2009, 32)
+
+
+class Calendar_weekdate_to_dateTest(unittest.TestCase):
+
+	def test_notimplemented(self):
+		"Calendar.weekdate_to_date() raises NotImplementedError"
+
+		self.assertRaises(NotImplementedError, chrono.calendar.Calendar.weekdate_to_date, 2009, 32, 4)
 
 
 class Calendar_weekdayTest(unittest.TestCase):
