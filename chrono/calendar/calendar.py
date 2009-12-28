@@ -112,6 +112,26 @@ class Calendar(object):
 			raise ValueError("Month must be in range 1 - 12")
 
 	@classmethod
+	def validate_ordinal(cls, year, day):
+		"""
+		Validates an ordinal date: *day* must be in range 1-365, or 366
+		if *year* is a leap year.
+		"""
+
+		year = int(year)
+		day = int(day)
+
+		cls.validate_year(year)
+
+		yeardays = cls.yeardays(year)
+
+		if not 1 <= int(day) <= yeardays:
+			raise ValueError(
+				"Ordinal day '{0}' not in valid range 1-{1} for year '{2}'"
+				.format(day, yeardays, year)
+			)
+
+	@classmethod
 	def validate_year(cls, year):
 		"""
 		Validates *year*: must be in 1-9999 range.

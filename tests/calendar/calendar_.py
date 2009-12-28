@@ -212,6 +212,41 @@ class Calendar_validate_monthTest(unittest.TestCase):
 		chrono.calendar.Calendar.validate_month("7")
 
 
+class Calendar_validate_ordinalTest(unittest.TestCase):
+
+	def test_leap(self):
+		"Calendar.validate_ordinal() accepts 2008-366"
+
+		chrono.calendar.Calendar.validate_ordinal(2008, 366)
+
+	def test_max(self):
+		"Calendar.validate_ordinal() accepts 2009-365"
+
+		chrono.calendar.Calendar.validate_ordinal(2009, 365)
+
+	def test_nonnumeric(self):
+		"Calendar.validate_ordinal() raises ValueError for non-numeric string"
+
+		self.assertRaises(ValueError, chrono.calendar.Calendar.validate_ordinal, "abc", 202)
+		self.assertRaises(ValueError, chrono.calendar.Calendar.validate_ordinal, 2009, "abc")
+
+	def test_none(self):
+		"Calendar.validate_ordinal() raises TypeError for None"
+
+		self.assertRaises(TypeError, chrono.calendar.Calendar.validate_ordinal, None, 202)
+		self.assertRaises(TypeError, chrono.calendar.Calendar.validate_ordinal, 2009, None)
+
+	def test_ordinal(self):
+		"Calendar.validate_ordinal() accepts 2009-202"
+
+		chrono.calendar.Calendar.validate_ordinal(2009, 202)
+
+	def test_string(self):
+		"Calendar.validate_ordinal() accepts string inputs"
+
+		chrono.calendar.Calendar.validate_ordinal("2009", "202")
+
+
 class Calendar_validate_yearTest(unittest.TestCase):
 
 	def test_0(self):
