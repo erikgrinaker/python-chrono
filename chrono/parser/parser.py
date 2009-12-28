@@ -18,6 +18,33 @@
 
 class Parser(object):
 	"""
-	Base parser class
+	Base parser class, with various utility methods for subclasses
 	"""
-	pass
+
+	@classmethod
+	def regexp(cls, regexp, subject):
+		"""
+		Parses the string *subject* based on the regular expression object *regexp*,
+		and returns a dict of named captured groups. Raises :exception:`ValueError
+		if the subject doesn't match the expression, or :exception:`TypeError` on
+		invalid type (ie non-string) for subject.
+		"""
+
+		try:
+			match = regexp.match(subject)
+
+		except TypeError:
+			raise TypeError("Subject is not a string")
+
+		if not match:
+			raise ValueError(
+				"The subject '{0}' doesn't match the regular expression"
+				.format(subject)
+			)
+
+		if match.groupdict():
+			return match.groupdict()
+
+		else:
+			return match.groups()
+
