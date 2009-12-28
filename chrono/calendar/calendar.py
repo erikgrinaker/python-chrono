@@ -164,6 +164,15 @@ class Calendar(object):
 		)
 
 	@classmethod
+	def validate_weekday(cls, day):
+		"""
+		Validates a week day: *day* must be in range 1-7.
+		"""
+
+		if not 1 <= int(day) <= 7:
+			raise ValueError("Weekday must be in range 1-7")
+
+	@classmethod
 	def validate_year(cls, year):
 		"""
 		Validates *year*: must be in 1-9999 range.

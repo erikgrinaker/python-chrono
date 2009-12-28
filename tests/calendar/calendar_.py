@@ -307,6 +307,44 @@ class Calendar_validate_weekTest(unittest.TestCase):
 		self.assertRaises(NotImplementedError, chrono.calendar.Calendar.validate_week, 2009, 32)
 
 
+class Calendar_validate_weekdayTest(unittest.TestCase):
+
+	def test_0(self):
+		"Calendar.validate_weekday() raises ValueError for 0"
+
+		self.assertRaises(ValueError, chrono.calendar.Calendar.validate_weekday, 0)
+
+	def test_8(self):
+		"Calendar.validate_weekday() raises ValueError for 8"
+
+		self.assertRaises(ValueError, chrono.calendar.Calendar.validate_weekday, 8)
+
+	def test_monday(self):
+		"Calendar.validate_weekday() accepts 1"
+
+		chrono.calendar.Calendar.validate_weekday(1)
+
+	def test_none(self):
+		"Calendar.validate_weekday() raises TypeError for None"
+
+		self.assertRaises(TypeError, chrono.calendar.Calendar.validate_weekday, None)
+
+	def test_nonnumeric(self):
+		"Calendar.validate_weekday() raises ValueError for non-numeric string"
+
+		self.assertRaises(ValueError, chrono.calendar.Calendar.validate_weekday, "abc")
+
+	def test_string(self):
+		"Calendar.validate_weekday() accepts strings"
+
+		chrono.calendar.Calendar.validate_weekday("7")
+
+	def test_sunday(self):
+		"Calendar.validate_weekday() accepts 7"
+
+		chrono.calendar.Calendar.validate_weekday(7)
+
+
 class Calendar_validate_yearTest(unittest.TestCase):
 
 	def test_0(self):
