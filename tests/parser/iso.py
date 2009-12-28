@@ -31,6 +31,14 @@ class ISOParserTest(unittest.TestCase):
 			chrono.ISOParser.date("2009-12-27")
 		)
 
+	def test_date__compact(self):
+		"ISOParser.date() parses compact ISO dates"
+
+		self.assertEquals(
+			(2009, 12, 27),
+			chrono.ISOParser.date("20091227")
+		)
+
 	def test_date__invalid_date(self):
 		"ISOParser.date() raises ValueError on invalid date"
 

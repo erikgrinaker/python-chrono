@@ -29,19 +29,23 @@ class ISOParser(parser.Parser):
 	An ISO date parser
 	"""
 
-	re_date = re.compile('^\s*(\d{1,4})-(\d{1,2})-(\d{1,2})\s*$')
+	re_date		= re.compile('^\s*(\d{1,4})-(\d{1,2})-(\d{1,2})\s*$')
+	re_date_compact	= re.compile('^\s*(\d{4})(\d{2})(\d{2})\s*$')
 
 	@classmethod
 	def date(cls, date):
 		"""
-		Parses an ISO date (yyyy-mm-dd), returns a tuple with year, month,
-		and day
+		Parses an ISO date (yyyy-mm-dd or yyyymmdd), returns a tuple
+		with year, month, and day
 		"""
 
 		match = cls.re_date.match(date)
 
 		if not match:
-			raise ValueError("Invalid ISO date '{0}'".format(date))
+			match = cls.re_date_compact.match(date)
+
+			if not match:
+				raise ValueError("Invalid ISO date '{0}'".format(date))
 
 		year, month, day = (
 			int(match.group(1)),
