@@ -26,34 +26,50 @@ import datetime
 
 class ISOCalendar(Calendar):
 	"""
-	An ISO calendar, as specified in ISO 8601
+	An ISO calendar, with functionality conforming to the ISO 8601 standard
 
-	Characteristics of the ISO calendar, in relation to the Gregorian:
+	Characteristics of the ISO calendar, compared to the Gregorian:
 
 	* Weeks start on Monday
 	* The first week of a year is the week containing the first Thursday
+
+	All methods accept either integers or strings as parameters, and raises
+	:exc:`TypeError` on invalid type for parameters, and :exc:`ValueError` on
+	invalid parameter values (such as non-numeric strings or invalid dates).
 	"""
 
 	@classmethod
 	def week(cls, year, month, day):
 		"""
-		Returns the week number containing the given date
+		Returns the ISO week number containing the given date.
 		"""
+
+		year = int(year)
+		month = int(month)
+		day = int(day)
+
+		cls.validate(year, month, day)
 
 		return datetime.date(year, month, day).isocalendar()[1]
 
 	@classmethod
 	def weekday(cls, year, month, day):
 		"""
-		Returns the week day of the date (1 = Monday, 7 = Sunday)
+		Returns the weekday of the given date (1 = Monday, 7 = Sunday).
 		"""
+
+		year = int(year)
+		month = int(month)
+		day = int(day)
+
+		cls.validate(year, month, day)
 
 		return calendar.weekday(year, month, day) + 1
 
 	@classmethod
 	def weeks(cls, year):
 		"""
-		Returns the number of weeks in *year*
+		Returns the number of weeks in *year*.
 		"""
 
 		if cls.leapyear(year) and cls.weekday(year, 1, 1) == 3:
@@ -69,8 +85,14 @@ class ISOCalendar(Calendar):
 	def weekyear(cls, year, month, day):
 		"""
 		Returns the year that "owns" the week containing the date
-		(for dates where the week number might belong to a different year)
+		(for dates where the week number might belong to a different year).
 		"""
+
+		year = int(year)
+		month = int(month)
+		day = int(day)
+
+		cls.validate(year, month, day)
 
 		return datetime.date(year, month, day).isocalendar()[0]
 

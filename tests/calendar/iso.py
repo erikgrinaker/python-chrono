@@ -61,13 +61,61 @@ class ISOCalendar_weekTest(unittest.TestCase):
 
 		self.assertEquals(chrono.calendar.ISOCalendar.week(2010, 12, 31), 52)
 
+	def test_invalid(self):
+		"ISOCalendar.week() raises ValueError on invalid date"
+
+		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.week, 2009, 2, 29)
+
+	def test_none(self):
+		"ISOCalendar.week() raises TypeError on None input"
+
+		self.assertRaises(TypeError, chrono.calendar.ISOCalendar.week, None, 8, 14)
+		self.assertRaises(TypeError, chrono.calendar.ISOCalendar.week, 2009, None, 14)
+		self.assertRaises(TypeError, chrono.calendar.ISOCalendar.week, 2009, 8, None)
+
+	def test_nonnumeric(self):
+		"ISOCalendar.week() raises ValueError on non-numeric input"
+
+		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.week, "abc", 8, 14)
+		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.week, 2009, "abc", 14)
+		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.week, 2009, 8, "abc")
+
+	def test_string(self):
+		"ISOCalendar.week() accepts string input"
+
+		self.assertEquals(chrono.calendar.ISOCalendar.week("2009", "7", "15"), 29)
+
 
 class ISOCalendar_weekdayTest(unittest.TestCase):
+
+	def test_invalid(self):
+		"ISOCalendar.weekday() raises ValueError on invalid date"
+
+		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.weekday, 2009, 2, 29)
 
 	def test_monday(self):
 		"ISOCalendar.weekday() returns 1 for 2009-12-28"
 
 		self.assertEquals(chrono.calendar.ISOCalendar.weekday(2009, 12, 28), 1)
+
+	def test_none(self):
+		"ISOCalendar.weekday() raises TypeError on None input"
+
+		self.assertRaises(TypeError, chrono.calendar.ISOCalendar.weekday, None, 8, 14)
+		self.assertRaises(TypeError, chrono.calendar.ISOCalendar.weekday, 2009, None, 14)
+		self.assertRaises(TypeError, chrono.calendar.ISOCalendar.weekday, 2009, 8, None)
+
+	def test_nonnumeric(self):
+		"ISOCalendar.weekday() raises ValueError on non-numeric input"
+
+		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.weekday, "abc", 8, 14)
+		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.weekday, 2009, "abc", 14)
+		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.weekday, 2009, 8, "abc")
+
+	def test_string(self):
+		"ISOCalendar.weekday() accepts string input"
+
+		self.assertEquals(chrono.calendar.ISOCalendar.weekday("2009", "12", "27"), 7)
 
 	def test_sunday(self):
 		"ISOCalendar.weekday() returns 7 for 2009-12-27"
@@ -82,10 +130,30 @@ class ISOCalendar_weeksTest(unittest.TestCase):
 
 		self.assertEquals(chrono.calendar.ISOCalendar.weeks(2008), 52)
 
+	def test_invalid(self):
+		"ISOCalendar.weeks() raises ValueError on invalid year"
+
+		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.weeks, 10000)
+
 	def test_leap(self):
 		"ISOCalendar.weeks() returns 53 for 2020"
 
 		self.assertEquals(chrono.calendar.ISOCalendar.weeks(2020), 53)
+
+	def test_none(self):
+		"ISOCalendar.weeks() raises TypeError on None input"
+
+		self.assertRaises(TypeError, chrono.calendar.ISOCalendar.weeks, None)
+
+	def test_nonnumeric(self):
+		"ISOCalendar.weeks() raises ValueError on non-numeric input"
+
+		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.weeks, "abc")
+
+	def test_string(self):
+		"ISOCalendar.weeks() accepts string input"
+
+		self.assertEquals(chrono.calendar.ISOCalendar.weeks("2008"), 52)
 
 	def test_thursday(self):
 		"ISOCalendar.weeks() returns 53 for 2009"
@@ -94,6 +162,11 @@ class ISOCalendar_weeksTest(unittest.TestCase):
 
 
 class ISOCalendar_weekyearTest(unittest.TestCase):
+
+	def test_invalid(self):
+		"ISOCalendar.weekyear() raises ValueError on invalid date"
+
+		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.weekyear, 2009, 2, 29)
 
 	def test_middle(self):
 		"ISOCalendar.weekyear() returns 2009 for 2009-07-15"
@@ -105,10 +178,29 @@ class ISOCalendar_weekyearTest(unittest.TestCase):
 
 		self.assertEquals(chrono.calendar.ISOCalendar.weekyear(2008, 12, 31), 2009)
 
+	def test_none(self):
+		"ISOCalendar.weekyear() raises TypeError on None input"
+
+		self.assertRaises(TypeError, chrono.calendar.ISOCalendar.weekyear, None, 12, 31)
+		self.assertRaises(TypeError, chrono.calendar.ISOCalendar.weekyear, 2008, None, 31)
+		self.assertRaises(TypeError, chrono.calendar.ISOCalendar.weekyear, 2008, 12, None)
+
+	def test_nonnumeric(self):
+		"ISOCalendar.weekyear() raises ValueError on non-numeric input"
+
+		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.weekyear, "abc", 12, 31)
+		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.weekyear, 2008, "abc", 31)
+		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.weekyear, 2008, 12, "abc")
+
 	def test_previous(self):
 		"ISOCalendar.weekyear() returns 2009 for 2010-01-01"
 
 		self.assertEquals(chrono.calendar.ISOCalendar.weekyear(2010, 1, 1), 2009)
+
+	def test_string(self):
+		"ISOCalendar.weekyear() accepts string input"
+
+		self.assertEquals(chrono.calendar.ISOCalendar.weekyear("2010", "1", "1"), 2009)
 
 
 if __name__ == "__main__":

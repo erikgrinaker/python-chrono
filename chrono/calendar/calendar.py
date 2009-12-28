@@ -137,7 +137,7 @@ class Calendar(object):
 	@classmethod
 	def weekday(cls, year, month, day):
 		"""
-		Returns the weeknumber and weekday of the given date.
+		Returns the weekday of the given date.
 
 		.. note:: This is a placeholder method which just raises
 		   :exc:`NotImplementedError`, it is implemented in
