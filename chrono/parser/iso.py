@@ -141,7 +141,7 @@ class ISOParser(parser.Parser):
 	@classmethod
 	def compactweek(cls, date):
 		"""
-		"Parses a compact ISO week (*yyyyWww*), and returns a tuple with year
+		Parses a compact ISO week (*yyyyWww*), and returns a tuple with year
 		and week number. Leading zeroes may be omitted, even though the ISO
 		standard requires them.
 		"""
@@ -158,7 +158,7 @@ class ISOParser(parser.Parser):
 	@classmethod
 	def compactweekdate(cls, date):
 		"""
-		"Parses a compact ISO weekdate (*yyyyWwwd*), and returns a tuple with year,
+		Parses a compact ISO weekdate (*yyyyWwwd*), and returns a tuple with year,
 		week, and weekday.
 		"""
 
@@ -224,7 +224,7 @@ class ISOParser(parser.Parser):
 	@classmethod
 	def week(cls, date):
 		"""
-		"Parses an ISO week (*yyyy-Www*), and returns a tuple with year
+		Parses an ISO week (*yyyy-Www*), and returns a tuple with year
 		and week number. Leading zeroes may be omitted, even though the ISO
 		standard requires them.
 		"""
