@@ -16,12 +16,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from . import calendar
+from __future__ import absolute_import
+
+from . import parser
+from .. import calendar
 
 import re
 
 
-class ISOParser(object):
+class ISOParser(parser.Parser):
 	"""
 	An ISO date parser
 	"""

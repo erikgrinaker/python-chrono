@@ -18,10 +18,10 @@
 #
 
 import chrono
-import test
+import unittest
 
 
-class ISOParserTest(test.TestCase):
+class ISOParserTest(unittest.TestCase):
 
 	def test_date(self):
 		"ISOParser.date() parses proper ISO dates"
@@ -51,4 +51,4 @@ class ISOParserTest(test.TestCase):
 
 
 if __name__ == "__main__":
-	test.main()
+	unittest.main()

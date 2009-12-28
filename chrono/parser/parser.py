@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
 # python-chrono - a date/time module for python
@@ -17,19 +16,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from distutils.core import setup
-
-setup(
-	name		= "python-chrono",
-	version		= "0.0.0",
-	description	= "a date/time module for python",
-	url		= "http://oss.codepoet.no/python-chrono",
-	author		= "Erik Grinaker",
-	author_email	= "erikg@codepoet.no",
-	license		= "GPL 3",
-	keywords	= "calendar date datetime time",
-	packages	= (
-		"chrono",
-		"chrono.parser",
-	),
-)
+class Parser(object):
+	"""
+	Base parser class
+	"""
+	pass
