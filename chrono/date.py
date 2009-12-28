@@ -191,6 +191,14 @@ class Date(object):
 		if self.is_set():
 			return self.calendar.monthdays(self.year, self.month)
 
+	def ordinal(self):
+		"""
+		Returns the ordinal day (day number in the year) of the set date
+		"""
+
+		if self.is_set():
+			return self.calendar.ordinal(self.year, self.month, self.day)
+
 	def set_datetime(self, datetime):
 		"""
 		Sets the date from a datetime.date object
@@ -272,14 +280,6 @@ class Date(object):
 
 		if self.is_set():
 			return self.calendar.weekyear(self.year, self.month, self.day)
-
-	def yearday(self):
-		"""
-		Returns the day number of the date in the set year
-		"""
-
-		if self.is_set():
-			return self.calendar.yearday(self.year, self.month, self.day)
 
 	def yeardays(self):
 		"""

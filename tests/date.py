@@ -295,6 +295,11 @@ class DateTest(test.TestCase):
 
 		self.assertEquals(chrono.Date("2008-02-01").monthdays(), 29)
 
+	def test_ordinal(self):
+		"Date.ordinal() returns 366 for 2008-12-31"
+
+		self.assertEquals(chrono.Date("2008-12-31").ordinal(), 366)
+
 	def test_set_datetime(self):
 		"Date.set_datetime() sets date from datetime.date object"
 
@@ -371,11 +376,6 @@ class DateTest(test.TestCase):
 		"Date.weekyear() returns 2009 for 2010-01-01"
 
 		self.assertEquals(chrono.Date("2010-01-01").weekyear(), 2009)
-
-	def test_yearday(self):
-		"Date.yearday() returns 366 for 2008-12-31"
-
-		self.assertEquals(chrono.Date("2008-12-31").yearday(), 366)
 
 	def test_yeardays(self):
 		"Date.yeardays() returns 366 for 2008"

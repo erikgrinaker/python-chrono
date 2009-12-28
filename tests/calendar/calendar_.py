@@ -100,6 +100,48 @@ class Calendar_monthdaysTest(unittest.TestCase):
 		self.assertRaises(ValueError, chrono.calendar.Calendar.monthdays, 2009, "abc")
 
 
+class Calendar_ordinalTest(unittest.TestCase):
+
+	def test_2009_01_05(self):
+		"Calendar.ordinal() returns 5 for 2009-01-05"
+
+		self.assertEquals(chrono.calendar.Calendar.ordinal(2009, 1, 5), 5)
+
+	def test_invalid(self):
+		"Calendar.ordinal() raises ValueError for invalid dates"
+
+		self.assertRaises(ValueError, chrono.calendar.Calendar.ordinal, 2009, 7, 32)
+
+	def test_last(self):
+		"Calendar.ordinal() returns 365 for 2009-12-31"
+
+		self.assertEquals(chrono.calendar.Calendar.ordinal(2009, 12, 31), 365)
+
+	def test_leap(self):
+		"Calendar.ordinal() returns 366 for 2008-12-31"
+
+		self.assertEquals(chrono.calendar.Calendar.ordinal(2008, 12, 31), 366)
+
+	def test_none(self):
+		"Calendar.ordinal() raises TypeError for None"
+
+		self.assertRaises(TypeError, chrono.calendar.Calendar.ordinal, None, 7, 21)
+		self.assertRaises(TypeError, chrono.calendar.Calendar.ordinal, 2009, None, 21)
+		self.assertRaises(TypeError, chrono.calendar.Calendar.ordinal, 2009, 7, None)
+
+	def test_string(self):
+		"Calendar.ordinal() accepts string inputs"
+
+		self.assertEquals(chrono.calendar.Calendar.ordinal("2009", "7", "21"), 202)
+
+	def test_text(self):
+		"Calendar.ordinal() raises ValueError for text values"
+
+		self.assertRaises(ValueError, chrono.calendar.Calendar.ordinal, "abc", 7, 21)
+		self.assertRaises(ValueError, chrono.calendar.Calendar.ordinal, 2009, "abc", 21)
+		self.assertRaises(ValueError, chrono.calendar.Calendar.ordinal, 2009, 7, "abc")
+
+
 class Calendar_validateTest(unittest.TestCase):
 
 	def test_2008_02_29(self):
@@ -243,48 +285,6 @@ class Calendar_weekyearTest(unittest.TestCase):
 		"Calendar.weekyear() raises NotImplementedError"
 
 		self.assertRaises(NotImplementedError, chrono.calendar.Calendar.weekyear, 2009, 12, 28)
-
-
-class Calendar_yeardayTest(unittest.TestCase):
-
-	def test_2009_01_05(self):
-		"Calendar.yearday() returns 5 for 2009-01-05"
-
-		self.assertEquals(chrono.calendar.Calendar.yearday(2009, 1, 5), 5)
-
-	def test_invalid(self):
-		"Calendar.yearday() raises ValueError for invalid dates"
-
-		self.assertRaises(ValueError, chrono.calendar.Calendar.yearday, 2009, 7, 32)
-
-	def test_last(self):
-		"Calendar.yearday() returns 365 for 2009-12-31"
-
-		self.assertEquals(chrono.calendar.Calendar.yearday(2009, 12, 31), 365)
-
-	def test_leap(self):
-		"Calendar.yearday() returns 366 for 2008-12-31"
-
-		self.assertEquals(chrono.calendar.Calendar.yearday(2008, 12, 31), 366)
-
-	def test_none(self):
-		"Calendar.yearday() raises TypeError for None"
-
-		self.assertRaises(TypeError, chrono.calendar.Calendar.yearday, None, 7, 21)
-		self.assertRaises(TypeError, chrono.calendar.Calendar.yearday, 2009, None, 21)
-		self.assertRaises(TypeError, chrono.calendar.Calendar.yearday, 2009, 7, None)
-
-	def test_string(self):
-		"Calendar.yearday() accepts string inputs"
-
-		self.assertEquals(chrono.calendar.Calendar.yearday("2009", "7", "21"), 202)
-
-	def test_text(self):
-		"Calendar.yearday() raises ValueError for text values"
-
-		self.assertRaises(ValueError, chrono.calendar.Calendar.yearday, "abc", 7, 21)
-		self.assertRaises(ValueError, chrono.calendar.Calendar.yearday, 2009, "abc", 21)
-		self.assertRaises(ValueError, chrono.calendar.Calendar.yearday, 2009, 7, "abc")
 
 
 class Calendar_yeardaysTest(unittest.TestCase):

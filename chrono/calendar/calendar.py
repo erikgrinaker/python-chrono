@@ -62,6 +62,27 @@ class Calendar(object):
 		return calendar.monthrange(year, month)[1]
 
 	@classmethod
+	def ordinal(cls, year, month, day):
+		"""
+		Returns the ordinal date (day number in the year) for the given date.
+		"""
+
+		year = int(year)
+		month = int(month)
+		day = int(day)
+
+		cls.validate(year, month, day)
+
+		ordinal = 0
+
+		for m in range(1, month):
+			ordinal += cls.monthdays(year, m)
+
+		ordinal += day
+
+		return ordinal
+
+	@classmethod
 	def validate(cls, year, month, day):
 		"""
 		Validates a date: *year* must be in 1-9999 range, *month* in
@@ -155,27 +176,6 @@ class Calendar(object):
 		raise NotImplementedError(
 			"This is a calendar-specific method to be handled in subclasses"
 		)
-
-	@classmethod
-	def yearday(cls, year, month, day):
-		"""
-		Returns the ordinal day number in a year for the given date.
-		"""
-
-		year = int(year)
-		month = int(month)
-		day = int(day)
-
-		cls.validate(year, month, day)
-
-		ordinal = 0
-
-		for m in range(1, month):
-			ordinal += cls.monthdays(year, m)
-
-		ordinal += day
-
-		return ordinal
 
 	@classmethod
 	def yeardays(cls, year):
