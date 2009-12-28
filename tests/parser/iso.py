@@ -227,7 +227,7 @@ class ISOParser_weekTest(unittest.TestCase):
 		"ISOParser.week() accepts weeks without leading zeroes"
 
 		self.assertEquals(
-			chrono.parser.ISOParser.compactweek("2009-W7"),
+			chrono.parser.ISOParser.week("2009-W7"),
 			(2009, 7)
 		)
 
@@ -269,7 +269,7 @@ class ISOParser_weekdateTest(unittest.TestCase):
 		"ISOParser.weekdate() accepts weekdates without leading zeroes"
 
 		self.assertEquals(
-			chrono.parser.ISOParser.compactweekdate("2009-W7-3"),
+			chrono.parser.ISOParser.weekdate("2009-W7-3"),
 			(2009, 7, 3)
 		)
 
