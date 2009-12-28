@@ -55,6 +55,32 @@ class ISOParser_compactdateTest(unittest.TestCase):
 		)
 
 
+class ISOParser_compactordinalTest(unittest.TestCase):
+
+	def test_invalid_compactordinal(self):
+		"ISOParser.compactordinal() raises ValueError on invalid ordinal date"
+
+		self.assertRaises(ValueError, chrono.parser.ISOParser.compactordinal, "2009366")
+
+	def test_invalid_format(self):
+		"ISOParser.compactordinal() raises ValueError on invalid format"
+
+		self.assertRaises(ValueError, chrono.parser.ISOParser.compactordinal, "2009abc")
+
+	def test_none(self):
+		"ISOParser.compactordinal() raises TypeError on None"
+
+		self.assertRaises(TypeError, chrono.parser.ISOParser.compactordinal, None)
+
+	def test_parse(self):
+		"ISOParser.compactordinal() parses proper ISO compactordinal dates (yyyyddd)"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.compactordinal("2009202"),
+			(2009, 202)
+		)
+
+
 class ISOParser_compactweekTest(unittest.TestCase):
 
 	def test_lowercase(self):

@@ -40,6 +40,13 @@ class ISOParser(parser.Parser):
 		\s*$			# ignore whitespace at end
 	''', re.VERBOSE)
 
+	re_compactordinal = re.compile('''
+		^\s*			# ignore whitespace at start
+		(?P<year>\d{4})		# year
+		(?P<day>\d{3})		# day
+		\s*$			# ignore whitespace at end
+	''', re.VERBOSE)
+
 	re_compactweek = re.compile('''
 		^\s*			# ignore whitespace at start
 		(?P<year>\d{1,4})	# year
@@ -114,6 +121,22 @@ class ISOParser(parser.Parser):
 		)
 
 		return (match["year"], match["month"], match["day"])
+
+	@classmethod
+	def compactordinal(cls, date):
+		"""
+		Parses a compact ISO ordinal date (*yyyyddd*), and returns a tuple with
+		year and ordinal day.
+		"""
+
+		match = cls.int(cls.regexp(cls.re_compactordinal, date))
+
+		calendar.ISOCalendar.validate_ordinal(
+			match["year"],
+			match["day"]
+		)
+
+		return (match["year"], match["day"])
 
 	@classmethod
 	def compactweek(cls, date):
