@@ -175,13 +175,13 @@ class Date(object):
 
 		return self.year != None and self.month != None and self.day != None
 
-	def leap(self):
+	def leapyear(self):
 		"""
 		Returns True if the date is in a leap year
 		"""
 
 		if self.is_set():
-			return self.calendar.leap(self.year)
+			return self.calendar.leapyear(self.year)
 
 	def monthdays(self):
 		"""

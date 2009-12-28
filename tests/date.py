@@ -285,10 +285,10 @@ class DateTest(test.TestCase):
 
 		self.assertFalse(d.is_set())
 
-	def test_leap(self):
-		"Date.leap() returns True for 2008"
+	def test_leapyear(self):
+		"Date.leapyear() returns True for 2008"
 
-		self.assertTrue(chrono.Date("2008-01-01").leap())
+		self.assertTrue(chrono.Date("2008-01-01").leapyear())
 
 	def test_monthdays(self):
 		"Date.monthdays() returns 29 for 2008-02"

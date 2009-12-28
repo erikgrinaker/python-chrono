@@ -27,155 +27,162 @@ class Calendar(object):
 	Base calendar class, with common calendar functionality
 
 	Calendar-specific (ie ISO, gregorian etc) methods will raise
-	NotImplementedError if called directly from this base class
+	:exc:`NotImplementedError` if called directly from this base class
 	"""
 
 	@classmethod
-	def leap(cls, year):
+	def leapyear(cls, year):
 		"""
-		Returns **True** if *year* is a leap year
+		Returns **True** if *year* is a leap year. Raises
+		:exc:`TypeError` if *year* is not an int or a string,
+		and :exc:`ValueError` if *year* is an invalid year value.
 		"""
+
+		year = int(year)
+
+		cls.validate_year(year)
 
 		return calendar.isleap(year)
 
 	@classmethod
 	def monthdays(cls, year, month):
 		"""
-		Returns the number of days in a given month (*year* is needed
-		to handle leap years
+		Returns the number of days in *month* (*year* is needed
+		to handle leap years). Raises :exc:`TypeError` if *year* or *month*
+		is not an int or a string, and :exc:`ValueError` if *year* or *month*
+		contains an invalid value.
 		"""
+
+		year = int(year)
+		month = int(month)
+
+		cls.validate_year(year)
+		cls.validate_month(month)
 
 		return calendar.monthrange(year, month)[1]
 
 	@classmethod
 	def validate(cls, year, month, day):
 		"""
-		Validates a date
+		Validates a date. Inputs can be either integers or strings. Raises
+		:exc:`TypeError` on invalid types, and :exc:`ValueError` on invalid
+		values.
 		"""
+
+		day = int(day)
 
 		cls.validate_year(year)
 		cls.validate_month(month)
 
-		try:
-			day = int(day)
-
-		except TypeError:
-			raise TypeError("Invalid day type, must be int or string")
-
-		except ValueError:
-			raise ValueError("Invalid day value '{0}'".format(day))
-
 		monthdays = cls.monthdays(year, month)
 
 		if not 1 <= day <= monthdays:
-			raise ValueError("Day must be in range 1 to {0} for year {1} month {2}".format(
-				monthdays,
-				year,
-				month
-			))
+			raise ValueError(
+				"Day must be in range 1 to {0} for year {1} month {2}"
+				.format(monthdays, year, month)
+			)
 
 	@classmethod
 	def validate_month(cls, month):
 		"""
-		Validates a month
+		Validates *month*. *month* can be either integer or string. Raises
+		:exc:`TypeError` on invalid type, and :exc:`ValueError` on invalid
+		value.
 		"""
 
-		try:
-			month = int(month)
-
-		except TypeError:
-			raise TypeError("Invalid month type, must be int or string")
-
-		except ValueError:
-			raise ValueError("Invalid month value '{0}'".format(month))
-
-		if not 1 <= month <= 12:
+		if not 1 <= int(month) <= 12:
 			raise ValueError("Month must be in range 1 - 12")
 
 	@classmethod
 	def validate_year(cls, year):
 		"""
-		Validates a year
+		Validates *year*. *year* can be either integer or string. Raises
+		:exc:`TypeError` on invalid type, and :exc:`ValueError` on invalid
+		value.
 		"""
 
-		try:
-			year = int(year)
-
-		except TypeError:
-			raise TypeError("Invalid year type, must be int or string")
-
-		except ValueError:
-			raise ValueError("Invalid year value '{0}'".format(year))
-
-		if not 1 <= year <= 9999:
+		if not 1 <= int(year) <= 9999:
 			raise ValueError("Year must be in range 1 - 9999")
 
 	@classmethod
 	def week(cls, year, month, day):
 		"""
-		Returns the week number containing the given date
+		Returns the week number containing the given date. This is a placeholder
+		method which just raises :exc:`NotImplementedError`, it is implemented
+		in calendar-specific subclasses.
 		"""
 
-		raise NotImplementedError()
+		raise NotImplementedError(
+			"This is a calendar-specific method to be handled in subclasses"
+		)
 
 	@classmethod
 	def weekday(cls, year, month, day):
 		"""
-		Returns the week day of the date
+		Returns the week number and day containing the given date. This is a placeholder
+		method which just raises :exc:`NotImplementedError`, it is implemented
+		in calendar-specific subclasses.
 		"""
 
-		raise NotImplementedError()
+		raise NotImplementedError(
+			"This is a calendar-specific method to be handled in subclasses"
+		)
 
 	@classmethod
 	def weeks(cls, year):
 		"""
-		Returns the number of weeks in *year*
+		Returns the number of weeks in *year*. This is a placeholder method
+		which just raises :exc:`NotImplementedError`, it is implemented
+		in calendar-specific subclasses.
 		"""
 
-		raise NotImplementedError()
+		raise NotImplementedError(
+			"This is a calendar-specific method to be handled in subclasses"
+		)
 
 	@classmethod
 	def weekyear(cls, year, month, day):
 		"""
-		Returns the year that "owns" the week containing the date
-		(for dates where the week number might belong to a different year)
+		Returns the year that "owns" the week containing the date (for
+		dates where the week number might belong to a different year).
+		This is a placeholder method which just raises
+		:exc:`NotImplementedError`, it is implemented in calendar-specific
+		subclasses.
 		"""
 
-		raise NotImplementedError()
+		raise NotImplementedError(
+			"This is a calendar-specific method to be handled in subclasses"
+		)
 
 	@classmethod
 	def yearday(cls, year, month, day):
 		"""
-		Returns the day number in a year for a given date
+		Returns the ordinal day number in a year for the given date. Raises
+		:exc:`TypeError` on invalid types, and :exc:`ValueError` on invalid
+		values.
 		"""
 
-		offsets = [
-			0,
-			31,
-			59,
-			90,
-			120,
-			151,
-			181,
-			212,
-			243,
-			273,
-			304,
-			334
-		]
+		year = int(year)
+		month = int(month)
+		day = int(day)
 
-		offset = offsets[month - 1]
+		cls.validate(year, month, day)
 
-		if cls.leap(year):
-			offset += 1
+		ordinal = 0
 
-		return offset + day
+		for m in range(1, month):
+			ordinal += cls.monthdays(year, m)
+
+		ordinal += day
+
+		return ordinal
 
 	@classmethod
 	def yeardays(cls, year):
 		"""
-		Returns the number of days in a year
+		Returns the number of days in *year* (365 for normal years,
+		366 for leap years)
 		"""
 
-		return cls.leap(year) and 366 or 365
+		return cls.leapyear(year) and 366 or 365
 

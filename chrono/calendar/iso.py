@@ -56,10 +56,10 @@ class ISOCalendar(Calendar):
 		Returns the number of weeks in *year*
 		"""
 
-		if cls.leap(year) and cls.weekday(year, 1, 1) == 3:
+		if cls.leapyear(year) and cls.weekday(year, 1, 1) == 3:
 			return 53
 
-		elif not cls.leap(year) and cls.weekday(year, 1, 1) == 4:
+		elif not cls.leapyear(year) and cls.weekday(year, 1, 1) == 4:
 			return 53
 
 		else:
