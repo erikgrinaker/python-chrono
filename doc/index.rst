@@ -7,6 +7,7 @@ Contents:
    :maxdepth: 2
 
    date.rst
+   parser.rst
 
 Indices and tables
 ==================

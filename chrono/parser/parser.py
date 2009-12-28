@@ -25,9 +25,9 @@ class Parser(object):
 	def regexp(cls, regexp, subject):
 		"""
 		Parses the string *subject* based on the regular expression object *regexp*,
-		and returns a dict of named captured groups. Raises :exception:`ValueError
-		if the subject doesn't match the expression, or :exception:`TypeError` on
-		invalid type (ie non-string) for subject.
+		and returns a dict of named captured groups. Raises :exc:`ValueError`
+		if the subject doesn't match the expression, or :exc:`TypeError` on
+		invalid subject type (ie non-string).
 		"""
 
 		try:

@@ -16,6 +16,5 @@
 #
 
 from . import parser
-
 from .calendar import ISOCalendar
 from .date import Date

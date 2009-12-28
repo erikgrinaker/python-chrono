@@ -15,5 +15,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+"""
+This module contains various classes that are used to parse different date/time formats.
+
+:class:`chrono.parser.Parser` is a base class with various utility methods for subclasses.
+Actual parsing will always be handled by subclasses, either through a :meth:`parse`
+method, or more specialized methods.
+"""
+
 from .iso import ISOParser
 from .parser import Parser
