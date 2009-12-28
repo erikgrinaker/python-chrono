@@ -21,6 +21,7 @@ from __future__ import absolute_import
 import calendar
 import datetime
 
+
 class Calendar(object):
 	"""
 	Base calendar class, with common calendar functionality
@@ -29,14 +30,16 @@ class Calendar(object):
 	NotImplementedError if called directly in this base class
 	"""
 
-	def leap(self, year):
+	@classmethod
+	def leap(cls, year):
 		"""
 		Returns **True** if *year* is a leap year
 		"""
 
 		return calendar.isleap(year)
 
-	def monthdays(self, year, month):
+	@classmethod
+	def monthdays(cls, year, month):
 		"""
 		Returns the number of days in a given month (*year* is needed
 		to handle leap years
@@ -44,28 +47,32 @@ class Calendar(object):
 
 		return calendar.monthrange(year, month)[1]
 
-	def week(self, year, month, day):
+	@classmethod
+	def week(cls, year, month, day):
 		"""
 		Returns the week number containing the given date
 		"""
 
 		raise NotImplementedError()
 
-	def weekday(self, year, month, day):
+	@classmethod
+	def weekday(cls, year, month, day):
 		"""
 		Returns the week day of the date
 		"""
 
 		raise NotImplementedError()
 
-	def weeks(self, year):
+	@classmethod
+	def weeks(cls, year):
 		"""
 		Returns the number of weeks in *year*
 		"""
 
 		raise NotImplementedError()
 
-	def weekyear(self, year, month, day):
+	@classmethod
+	def weekyear(cls, year, month, day):
 		"""
 		Returns the year that "owns" the week containing the date
 		(for dates where the week number might belong to a different year)
@@ -73,7 +80,8 @@ class Calendar(object):
 
 		raise NotImplementedError()
 
-	def yearday(self, year, month, day):
+	@classmethod
+	def yearday(cls, year, month, day):
 		"""
 		Returns the day number in a year for a given date
 		"""
@@ -95,17 +103,18 @@ class Calendar(object):
 
 		offset = offsets[month - 1]
 
-		if self.leap(year):
+		if cls.leap(year):
 			offset += 1
 
 		return offset + day
 
-	def yeardays(self, year):
+	@classmethod
+	def yeardays(cls, year):
 		"""
 		Returns the number of days in a year
 		"""
 
-		return self.leap(year) and 366 or 365
+		return cls.leap(year) and 366 or 365
 
 
 class ISOCalendar(Calendar):
@@ -118,35 +127,39 @@ class ISOCalendar(Calendar):
 	* The first week of a year is the week containing the first Thursday
 	"""
 
-	def week(self, year, month, day):
+	@classmethod
+	def week(cls, year, month, day):
 		"""
 		Returns the week number containing the given date
 		"""
 
 		return datetime.date(year, month, day).isocalendar()[1]
 
-	def weekday(self, year, month, day):
+	@classmethod
+	def weekday(cls, year, month, day):
 		"""
 		Returns the week day of the date (1 = Monday, 7 = Sunday)
 		"""
 
 		return calendar.weekday(year, month, day) + 1
 
-	def weeks(self, year):
+	@classmethod
+	def weeks(cls, year):
 		"""
 		Returns the number of weeks in *year*
 		"""
 
-		if self.leap(year) and self.weekday(year, 1, 1) == 3:
+		if cls.leap(year) and cls.weekday(year, 1, 1) == 3:
 			return 53
 
-		elif not self.leap(year) and self.weekday(year, 1, 1) == 4:
+		elif not cls.leap(year) and cls.weekday(year, 1, 1) == 4:
 			return 53
 
 		else:
 			return 52
 
-	def weekyear(self, year, month, day):
+	@classmethod
+	def weekyear(cls, year, month, day):
 		"""
 		Returns the year that "owns" the week containing the date
 		(for dates where the week number might belong to a different year)
