@@ -46,17 +46,31 @@ class ISOParser(parser.Parser):
 	''', re.VERBOSE)
 
 	@classmethod
+	def compactdate(cls, date):
+		"""
+		Parses a compact ISO date(*yyyymmdd*), and returns a tuple with
+		year, month, and day. Raises :exc:`ValueError` if *date* is invalid.
+		"""
+
+		match = cls.int(cls.regexp(cls.re_date_compact, date))
+
+		calendar.ISOCalendar.validate(
+			match["year"],
+			match["month"],
+			match["day"]
+		)
+
+		return (match["year"], match["month"], match["day"])
+
+	@classmethod
 	def date(cls, date):
 		"""
-		Parses an ISO date (*yyyy-mm-dd* or *yyyymmdd*), and returns a tuple
-		with year, month, and day.
+		Parses a ISO date (*yyyy-mm-dd*), and returns a tuple with year,
+		month, and day. Leading zeroes may be omitted, even though the ISO
+		standard requires them.
 		"""
 
-		try:
-			match = cls.int(cls.regexp(cls.re_date, date))
-
-		except ValueError:
-			match = cls.int(cls.regexp(cls.re_date_compact, date))
+		match = cls.int(cls.regexp(cls.re_date, date))
 
 		calendar.ISOCalendar.validate(
 			match["year"],

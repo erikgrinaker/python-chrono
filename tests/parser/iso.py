@@ -29,15 +29,33 @@ class ISOParserTest(unittest.TestCase):
 		self.assertTrue(issubclass(chrono.parser.ISOParser, chrono.parser.parser.Parser))
 
 
-class ISOParser_dateTest(unittest.TestCase):
+class ISOParser_compactdateTest(unittest.TestCase):
 
-	def test_compact(self):
-		"ISOParser.date() parses compact ISO dates (yyyymmdd)"
+	def test_invalid_date(self):
+		"ISOParser.compactdate() raises ValueError on invalid date"
+
+		self.assertRaises(ValueError, chrono.parser.ISOParser.compactdate, "20090229")
+
+	def test_invalid_format(self):
+		"ISOParser.compactdate() raises ValueError on invalid format"
+
+		self.assertRaises(ValueError, chrono.parser.ISOParser.compactdate, "090229")
+
+	def test_none(self):
+		"ISOParser.compactdate() raises TypeError on None"
+
+		self.assertRaises(TypeError, chrono.parser.ISOParser.compactdate, None)
+
+	def test_parse(self):
+		"ISOParser.compactdate() parses proper ISO compact dates (yyyymmdd)"
 
 		self.assertEquals(
-			(2009, 12, 27),
-			chrono.parser.ISOParser.date("20091227")
+			chrono.parser.ISOParser.compactdate("20091227"),
+			(2009, 12, 27)
 		)
+
+
+class ISOParser_dateTest(unittest.TestCase):
 
 	def test_invalid_date(self):
 		"ISOParser.date() raises ValueError on invalid date"
@@ -49,20 +67,25 @@ class ISOParser_dateTest(unittest.TestCase):
 
 		self.assertRaises(ValueError, chrono.parser.ISOParser.date, "xx-yy-zz")
 
-	def test_iso(self):
-		"ISOParser.date() parses proper ISO dates (yyyy-mm-dd)"
+	def test_none(self):
+		"ISOParser.date() raises TypeError on None"
 
-		self.assertEquals(
-			(2009, 12, 27),
-			chrono.parser.ISOParser.date("2009-12-27")
-		)
+		self.assertRaises(TypeError, chrono.parser.ISOParser.date, None)
 
 	def test_nozero(self):
 		"ISOParser.date() parses dates without leading zeroes (2009-7-3)"
 
 		self.assertEquals(
-			(2009, 7, 3),
-			chrono.parser.ISOParser.date("2009-7-3")
+			chrono.parser.ISOParser.date("2009-7-3"),
+			(2009, 7, 3)
+		)
+
+	def test_parse(self):
+		"ISOParser.date() parses proper ISO dates (yyyy-mm-dd)"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.date("2009-12-27"),
+			(2009, 12, 27)
 		)
 
 
