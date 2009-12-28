@@ -30,6 +30,7 @@ setup(
 	keywords	= "calendar date datetime time",
 	packages	= (
 		"chrono",
+		"chrono.calendar",
 		"chrono.parser",
 	),
 )

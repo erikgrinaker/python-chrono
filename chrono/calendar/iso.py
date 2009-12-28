@@ -18,6 +18,8 @@
 
 from __future__ import absolute_import
 
+from .calendar import Calendar
+
 import calendar
 import datetime
 
