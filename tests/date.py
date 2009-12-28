@@ -247,6 +247,16 @@ class DateTest(test.TestCase):
 
 		self.assertNone(chrono.Date().get_struct_time())
 
+	def test_get_unix(self):
+		"Date.get_unix() returns unix timestamp"
+
+		self.assertEquals(chrono.Date("2009-12-27").get_unix(), 1261846800)
+
+	def test_get_unix__none(self):
+		"Date.get_unix() returns None for empty date"
+
+		self.assertNone(chrono.Date().get_unix())
+
 	def test_is_set(self):
 		"Date.is_set() returns True if date is set"
 

@@ -152,6 +152,15 @@ class Date(object):
 		if self.is_set():
 			return time.struct_time(self.get_datetime().timetuple())
 
+	def get_unix(self):
+		"""
+		Returns a UNIX timestamp representation of the date, or None if not
+		set
+		"""
+
+		if self.is_set():
+			return int(time.mktime(self.get_struct_time()))
+
 	def is_set(self):
 		"""
 		Checks if a date is set, ie if the attributes *year*, *month*,
