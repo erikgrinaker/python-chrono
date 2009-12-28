@@ -226,6 +226,21 @@ class Calendar(object):
 		)
 
 	@classmethod
+	def weekdate(cls, year, month, day):
+		"""
+		Returns the weekdate for the given date as a tuple with year, week,
+		and weekday.
+
+		.. note:: This is a placeholder method which just raises
+		   :exc:`NotImplementedError`, it is implemented in
+		   calendar-specific subclasses.
+		"""
+
+		raise NotImplementedError(
+			"This is a calendar-specific method to be handled in subclasses"
+		)
+
+	@classmethod
 	def weekdate_to_date(cls, year, week, day):
 		"""
 		Returns the date of the given weekdate as a tuple with year, month,

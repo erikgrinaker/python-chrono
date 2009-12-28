@@ -82,6 +82,21 @@ class ISOCalendar(Calendar):
 		return datetime.date(year, month, day).isocalendar()[1]
 
 	@classmethod
+	def weekdate(cls, year, month, day):
+		"""
+		Returns the weekdate for the given date as a tuple with year, week,
+		and weekday.
+		"""
+
+		year = int(year)
+		month = int(month)
+		day = int(day)
+
+		cls.validate(year, month, day)
+
+		return datetime.date(year, month, day).isocalendar()
+
+	@classmethod
 	def week_to_date(cls, year, week):
 		"""
 		Returns the date of the first day in the given week as a tuple with
