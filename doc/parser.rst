@@ -7,3 +7,4 @@
    :maxdepth: 2
 
    parser/parser.rst
+   parser/iso.rst

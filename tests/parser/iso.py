@@ -18,7 +18,6 @@
 #
 
 import chrono
-import chrono.parser.parser
 import unittest
 
 
@@ -27,43 +26,43 @@ class ISOParserTest(unittest.TestCase):
 	def test_subclass(self):
 		"ISOParser subclasses Parser"
 
-		self.assertTrue(issubclass(chrono.ISOParser, chrono.parser.parser.Parser))
+		self.assertTrue(issubclass(chrono.parser.ISOParser, chrono.parser.parser.Parser))
 
 
 class ISOParser_dateTest(unittest.TestCase):
 
 	def test_compact(self):
-		"ISOParser.date() parses compact ISO dates"
+		"ISOParser.date() parses compact ISO dates (yyyymmdd)"
 
 		self.assertEquals(
 			(2009, 12, 27),
-			chrono.ISOParser.date("20091227")
+			chrono.parser.ISOParser.date("20091227")
 		)
 
 	def test_invalid_date(self):
 		"ISOParser.date() raises ValueError on invalid date"
 
-		self.assertRaises(ValueError, chrono.ISOParser.date, "2009-02-29")
+		self.assertRaises(ValueError, chrono.parser.ISOParser.date, "2009-02-29")
 
 	def test_invalid_format(self):
 		"ISOParser.date() raises ValueError on invalid format"
 
-		self.assertRaises(ValueError, chrono.ISOParser.date, "xx-yy-zz")
+		self.assertRaises(ValueError, chrono.parser.ISOParser.date, "xx-yy-zz")
 
 	def test_iso(self):
-		"ISOParser.date() parses proper ISO dates"
+		"ISOParser.date() parses proper ISO dates (yyyy-mm-dd)"
 
 		self.assertEquals(
 			(2009, 12, 27),
-			chrono.ISOParser.date("2009-12-27")
+			chrono.parser.ISOParser.date("2009-12-27")
 		)
 
 	def test_nozero(self):
-		"ISOParser.date() parses dates without leading zeroes"
+		"ISOParser.date() parses dates without leading zeroes (2009-7-3)"
 
 		self.assertEquals(
 			(2009, 7, 3),
-			chrono.ISOParser.date("2009-7-3")
+			chrono.parser.ISOParser.date("2009-7-3")
 		)
 
 

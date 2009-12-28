@@ -26,34 +26,43 @@ import re
 
 class ISOParser(parser.Parser):
 	"""
-	An ISO date parser
+	A parser for ISO 8601 date formats
 	"""
 
-	re_date		= re.compile('^\s*(\d{1,4})-(\d{1,2})-(\d{1,2})\s*$')
-	re_date_compact	= re.compile('^\s*(\d{4})(\d{2})(\d{2})\s*$')
+	re_date = re.compile('''
+		^\s*			# ignore whitespace at start
+		(?P<year>\d{1,4})	# year
+		-(?P<month>\d{1,2})	# month
+		-(?P<day>\d{1,2})	# day
+		\s*$			# ignore whitespace at end
+	''', re.VERBOSE)
+
+	re_date_compact = re.compile('''
+		^\s*			# ignore whitespace at start
+		(?P<year>\d{4})		# year
+		(?P<month>\d{2})	# month
+		(?P<day>\d{2})		# day
+		\s*$			# ignore whitespace at end
+	''', re.VERBOSE)
 
 	@classmethod
 	def date(cls, date):
 		"""
-		Parses an ISO date (yyyy-mm-dd or yyyymmdd), returns a tuple
-		with year, month, and day
+		Parses an ISO date (*yyyy-mm-dd* or *yyyymmdd*), and returns a tuple
+		with year, month, and day.
 		"""
 
-		match = cls.re_date.match(date)
+		try:
+			match = cls.int(cls.regexp(cls.re_date, date))
 
-		if not match:
-			match = cls.re_date_compact.match(date)
+		except ValueError:
+			match = cls.int(cls.regexp(cls.re_date_compact, date))
 
-			if not match:
-				raise ValueError("Invalid ISO date '{0}'".format(date))
-
-		year, month, day = (
-			int(match.group(1)),
-			int(match.group(2)),
-			int(match.group(3))
+		calendar.ISOCalendar.validate(
+			match["year"],
+			match["month"],
+			match["day"]
 		)
 
-		calendar.ISOCalendar.validate(year, month, day)
-
-		return (year, month, day)
+		return (match["year"], match["month"], match["day"])
 
