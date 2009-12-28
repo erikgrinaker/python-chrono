@@ -18,9 +18,56 @@
 #
 
 import chrono
-import chrono.parser
 import re
 import unittest
+
+
+class Parser_intTest(unittest.TestCase):
+
+	def test_dict(self):
+		"Parser.int() converts dict members to integer"
+
+		self.assertEquals(
+			chrono.parser.Parser.int({"a": "123", "b": "456", "c": "789"}),
+			{"a": 123, "b": 456, "c": 789}
+		)
+
+	def test_int(self):
+		"Parser.int() converts integer to integer"
+
+		self.assertEquals(chrono.parser.Parser.int(123), 123)
+
+	def test_list(self):
+		"Parser.int() converts list members to integer"
+
+		self.assertEquals(
+			chrono.parser.Parser.int(["123", "456", "789"]),
+			[123, 456, 789]
+		)
+
+	def test_none(self):
+		"Parser.int() raises TypeError for None"
+
+		self.assertRaises(TypeError, chrono.parser.Parser.int, None)
+
+	def test_nonnumeric(self):
+		"Parser.int() raises ValueError for non-numeric string"
+
+		self.assertRaises(ValueError, chrono.parser.Parser.int, "abc")
+
+	def test_string(self):
+		"Parser.int() converts string to integer"
+
+		self.assertEquals(chrono.parser.Parser.int("123"), 123)
+
+	def test_tuple(self):
+		"Parser.int() converts tuple members to integer"
+
+		self.assertEquals(
+			chrono.parser.Parser.int(( "123", "456", "789")),
+			(123, 456, 789)
+		)
+
 
 class Parser_regexpTest(unittest.TestCase):
 
