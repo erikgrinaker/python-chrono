@@ -79,7 +79,7 @@ class ISOCalendar(Calendar):
 
 		cls.validate(year, month, day)
 
-		return datetime.date(year, month, day).isocalendar()[1]
+		return datetime.date(year, month, day).isocalendar()[0:2]
 
 	@classmethod
 	def weekdate(cls, year, month, day):
@@ -171,19 +171,4 @@ class ISOCalendar(Calendar):
 
 		else:
 			return 52
-
-	@classmethod
-	def weekyear(cls, year, month, day):
-		"""
-		Returns the year that "owns" the week containing the date
-		(for dates where the week number might belong to a different year).
-		"""
-
-		year = int(year)
-		month = int(month)
-		day = int(day)
-
-		cls.validate(year, month, day)
-
-		return datetime.date(year, month, day).isocalendar()[0]
 

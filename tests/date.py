@@ -358,9 +358,9 @@ class DateTest(test.TestCase):
 		self.assertEquals(d.day,	27)
 
 	def test_week(self):
-		"Date.week() returns 53 for 2010-01-01"
+		"Date.week() returns 2009-W53 for 2010-01-01"
 
-		self.assertEquals(chrono.Date("2010-01-01").week(), 53)
+		self.assertEquals(chrono.Date("2010-01-01").week(), (2009, 53))
 
 	def test_weekday(self):
 		"Date.weekday() returns 7 for 2009-12-27"
@@ -371,11 +371,6 @@ class DateTest(test.TestCase):
 		"Date.weeks() returns 53 for 2009"
 
 		self.assertEquals(chrono.Date("2009-07-15").weeks(), 53)
-
-	def test_weekyear(self):
-		"Date.weekyear() returns 2009 for 2010-01-01"
-
-		self.assertEquals(chrono.Date("2010-01-01").weekyear(), 2009)
 
 	def test_yeardays(self):
 		"Date.yeardays() returns 366 for 2008"

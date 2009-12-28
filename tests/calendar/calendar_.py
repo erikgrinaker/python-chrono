@@ -444,14 +444,6 @@ class Calendar_weeksTest(unittest.TestCase):
 		self.assertRaises(NotImplementedError, chrono.calendar.Calendar.weeks, 2009)
 
 
-class Calendar_weekyearTest(unittest.TestCase):
-
-	def test_notimplemented(self):
-		"Calendar.weekyear() raises NotImplementedError"
-
-		self.assertRaises(NotImplementedError, chrono.calendar.Calendar.weekyear, 2009, 12, 28)
-
-
 class Calendar_yeardaysTest(unittest.TestCase):
 
 	def test_2007(self):

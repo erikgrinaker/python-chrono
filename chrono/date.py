@@ -250,7 +250,7 @@ class Date(object):
 
 	def week(self):
 		"""
-		Returns the week number of the set date (weeks starting monday)
+		Returns the week of the set date as a tuple with year and week
 		"""
 
 		if self.is_set():
@@ -271,15 +271,6 @@ class Date(object):
 
 		if self.is_set():
 			return self.calendar.weeks(self.year)
-
-	def weekyear(self):
-		"""
-		Returns the year that the current week belongs to (for dates where
-		the week number belongs to a different year)
-		"""
-
-		if self.is_set():
-			return self.calendar.weekyear(self.year, self.month, self.day)
 
 	def yeardays(self):
 		"""

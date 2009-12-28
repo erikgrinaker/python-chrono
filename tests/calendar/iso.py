@@ -124,34 +124,34 @@ class ISOCalendar_validate_weekdateTest(unittest.TestCase):
 class ISOCalendar_weekTest(unittest.TestCase):
 
 	def test_2009_01_01(self):
-		"ISOCalendar.week() returns 1 for 2009-01-01"
+		"ISOCalendar.week() returns 2009-W01 for 2009-01-01"
 
-		self.assertEquals(chrono.calendar.ISOCalendar.week(2009, 1, 1), 1)
+		self.assertEquals(chrono.calendar.ISOCalendar.week(2009, 1, 1), (2009, 1))
 
 	def test_2009_07_15(self):
-		"ISOCalendar.week() returns 29 for 2009-07-15"
+		"ISOCalendar.week() returns 2009-W29 for 2009-07-15"
 
-		self.assertEquals(chrono.calendar.ISOCalendar.week(2009, 7, 15), 29)
+		self.assertEquals(chrono.calendar.ISOCalendar.week(2009, 7, 15), (2009, 29))
 
 	def test_2009_12_31(self):
-		"ISOCalendar.week() returns 53 for 2009-12-31"
+		"ISOCalendar.week() returns 2009-W53 for 2009-12-31"
 
-		self.assertEquals(chrono.calendar.ISOCalendar.week(2009, 12, 31), 53)
+		self.assertEquals(chrono.calendar.ISOCalendar.week(2009, 12, 31), (2009, 53))
 
 	def test_2010_01_01(self):
-		"ISOCalendar.week() returns 53 for 2010-01-01"
+		"ISOCalendar.week() returns 2009-W53 for 2010-01-01"
 
-		self.assertEquals(chrono.calendar.ISOCalendar.week(2010, 1, 1), 53)
+		self.assertEquals(chrono.calendar.ISOCalendar.week(2010, 1, 1), (2009, 53))
 
 	def test_2010_01_04(self):
-		"ISOCalendar.week() returns 1 for 2010-01-04"
+		"ISOCalendar.week() returns 2010-W01 for 2010-01-04"
 
-		self.assertEquals(chrono.calendar.ISOCalendar.week(2010, 1, 4), 1)
+		self.assertEquals(chrono.calendar.ISOCalendar.week(2010, 1, 4), (2010, 1))
 
 	def test_2010_12_31(self):
-		"ISOCalendar.week() returns 52 for 2010-12-31"
+		"ISOCalendar.week() returns 2010-W52 for 2010-12-31"
 
-		self.assertEquals(chrono.calendar.ISOCalendar.week(2010, 12, 31), 52)
+		self.assertEquals(chrono.calendar.ISOCalendar.week(2010, 12, 31), (2010, 52))
 
 	def test_invalid(self):
 		"ISOCalendar.week() raises ValueError on invalid date"
@@ -175,7 +175,7 @@ class ISOCalendar_weekTest(unittest.TestCase):
 	def test_string(self):
 		"ISOCalendar.week() accepts string input"
 
-		self.assertEquals(chrono.calendar.ISOCalendar.week("2009", "7", "15"), 29)
+		self.assertEquals(chrono.calendar.ISOCalendar.week("2009", "7", "15"), (2009, 29))
 
 
 class ISOCalendar_week_to_dateTest(unittest.TestCase):
@@ -467,48 +467,6 @@ class ISOCalendar_weeksTest(unittest.TestCase):
 		"ISOCalendar.weeks() returns 53 for 2009"
 
 		self.assertEquals(chrono.calendar.ISOCalendar.weeks(2009), 53)
-
-
-class ISOCalendar_weekyearTest(unittest.TestCase):
-
-	def test_invalid(self):
-		"ISOCalendar.weekyear() raises ValueError on invalid date"
-
-		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.weekyear, 2009, 2, 29)
-
-	def test_middle(self):
-		"ISOCalendar.weekyear() returns 2009 for 2009-07-15"
-
-		self.assertEquals(chrono.calendar.ISOCalendar.weekyear(2009, 7, 15), 2009)
-
-	def test_next(self):
-		"ISOCalendar.weekyear() returns 2009 for 2008-12-31"
-
-		self.assertEquals(chrono.calendar.ISOCalendar.weekyear(2008, 12, 31), 2009)
-
-	def test_none(self):
-		"ISOCalendar.weekyear() raises TypeError on None input"
-
-		self.assertRaises(TypeError, chrono.calendar.ISOCalendar.weekyear, None, 12, 31)
-		self.assertRaises(TypeError, chrono.calendar.ISOCalendar.weekyear, 2008, None, 31)
-		self.assertRaises(TypeError, chrono.calendar.ISOCalendar.weekyear, 2008, 12, None)
-
-	def test_nonnumeric(self):
-		"ISOCalendar.weekyear() raises ValueError on non-numeric input"
-
-		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.weekyear, "abc", 12, 31)
-		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.weekyear, 2008, "abc", 31)
-		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.weekyear, 2008, 12, "abc")
-
-	def test_previous(self):
-		"ISOCalendar.weekyear() returns 2009 for 2010-01-01"
-
-		self.assertEquals(chrono.calendar.ISOCalendar.weekyear(2010, 1, 1), 2009)
-
-	def test_string(self):
-		"ISOCalendar.weekyear() accepts string input"
-
-		self.assertEquals(chrono.calendar.ISOCalendar.weekyear("2010", "1", "1"), 2009)
 
 
 if __name__ == "__main__":

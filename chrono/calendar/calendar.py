@@ -199,7 +199,7 @@ class Calendar(object):
 	@classmethod
 	def week(cls, year, month, day):
 		"""
-		Returns the week number containing the given date.
+		Returns the week containing the given date as a tuple of year and week.
 
 		.. note:: This is a placeholder method which just raises
 		   :exc:`NotImplementedError`, it is implemented in
@@ -273,21 +273,6 @@ class Calendar(object):
 	def weeks(cls, year):
 		"""
 		Returns the number of weeks in *year*.
-
-		.. note:: This is a placeholder method which just raises
-		   :exc:`NotImplementedError`, it is implemented in
-		   calendar-specific subclasses.
-		"""
-
-		raise NotImplementedError(
-			"This is a calendar-specific method to be handled in subclasses"
-		)
-
-	@classmethod
-	def weekyear(cls, year, month, day):
-		"""
-		Returns the year that "owns" the week containing the date (for
-		dates where the week number might belong to a different year).
 
 		.. note:: This is a placeholder method which just raises
 		   :exc:`NotImplementedError`, it is implemented in
