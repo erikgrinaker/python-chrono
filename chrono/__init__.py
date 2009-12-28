@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+from . import parser
+
 from .calendar import ISOCalendar
 from .date import Date
-from .parser import ISOParser
