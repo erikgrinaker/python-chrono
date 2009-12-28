@@ -45,6 +45,13 @@ class ISOParser(parser.Parser):
 		\s*$			# ignore whitespace at end
 	''', re.VERBOSE)
 
+	re_month = re.compile('''
+		^\s*			# ignore whitespace at start
+		(?P<year>\d{1,4})	# year
+		-(?P<month>\d{1,2})	# month
+		\s*$			# ignore whitespace at end
+	''', re.VERBOSE)
+
 	re_year = re.compile('''
 		^\s*			# ignore whitespace at start
 		(?P<year>\d{1,4})	# year
@@ -85,6 +92,21 @@ class ISOParser(parser.Parser):
 		)
 
 		return (match["year"], match["month"], match["day"])
+
+	@classmethod
+	def month(cls, date):
+		"""
+		Parses an ISO month (*yyyy-mm*), and returns a tuple with year and
+		month. Leading zeroes may be omitted, even though the ISO standard
+		requires them.
+		"""
+
+		match = cls.int(cls.regexp(cls.re_month, date))
+
+		calendar.ISOCalendar.validate_year(match["year"])
+		calendar.ISOCalendar.validate_month(match["month"])
+
+		return (match["year"], match["month"])
 
 	@classmethod
 	def year(cls, date):

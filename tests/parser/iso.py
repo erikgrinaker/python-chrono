@@ -89,6 +89,37 @@ class ISOParser_dateTest(unittest.TestCase):
 		)
 
 
+class ISOParser_monthTest(unittest.TestCase):
+
+	def test_invalid_format(self):
+		"ISOParser.month() raises ValueError on invalid format"
+
+		self.assertRaises(ValueError, chrono.parser.ISOParser.month, "2009-xyz")
+
+	def test_invalid_month(self):
+		"ISOParser.month() raises ValueError on invalid month"
+
+		self.assertRaises(ValueError, chrono.parser.ISOParser.month, "2009-13")
+
+	def test_invalid_year(self):
+		"ISOParser.month() raises ValueError on invalid year"
+
+		self.assertRaises(ValueError, chrono.parser.ISOParser.month, "10000-12")
+
+	def test_none(self):
+		"ISOParser.month() raises TypeError on None"
+
+		self.assertRaises(TypeError, chrono.parser.ISOParser.month, None)
+
+	def test_parse(self):
+		"ISOParser.month() parses proper ISO month dates (yyyy-mm)"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.month("2009-12"),
+			(2009, 12)
+		)
+
+
 class ISOParser_yearTest(unittest.TestCase):
 
 	def test_invalid_year(self):
