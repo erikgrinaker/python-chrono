@@ -150,6 +150,20 @@ class Calendar(object):
 			)
 
 	@classmethod
+	def validate_week(cls, year, week):
+		"""
+		Validates a week: *week* must be in range 1-53, depending on *year*.
+
+		.. note:: This is a placeholder method which just raises
+		   :exc:`NotImplementedError`, it is implemented in
+		   calendar-specific subclasses.
+		"""
+
+		raise NotImplementedError(
+			"This is a calendar-specific method to be handled in subclasses"
+		)
+
+	@classmethod
 	def validate_year(cls, year):
 		"""
 		Validates *year*: must be in 1-9999 range.

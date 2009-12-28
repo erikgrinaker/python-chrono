@@ -299,6 +299,14 @@ class Calendar_validate_ordinalTest(unittest.TestCase):
 		chrono.calendar.Calendar.validate_ordinal("2009", "202")
 
 
+class Calendar_validate_weekTest(unittest.TestCase):
+
+	def test_notimplemented(self):
+		"Calendar.validate_week() raises NotImplementedError"
+
+		self.assertRaises(NotImplementedError, chrono.calendar.Calendar.validate_week, 2009, 32)
+
+
 class Calendar_validate_yearTest(unittest.TestCase):
 
 	def test_0(self):
