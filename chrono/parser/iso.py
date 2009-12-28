@@ -27,21 +27,24 @@ import re
 class ISOParser(parser.Parser):
 	"""
 	A parser for ISO 8601 date formats
+
+	All methods raise :exc:`TypeError` on invalid input types,
+	and :exc:`ValueError` on invalid input formats (ie, parse failure).
 	"""
+
+	re_compactdate = re.compile('''
+		^\s*			# ignore whitespace at start
+		(?P<year>\d{4})		# year
+		(?P<month>\d{2})	# month
+		(?P<day>\d{2})		# day
+		\s*$			# ignore whitespace at end
+	''', re.VERBOSE)
 
 	re_date = re.compile('''
 		^\s*			# ignore whitespace at start
 		(?P<year>\d{1,4})	# year
 		-(?P<month>\d{1,2})	# month
 		-(?P<day>\d{1,2})	# day
-		\s*$			# ignore whitespace at end
-	''', re.VERBOSE)
-
-	re_date_compact = re.compile('''
-		^\s*			# ignore whitespace at start
-		(?P<year>\d{4})		# year
-		(?P<month>\d{2})	# month
-		(?P<day>\d{2})		# day
 		\s*$			# ignore whitespace at end
 	''', re.VERBOSE)
 
@@ -76,10 +79,10 @@ class ISOParser(parser.Parser):
 	def compactdate(cls, date):
 		"""
 		Parses a compact ISO date(*yyyymmdd*), and returns a tuple with
-		year, month, and day. Raises :exc:`ValueError` if *date* is invalid.
+		year, month, and day.
 		"""
 
-		match = cls.int(cls.regexp(cls.re_date_compact, date))
+		match = cls.int(cls.regexp(cls.re_compactdate, date))
 
 		calendar.ISOCalendar.validate(
 			match["year"],
