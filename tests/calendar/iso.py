@@ -178,6 +178,74 @@ class ISOCalendar_weekTest(unittest.TestCase):
 		self.assertEquals(chrono.calendar.ISOCalendar.week("2009", "7", "15"), 29)
 
 
+class ISOCalendar_week_to_dateTest(unittest.TestCase):
+
+	def test_2007_W01(self):
+		"ISOCalendar.week_to_date() returns 2007-01-01 for 2007-W01"
+
+		self.assertEquals(
+			chrono.calendar.ISOCalendar.week_to_date(2007, 1),
+			(2007, 1, 1)
+		)
+
+	def test_2009_W01(self):
+		"ISOCalendar.week_to_date() returns 2008-12-29 for 2009-W01"
+
+		self.assertEquals(
+			chrono.calendar.ISOCalendar.week_to_date(2009, 1),
+			(2008, 12, 29)
+		)
+
+	def test_2009_W32(self):
+		"ISOCalendar.week_to_date() returns 2009-08-03 for 2009-W32"
+
+		self.assertEquals(
+			chrono.calendar.ISOCalendar.week_to_date(2009, 32),
+			(2009, 8, 3)
+		)
+
+	def test_invalid(self):
+		"ISOCalendar.week_to_date() raises ValueError for invalid week dates"
+
+		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.week_to_date, 2008, 53)
+
+	def test_last(self):
+		"ISOCalendar.week_to_date() returns 2009-12-28 for 2009-W53"
+
+		self.assertEquals(
+			chrono.calendar.ISOCalendar.week_to_date(2009, 53),
+			(2009, 12, 28)
+		)
+
+	def test_leap(self):
+		"ISOCalendar.week_to_date() returns 2008-07-14 for 2008-W29"
+
+		self.assertEquals(
+			chrono.calendar.ISOCalendar.week_to_date(2008, 29),
+			(2008, 7, 14)
+		)
+
+	def test_none(self):
+		"ISOCalendar.week_to_date() raises TypeError for None"
+
+		self.assertRaises(TypeError, chrono.calendar.ISOCalendar.week_to_date, None, 29)
+		self.assertRaises(TypeError, chrono.calendar.ISOCalendar.week_to_date, 2009, None)
+
+	def test_nonnumeric(self):
+		"ISOCalendar.week_to_date() raises ValueError for non-numeric values"
+
+		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.week_to_date, "abc", 29)
+		self.assertRaises(ValueError, chrono.calendar.ISOCalendar.week_to_date, 2009, "abc")
+
+	def test_string(self):
+		"ISOCalendar.week_to_date() accepts string inputs"
+
+		self.assertEquals(
+			chrono.calendar.ISOCalendar.week_to_date("2009", "32"),
+			(2009, 8, 3)
+		)
+
+
 class ISOCalendar_weekdayTest(unittest.TestCase):
 
 	def test_invalid(self):
