@@ -15,6 +15,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from . import calendar
-from . import parser
-from .date import Date
+"""
+This module contains various classes that provide calendar-related functionality,
+related to issues like week numbers, leap years, validation, etc.
+
+:class:`chrono.calendar.Calendar` is a base class which implements methods
+common to all gregorian-based calendars, while calendar-specific methods will
+raise :exc:`NotImplementedError`, and be implemented in subclasses.
+"""
+
+from __future__ import absolute_import
+
+from .calendar import Calendar
+from .iso import ISOCalendar

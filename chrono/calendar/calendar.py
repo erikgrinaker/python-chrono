@@ -27,7 +27,7 @@ class Calendar(object):
 	Base calendar class, with common calendar functionality
 
 	Calendar-specific (ie ISO, gregorian etc) methods will raise
-	NotImplementedError if called directly in this base class
+	NotImplementedError if called directly from this base class
 	"""
 
 	@classmethod
@@ -178,55 +178,4 @@ class Calendar(object):
 		"""
 
 		return cls.leap(year) and 366 or 365
-
-
-class ISOCalendar(Calendar):
-	"""
-	An ISO calendar, as specified in ISO 8601
-
-	Characteristics of the ISO calendar, in relation to the Gregorian:
-
-	* Weeks start on Monday
-	* The first week of a year is the week containing the first Thursday
-	"""
-
-	@classmethod
-	def week(cls, year, month, day):
-		"""
-		Returns the week number containing the given date
-		"""
-
-		return datetime.date(year, month, day).isocalendar()[1]
-
-	@classmethod
-	def weekday(cls, year, month, day):
-		"""
-		Returns the week day of the date (1 = Monday, 7 = Sunday)
-		"""
-
-		return calendar.weekday(year, month, day) + 1
-
-	@classmethod
-	def weeks(cls, year):
-		"""
-		Returns the number of weeks in *year*
-		"""
-
-		if cls.leap(year) and cls.weekday(year, 1, 1) == 3:
-			return 53
-
-		elif not cls.leap(year) and cls.weekday(year, 1, 1) == 4:
-			return 53
-
-		else:
-			return 52
-
-	@classmethod
-	def weekyear(cls, year, month, day):
-		"""
-		Returns the year that "owns" the week containing the date
-		(for dates where the week number might belong to a different year)
-		"""
-
-		return datetime.date(year, month, day).isocalendar()[0]
 
