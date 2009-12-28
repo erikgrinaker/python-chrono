@@ -286,6 +286,16 @@ class DateTest(test.TestCase):
 
 		self.assertEquals(chrono.Date("2008-02-01").monthdays(), 29)
 
+	def test_set_datetime(self):
+		"Date.set_datetime() sets date from datetime.date object"
+
+		d = chrono.Date()
+		d.set_datetime(datetime.date(2009, 12, 27))
+
+		self.assertEquals(d.year,	2009)
+		self.assertEquals(d.month,	12)
+		self.assertEquals(d.day,	27)
+
 	def test_set_iso(self):
 		"Date.set_iso() sets date from ISO date"
 

@@ -76,10 +76,13 @@ class Date(object):
 			self.month = kwargs["month"]
 			self.day = kwargs["day"]
 
-		elif isinstance(date, Date) or isinstance(date, datetime.date):
+		elif isinstance(date, Date):
 			self.year = date.year
 			self.month = date.month
 			self.day = date.day
+
+		elif isinstance(date, datetime.date):
+			self.set_datetime(date)
 
 		elif date is True:
 			self.set_now()
@@ -184,6 +187,15 @@ class Date(object):
 
 		if self.is_set():
 			return self.calendar.monthdays(self.year, self.month)
+
+	def set_datetime(self, datetime):
+		"""
+		Sets the date from a datetime.date object
+		"""
+
+		self.year = datetime.year
+		self.month = datetime.month
+		self.day = datetime.day
 
 	def set_iso(self, date):
 		"""
