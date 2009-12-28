@@ -83,6 +83,24 @@ class Calendar(object):
 		return ordinal
 
 	@classmethod
+	def ordinal_to_date(cls, year, day):
+		"""
+		Returns a tuple of year, month, and day for the given ordinal date.
+		"""
+
+		year = int(year)
+		day = int(day)
+
+		cls.validate_ordinal(year, day)
+
+		dt = datetime.date(year = year, month = 1, day = 1)
+
+		if day > 1:
+			dt += datetime.timedelta(days = day - 1)
+
+		return (dt.year, dt.month, dt.day)
+
+	@classmethod
 	def validate(cls, year, month, day):
 		"""
 		Validates a date: *year* must be in 1-9999 range, *month* in

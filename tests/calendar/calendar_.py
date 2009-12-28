@@ -142,6 +142,58 @@ class Calendar_ordinalTest(unittest.TestCase):
 		self.assertRaises(ValueError, chrono.calendar.Calendar.ordinal, 2009, 7, "abc")
 
 
+class Calendar_ordinal_to_dateTest(unittest.TestCase):
+
+	def test_2009_202(self):
+		"Calendar.ordinal_to_date() returns 2009-07-16 for 2009-202"
+
+		self.assertEquals(
+			chrono.calendar.Calendar.ordinal_to_date(2009, 202),
+			(2009, 7, 21)
+		)
+
+	def test_invalid(self):
+		"Calendar.ordinal_to_date() raises ValueError for invalid dates"
+
+		self.assertRaises(ValueError, chrono.calendar.Calendar.ordinal_to_date, 2009, 366)
+
+	def test_last(self):
+		"Calendar.ordinal_to_date() returns 2009-12-31 for 2009-365"
+
+		self.assertEquals(
+			chrono.calendar.Calendar.ordinal_to_date(2009, 365),
+			(2009, 12, 31)
+		)
+
+	def test_leap(self):
+		"Calendar.ordinal_to_date() returns 2008-12-31 for 2008-366"
+
+		self.assertEquals(
+			chrono.calendar.Calendar.ordinal_to_date(2008, 366),
+			(2008, 12, 31)
+		)
+
+	def test_none(self):
+		"Calendar.ordinal_to_date() raises TypeError for None"
+
+		self.assertRaises(TypeError, chrono.calendar.Calendar.ordinal_to_date, None, 202)
+		self.assertRaises(TypeError, chrono.calendar.Calendar.ordinal_to_date, 2009, None)
+
+	def test_nonnumeric(self):
+		"Calendar.ordinal_to_date() raises ValueError for non-numeric values"
+
+		self.assertRaises(ValueError, chrono.calendar.Calendar.ordinal_to_date, "abc", 202)
+		self.assertRaises(ValueError, chrono.calendar.Calendar.ordinal_to_date, 2009, "abc")
+
+	def test_string(self):
+		"Calendar.ordinal_to_date() accepts string inputs"
+
+		self.assertEquals(
+			chrono.calendar.Calendar.ordinal_to_date("2009", "202"),
+			(2009, 7, 21)
+		)
+
+
 class Calendar_validateTest(unittest.TestCase):
 
 	def test_2008_02_29(self):
