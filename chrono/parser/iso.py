@@ -45,6 +45,12 @@ class ISOParser(parser.Parser):
 		\s*$			# ignore whitespace at end
 	''', re.VERBOSE)
 
+	re_year = re.compile('''
+		^\s*			# ignore whitespace at start
+		(?P<year>\d{1,4})	# year
+		\s*$			# ignore whitespace at end
+	''', re.VERBOSE)
+
 	@classmethod
 	def compactdate(cls, date):
 		"""
@@ -79,4 +85,17 @@ class ISOParser(parser.Parser):
 		)
 
 		return (match["year"], match["month"], match["day"])
+
+	@classmethod
+	def year(cls, date):
+		"""
+		Parses an ISO year (*yyyy*), and returns it. Leading zeroes may be
+		omitted, even though the ISO standard requires them.
+		"""
+
+		match = cls.int(cls.regexp(cls.re_year, date))
+
+		calendar.ISOCalendar.validate_year(match["year"])
+
+		return match["year"]
 

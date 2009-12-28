@@ -89,5 +89,28 @@ class ISOParser_dateTest(unittest.TestCase):
 		)
 
 
+class ISOParser_yearTest(unittest.TestCase):
+
+	def test_invalid_year(self):
+		"ISOParser.year() raises ValueError on invalid year"
+
+		self.assertRaises(ValueError, chrono.parser.ISOParser.year, "10000")
+
+	def test_invalid_format(self):
+		"ISOParser.year() raises ValueError on invalid format"
+
+		self.assertRaises(ValueError, chrono.parser.ISOParser.year, "abc")
+
+	def test_none(self):
+		"ISOParser.year() raises TypeError on None"
+
+		self.assertRaises(TypeError, chrono.parser.ISOParser.year, None)
+
+	def test_parse(self):
+		"ISOParser.year() parses proper ISO compact dates (yyyymmdd)"
+
+		self.assertEquals(chrono.parser.ISOParser.year("2009"), 2009)
+
+
 if __name__ == "__main__":
 	unittest.main()
