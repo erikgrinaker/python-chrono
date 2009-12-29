@@ -43,8 +43,7 @@ class Date(object):
 
 		Date(year = 2000, month = 10, day = 16)
 
-	When initializing using keywords, all keywords must be specified.
-	If both *date* and keywords are specified, keywords take precedence.
+	If both *date* and keywords are specified, *date* takes precedence.
 
 	All methods will generally raise :exc:`TypeError` on invalid types for date
 	input, and :exc:`ValueError` on invalid dates (such out-of-range values,
@@ -88,13 +87,7 @@ class Date(object):
 
 	def __init__(self, date = None, **kwargs):
 
-		if "year" in kwargs and "month" in kwargs and "day" in kwargs:
-			self.set(kwargs["year"], kwargs["month"], kwargs["day"])
-
-		elif date is None:
-			pass
-
-		elif isinstance(date, str):
+		if isinstance(date, str):
 			self.set_string(date)
 
 		elif date is True:
@@ -112,7 +105,23 @@ class Date(object):
 		elif isinstance(date, time.struct_time):
 			self.set_struct_time(date)
 
+		elif not date and ("year" in kwargs or "month" in kwargs or "day" in kwargs):
+			y = kwargs.get("year")
+			m = kwargs.get("month")
+			d = kwargs.get("day")
+
+			if y and m and d:
+				self.set(y, m, d)
+
+			else:
+				self.year = y
+				self.month = m
+				self.day = d
+
 		elif date is False:
+			pass
+
+		elif date is None:
 			pass
 
 		else:
@@ -120,11 +129,18 @@ class Date(object):
 
 	def __repr__(self):
 
-		if self.is_set():
-			return "chrono.Date(year = {0}, month = {1}, day = {2})".format(*self.get())
+		args = []
 
-		else:
-			return "chrono.Date()"
+		if self.year:
+			args.append("year = {0}".format(self.year))
+
+		if self.month:
+			args.append("month = {0}".format(self.month))
+
+		if self.day:
+			args.append("day = {0}".format(self.day))
+
+		return "chrono.Date({0})".format(", ".join(args))
 
 	def __str__(self):
 

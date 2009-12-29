@@ -108,20 +108,21 @@ class Date__initTest(unittest.TestCase):
 		)
 
 	def test_kwargs_date(self):
-		"Date.__init__() uses kwargs over date"
+		"Date.__init__() uses date over kwargs"
 
 		self.assertEquals(
-			chrono.Date(1261892718, year = 2009, month = 12, day = 26).get(),
-			(2009, 12, 26)
-		)
-
-	def test_kwargs_date_partial(self):
-		"Date.__init__() uses date if kwargs is partial"
-
-		self.assertEquals(
-			chrono.Date(1261892718, year = 2005, month = 8).get(),
+			chrono.Date("2009-12-27", year = 2009, month = 12, day = 26).get(),
 			(2009, 12, 27)
 		)
+
+	def test_kwargs_partial(self):
+		"Date.__init__() accepts partial kwargs"
+
+		d = chrono.Date(year = 2009, day = 20)
+
+		self.assertEquals(d.year, 2009)
+		self.assertEquals(d.month, None)
+		self.assertEquals(d.day, 20)
 
 	def test_none(self):
 		"Date.__init__() with none sets up empty date"
@@ -163,6 +164,14 @@ class Date__reprTest(unittest.TestCase):
 		"Date.__repr__() handles empty dates"
 
 		self.assertEquals(repr(chrono.Date()), "chrono.Date()")
+
+	def test_partial(self):
+		"Date.__repr__() handles partial dates"
+
+		self.assertEquals(
+			repr(chrono.Date(year = 2009, day = 27)),
+			"chrono.Date(year = 2009, day = 27)"
+		)
 
 	def test_repr(self):
 		"Date.__repr__() shows code to recreate object"
