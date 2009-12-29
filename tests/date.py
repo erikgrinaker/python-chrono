@@ -182,6 +182,41 @@ class Date__reprTest(unittest.TestCase):
 		)
 
 
+class Date__setattrTest(unittest.TestCase):
+
+	def test_day_overflow(self):
+		"Date.__setattr__() handles month rollover for day overflow"
+
+		d = chrono.Date("2009-07-15")
+		d.day += 20
+
+		self.assertEquals(d.get(), (2009, 8, 4))
+
+	def test_day_overflow_doublemonth(self):
+		"Date.__setattr__() handles double month rollover for day overflow"
+
+		d = chrono.Date("2009-07-15")
+		d.day += 50
+
+		self.assertEquals(d.get(), (2009, 9, 3))
+
+	def test_day_overflow_year(self):
+		"Date.__setattr__() handles year rollover for day overflow"
+
+		d = chrono.Date("2009-11-15")
+		d.day += 90
+
+		self.assertEquals(d.get(), (2010, 2, 13))
+
+	def test_month_overflow(self):
+		"Date.__setattr__() handles year rollover for month overflow"
+
+		d = chrono.Date("2009-08-10")
+		d.month += 8
+
+		self.assertEquals(d.get(), (2010, 4, 10))
+
+
 class Date__strTest(unittest.TestCase):
 
 	def test_empty(self):

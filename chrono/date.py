@@ -142,6 +142,64 @@ class Date(object):
 
 		return "chrono.Date({0})".format(", ".join(args))
 
+	def __setattr__(self, name, value):
+
+		# set None values directly
+		if value is None:
+			object.__setattr__(self, name, value)
+
+		# normalize year
+		elif name == "year":
+
+			# validate year
+			if not 1 <= int(value) <= 9999:
+				raise ValueError("year must be in range 1-9999")
+
+			# just set the year directly if it's valid
+			object.__setattr__(self, name, value)
+
+			# re-set month attribute, to trigger re-calculation
+			# of month and day (is case of leap years etc)
+			self.month = self.month
+
+		# normalize month
+		elif name == "month":
+
+			# handle month rollover
+			y = self.year or 0
+
+			while value > 12:
+				y += 1
+				value -= 12
+
+			# set year, but only if already set
+			object.__setattr__(self, "year", self.year and y or self.year)
+
+			# update month attribute
+			object.__setattr__(self, "month", value)
+
+			# re-set day to itself, to trigger day re-calculation
+			# (in case of leap months etc)
+			self.day = self.day
+
+		# normalize day
+		elif name == "day":
+
+			# use current attribute values for calculations, or fall back to
+			# sensible defaults if not set
+			dt = datetime.date(self.year or 1900, self.month or 1, 1)
+			dt += datetime.timedelta(value - 1)
+
+			# set attributes, but only if they are already set
+			object.__setattr__(self, "year", self.year and dt.year or self.year)
+			object.__setattr__(self, "month", self.month and dt.month or self.month)
+			object.__setattr__(self, "day", dt.day)
+
+		# set other attributes directly
+		else:
+			object.__setattr__(self, name, value)
+
+
 	def __str__(self):
 
 		return self.get_iso() or ""
