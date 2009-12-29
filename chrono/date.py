@@ -172,6 +172,10 @@ class Date(object):
 				y += 1
 				value -= 12
 
+			while value < 1:
+				y -= 1
+				value += 12
+
 			# set year, but only if already set
 			object.__setattr__(self, "year", self.year and y or self.year)
 

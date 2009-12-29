@@ -184,6 +184,38 @@ class Date__reprTest(unittest.TestCase):
 
 class Date__setattrTest(unittest.TestCase):
 
+	def test_day_negative(self):
+		"Date.__setattr__() handles month rollunder for negative days"
+
+		d = chrono.Date("2009-07-15")
+		d.day -= 20
+
+		self.assertEquals(d.get(), (2009, 6, 25))
+
+	def test_day_negative_doublemonth(self):
+		"Date.__setattr__() handles double month rollunder for negative days"
+
+		d = chrono.Date("2009-07-15")
+		d.day -= 50
+
+		self.assertEquals(d.get(), (2009, 5, 26))
+
+	def test_day_negative_leap(self):
+		"Date.__setattr__() handles leap years for negative days"
+
+		d = chrono.Date("2008-03-01")
+		d.day -= 2
+
+		self.assertEquals(d.get(), (2008, 2, 28))
+
+	def test_day_negative_year(self):
+		"Date.__setattr__() handles year rollunder for negative days"
+
+		d = chrono.Date("2009-02-03")
+		d.day -= 90
+
+		self.assertEquals(d.get(), (2008, 11, 5))
+
 	def test_day_overflow(self):
 		"Date.__setattr__() handles month rollover for day overflow"
 
@@ -200,6 +232,14 @@ class Date__setattrTest(unittest.TestCase):
 
 		self.assertEquals(d.get(), (2009, 9, 3))
 
+	def test_day_overflow_leap(self):
+		"Date.__setattr__() handles leap years for day overflow"
+
+		d = chrono.Date("2008-02-28")
+		d.day += 2
+
+		self.assertEquals(d.get(), (2008, 3, 1))
+
 	def test_day_overflow_year(self):
 		"Date.__setattr__() handles year rollover for day overflow"
 
@@ -208,13 +248,108 @@ class Date__setattrTest(unittest.TestCase):
 
 		self.assertEquals(d.get(), (2010, 2, 13))
 
+	def test_day_zero(self):
+		"Date.__setattr__() handles rollunder for zero-days"
+
+		d = chrono.Date("2008-06-01")
+		d.day = 0
+
+		self.assertEquals(d.get(), (2008, 5, 31))
+
+	def test_day_zero_leap(self):
+		"Date.__setattr__() handles leap years for zero-days"
+
+		d = chrono.Date("2008-03-01")
+		d.day = 0
+
+		self.assertEquals(d.get(), (2008, 2, 29))
+
+	def test_day_zero_year(self):
+		"Date.__setattr__() handles year rollunder for zero-days"
+
+		d = chrono.Date("2009-01-20")
+		d.day = 0
+
+		self.assertEquals(d.get(), (2008, 12, 31))
+
+	def test_month_dayoverflow(self):
+		"Date.__setattr__() handles days outside new month range"
+
+		d = chrono.Date("2009-07-31")
+		d.month -= 1
+
+		self.assertEquals(d.get(), (2009, 7, 1))
+
+	def test_month_negative(self):
+		"Date.__setattr__() handles year rollunder for negative months"
+
+		d = chrono.Date("2009-04-15")
+		d.month -= 6
+
+		self.assertEquals(d.get(), (2008, 10, 15))
+
+	def test_month_negative_doublemonth(self):
+		"Date.__setattr__() handles double year rollunder for negative months"
+
+		d = chrono.Date("2009-07-15")
+		d.month -= 30
+
+		self.assertEquals(d.get(), (2007, 1, 15))
+
+	def test_month_negative_leap(self):
+		"Date.__setattr__() handles leap years for negative months"
+
+		d = chrono.Date("2008-02-29")
+		d.month -= 12
+
+		self.assertEquals(d.get(), (2007, 3, 1))
+
 	def test_month_overflow(self):
 		"Date.__setattr__() handles year rollover for month overflow"
 
-		d = chrono.Date("2009-08-10")
-		d.month += 8
+		d = chrono.Date("2009-07-15")
+		d.month += 10
 
-		self.assertEquals(d.get(), (2010, 4, 10))
+		self.assertEquals(d.get(), (2010, 5, 15))
+
+	def test_month_overflow_doubleyear(self):
+		"Date.__setattr__() handles double year rollover for month overflow"
+
+		d = chrono.Date("2009-03-15")
+		d.month += 30
+
+		self.assertEquals(d.get(), (2011, 9, 15))
+
+	def test_month_overflow_leap(self):
+		"Date.__setattr__() handles leap years for month overflow"
+
+		d = chrono.Date("2008-02-29")
+		d.month += 12
+
+		self.assertEquals(d.get(), (2009, 3, 1))
+
+	def test_month_zero(self):
+		"Date.__setattr__() handles rollunder for zero-months"
+
+		d = chrono.Date("2008-06-21")
+		d.month = 0
+
+		self.assertEquals(d.get(), (2007, 12, 21))
+
+	def test_year_invalid(self):
+		"Date.__setattr__() raises ValueError on year outside range (1-9999)"
+
+		d = chrono.Date("2008-12-27")
+
+		self.assertRaises(ValueError, setattr, d, "year", 10000)
+
+	def test_year_leap(self):
+		"Date.__setattr__() handles leap years when changing year"
+
+		d = chrono.Date("2008-02-29")
+		d.year = 2009
+
+		self.assertEquals(d.get(), (2009, 3, 1))
 
 
 class Date__strTest(unittest.TestCase):
