@@ -16,20 +16,27 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import datetime
-import time
+from __future__ import absolute_import
+
 from . import calendar
 from . import parser
+
+import datetime
+import time
 
 
 class Date(object):
 	"""
-	Represents a date
-	
 	Valid values for *date* can be:
 
-	* **None**: creates a date with empty attributes
+	* string: parses string using :attr:`chrono.Date.parser`, by default set to :class:`chrono.parser.ISOParser`
 	* **True**: sets the date to the current date
+	* integer: assumes input is a UNIX timestamp, sets date accordingly
+	* :class:`chrono.Date`: sets date from another Date object
+	* :class:`datetime.date`: sets date from a :class:`datetime.date` object
+	* :class:`time.struct_time`: sets date from a :class:`time.struct_time` object
+	* **None**: creates a date with empty attributes
+	* **False**: creates a date with empty attributes
 
 	The class can also be initialized using the keyword arguments
 	*year*, *month*, and *day*, like this::
@@ -38,54 +45,57 @@ class Date(object):
 
 	When initializing using keywords, all keywords must be specified.
 	If both *date* and keywords are specified, keywords take precedence.
+
+	All methods will generally raise :exc:`TypeError` on invalid types for date
+	input, and :exc:`ValueError` on invalid dates (such out-of-range values,
+	or values which cannot be parsed to a proper value)
 	"""
 
 	calendar = calendar.ISOCalendar()
 	"""
-	Calendar to be used for calendar-related operations (a class instance
-	from the calendar subpackage)
+	Calendar to be used for calendar-related operations. Should be a
+	subclass of :class:`chrono.calendar.Calendar`.
+	"""
+
+	parser = parser.ISOParser()
+	"""
+	Parser to be used for parsing strings to dates in :meth:`set_string`.
+	Should be a subclass of :class:`chrono.parser.Parser`.
 	"""
 
 	day = None
-	"Day number, 1 - 31 depending on month"
+	"Day number, range 1-31 depending on :attr:`month` and :attr:`year`"
 
 	month = None
-	"Month number, 1 - 12"
+	"Month number, range 1-12"
 
 	year = None
-	"Year number, 0000 - 9999"
+	"Year number, range 0001-9999"
 
 	def __cmp__(self, other):
 
-		if isinstance(other, Date):
-			return cmp(self.get_iso(), other.get_iso())
+		if not isinstance(other, Date):
+			other = Date(other)
 
-		elif isinstance(other, str):
-			return cmp(self.get_iso(), other)
+		if self.year != other.year:
+			return cmp(self.year, other.year)
 
-		elif other is None:
-			return cmp(self.get_iso(), other)
+		elif self.month != other.month:
+			return cmp(self.month, other.month)
 
 		else:
-			raise TypeError("Invalid type '{0}' for comparison".format(type(other)))
+			return cmp(self.day, other.day)
 
 	def __init__(self, date = None, **kwargs):
 
 		if "year" in kwargs and "month" in kwargs and "day" in kwargs:
-			self.year = kwargs["year"]
-			self.month = kwargs["month"]
-			self.day = kwargs["day"]
+			self.set(kwargs["year"], kwargs["month"], kwargs["day"])
 
-		elif isinstance(date, Date):
-			self.year = date.year
-			self.month = date.month
-			self.day = date.day
+		elif date is None:
+			pass
 
-		elif isinstance(date, datetime.date):
-			self.set_datetime(date)
-
-		elif isinstance(date, time.struct_time):
-			self.set_struct_time(date)
+		elif isinstance(date, str):
+			self.set_string(date)
 
 		elif date is True:
 			self.set_now()
@@ -93,13 +103,25 @@ class Date(object):
 		elif isinstance(date, int):
 			self.set_unix(date)
 
-		elif isinstance(date, str):
-			self.set_iso(date)
+		elif isinstance(date, Date):
+			self.set(date.year, date.month, date.day)
+
+		elif isinstance(date, datetime.date):
+			self.set_datetime(date)
+
+		elif isinstance(date, time.struct_time):
+			self.set_struct_time(date)
+
+		elif date is False:
+			pass
+
+		else:
+			raise TypeError("Invalid type for Date parameter")
 
 	def __repr__(self):
 
 		if self.is_set():
-			return "chrono.Date('{0}')".format(self.get_iso())
+			return "chrono.Date(year = {0}, month = {1}, day = {2})".format(*self.get())
 
 		else:
 			return "chrono.Date()"
@@ -108,18 +130,38 @@ class Date(object):
 
 		return self.get_iso() or ""
 
+	def clear(self):
+		"""
+		Clears the date, by setting :attr:`year`, :attr:`month` and
+		:attr:`day` to **None**.
+		"""
+
+		self.year	= None
+		self.month	= None
+		self.day	= None
+
 	def format(self, format):
 		"""
-		Formats the date, according to formatting rules for :func:`time.strftime`
+		Formats the date using the template *format*, according to the
+		formatting rules for :func:`time.strftime`.
 		"""
 
 		if self.is_set():
 			return self.get_datetime().strftime(format)
 
+	def get(self):
+		"""
+		Returns the date as a tuple of year, month, and day, or **None**
+		if no date is set.
+		"""
+
+		if self.is_set():
+			return (self.year, self.month, self.day)
+
 	def get_datetime(self):
 		"""
 		Returns a datetime.date instance based on the current date, or **None**
-		if date isn't set
+		if date isn't set.
 		"""
 
 		if self.is_set():
@@ -127,32 +169,33 @@ class Date(object):
 
 	def get_iso(self):
 		"""
-		Returns a ISO date (yyyy-mm-dd) representation of the date, or None
-		if date isn't set
+		Returns a ISO date (*yyyy-mm-dd*) representation of the date, or None
+		if date isn't set.
 		"""
 
 		return self.format("%Y-%m-%d")
 
 	def get_iso_month(self):
 		"""
-		Returns a ISO month (yyyy-mm) representation of the date, or None
-		if date isn't set
+		Returns a ISO month (*yyyy-mm*) representation of the date, or None
+		if date isn't set.
 		"""
 
 		return self.format("%Y-%m")
 
 	def get_iso_year(self):
 		"""
-		Returns a ISO year (yyyy) representation of the date, or None
-		if date isn't set
+		Returns a ISO year (*yyyy*) representation of the date, or None
+		if date isn't set.
 		"""
 
 		return self.format("%Y")
 
 	def get_struct_time(self):
 		"""
-		Returns a struct_time representation of the date (expected as input
-		to many Python functions), or None if date isn't set
+		Returns a :class:`time.struct_time` representation of the date
+		(expected as input to many Python functions), or **None** if date
+		isn't set.
 		"""
 
 		if self.is_set():
@@ -160,8 +203,8 @@ class Date(object):
 
 	def get_unix(self):
 		"""
-		Returns a UNIX timestamp representation of the date, or None if not
-		set
+		Returns a UNIX timestamp  representation of the date, or **None**
+		if not set.
 		"""
 
 		if self.is_set():
@@ -169,23 +212,23 @@ class Date(object):
 
 	def is_set(self):
 		"""
-		Checks if a date is set, ie if the attributes *year*, *month*,
-		and *day* are not None
+		Returns **True** if a date is set, ie if the attributes :attr:`year`,
+		:attr:`month`, and :attr:`day` are not **None**.
 		"""
 
 		return self.year != None and self.month != None and self.day != None
 
 	def leapyear(self):
 		"""
-		Returns True if the date is in a leap year
+		Returns **True** if the date is in a leap year.
 		"""
 
-		if self.is_set():
-			return self.calendar.leapyear(self.year)
+		return self.is_set() and self.calendar.leapyear(self.year) or False
 
 	def monthdays(self):
 		"""
-		Returns the number of days in the set month
+		Returns the number of days in the set month, or **None** if no
+		date is set.
 		"""
 
 		if self.is_set():
@@ -193,29 +236,46 @@ class Date(object):
 
 	def ordinal(self):
 		"""
-		Returns the ordinal day (day number in the year) of the set date
+		Returns the ordinal day (day number in the year) of the set date,
+		or **None** if no date is set.
 		"""
 
 		if self.is_set():
 			return self.calendar.ordinal(self.year, self.month, self.day)
 
-	def set_datetime(self, datetime):
+	def set(self, year, month, day):
 		"""
-		Sets the date from a datetime.date object
+		Sets the date.
 		"""
 
-		self.year = datetime.year
-		self.month = datetime.month
-		self.day = datetime.day
+		year = int(year)
+		month = int(month)
+		day = int(day)
+
+		self.calendar.validate(year, month, day)
+
+		self.clear()
+
+		self.year = year
+		self.month = month
+		self.day = day
+
+	def set_datetime(self, datetime):
+		"""
+		Sets the date from a :class:`datetime.date` object.
+		"""
+
+		self.set(datetime.year, datetime.month, datetime.day)
 
 	def set_iso(self, date):
 		"""
-		Sets the date from an ISO date string (yyyy-mm-dd)
-
-		Raises :exc: ValueError on invalid value
+		Sets the date from an ISO date string. See :class:`chrono.parser.ISOParser`
+		for valid formats.
 		"""
 
-		self.year, self.month, self.day = parser.ISOParser.date(date)
+		y, m, d = parser.ISOParser.parse_date(date)
+
+		self.set(y, m, d)
 
 	def set_now(self):
 		"""
@@ -224,41 +284,60 @@ class Date(object):
 
 		d = datetime.date.today()
 
-		self.year = d.year
-		self.month = d.month
-		self.day = d.day
+		self.set(d.year, d.month, d.day)
+
+	def set_string(self, string):
+		"""
+		Sets the date from a string parsed with Date.parser
+		"""
+
+		y, m, d = self.parser.parse_date(string)
+
+		self.set(y, m, d)
 
 	def set_struct_time(self, struct_time):
 		"""
-		Sets the date from a struct_time (as returned by various Python functions)
+		Sets the date from a :class:`time.struct_time` (as returned by
+		various Python functions)
 		"""
 
-		self.year = struct_time.tm_year
-		self.month = struct_time.tm_mon
-		self.day = struct_time.tm_mday
+		self.set(
+			struct_time.tm_year,
+			struct_time.tm_mon,
+			struct_time.tm_mday
+		)
 
 	def set_unix(self, timestamp):
 		"""
-		Sets the date from an integer UNIX timestamp
+		Sets the date from an integer UNIX timestamp.
 		"""
 
-		dt = datetime.date.fromtimestamp(timestamp)
+		dt = datetime.date.fromtimestamp(int(timestamp))
 
-		self.year = dt.year
-		self.month = dt.month
-		self.day = dt.day
+		self.set(dt.year, dt.month, dt.day)
 
 	def week(self):
 		"""
 		Returns the week of the set date as a tuple with year and week
+		number, or **None** if no date is set.
 		"""
 
 		if self.is_set():
 			return self.calendar.week(self.year, self.month, self.day)
 
+	def weekdate(self):
+		"""
+		Returns the week date of the set date as a tuple with year,
+		week, and weekday, or **None** if no date is set.
+		"""
+
+		if self.is_set():
+			return self.calendar.weekdate(self.year, self.month, self.day)
+
 	def weekday(self):
 		"""
-		Returns the week day of the set date (1 is Monday, 7 is Sunday)
+		Returns the week day of the set date, or **None** if no
+		date is set.
 		"""
 
 		if self.is_set():
@@ -266,7 +345,8 @@ class Date(object):
 
 	def weeks(self):
 		"""
-		Returns the number of weeks in the set year
+		Returns the number of weeks in the set year, or **None** if no
+		date is set.
 		"""
 
 		if self.is_set():
@@ -274,7 +354,8 @@ class Date(object):
 
 	def yeardays(self):
 		"""
-		Returns the number of days in the year
+		Returns the number of days in the year, or **None** if no date
+		is set.
 		"""
 
 		if self.is_set():

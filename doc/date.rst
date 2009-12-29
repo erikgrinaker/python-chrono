@@ -1,5 +1,5 @@
-Date - handling of dates
-========================
+:class:`chrono.Date` - handling of dates
+========================================
 
 .. autoclass:: chrono.Date
    :members:
