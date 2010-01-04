@@ -15,7 +15,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from . import calendar
-from . import clock
-from . import parser
-from .date import Date
+"""
+This module contains various classes that provide clock-related functionality,
+mainly for validation.
+"""
+
+from __future__ import absolute_import
+
+from .clock import Clock

@@ -8,6 +8,7 @@ Contents:
 
    date.rst
    calendar.rst
+   clock.rst
    parser.rst
 
 Indices and tables

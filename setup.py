@@ -31,6 +31,7 @@ setup(
 	packages	= (
 		"chrono",
 		"chrono.calendar",
+		"chrono.clock",
 		"chrono.parser",
 	),
 )
