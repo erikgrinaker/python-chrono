@@ -20,6 +20,7 @@ from __future__ import absolute_import
 
 from . import parser
 from .. import calendar
+from .. import clock
 
 import re
 
@@ -45,6 +46,14 @@ class ISOParser(parser.Parser):
 		(?P<year>\d{4})		# year
 		(?P<day>\d{3})		# day
 		\s*$			# ignore whitespace at end
+	''', re.VERBOSE)
+
+	re_compacttime = re.compile('''
+		^\s*				# ignore whitespace at start
+		(?P<hour>\d{2})			# hour
+		(?:(?P<minute>\d{2}))?		# minute
+		(?:(?P<second>\d{2}))?		# second
+		\s*$				# ignore whitespace at end
 	''', re.VERBOSE)
 
 	re_compactweek = re.compile('''
@@ -82,6 +91,14 @@ class ISOParser(parser.Parser):
 		(?P<year>\d{4})		# year
 		-(?P<day>\d{3})		# day
 		\s*$			# ignore whitespace at end
+	''', re.VERBOSE)
+
+	re_time = re.compile('''
+		^\s*				# ignore whitespace at start
+		(?P<hour>\d{1,2})		# hour
+		(?::(?P<minute>\d{1,2}))?	# minute
+		(?::(?P<second>\d{1,2}))?	# second
+		\s*$				# ignore whitespace at end
 	''', re.VERBOSE)
 
 	re_week = re.compile('''
@@ -137,6 +154,24 @@ class ISOParser(parser.Parser):
 		)
 
 		return (match["year"], match["day"])
+
+	@classmethod
+	def compacttime(cls, time):
+		"""
+		Parses a compact ISO time (*hhmmss*), and returns a tuple with
+		hour, minute, and second. Minutes and/or seconds may be omitted,
+		which will be interpreted as 0.
+		"""
+
+		match = cls.int(cls.regexp(cls.re_compacttime, time))
+
+		h = match["hour"]
+		m = match["minute"] or 0
+		s = match["second"] or 0
+
+		clock.Clock.validate(h, m, s)
+
+		return (h, m, s)
 
 	@classmethod
 	def compactweek(cls, date):
@@ -327,6 +362,55 @@ class ISOParser(parser.Parser):
 
 		# handle unknown formats
 		raise ValueError("Invalid ISO date format for date '{0}'".format(date))
+
+	@classmethod
+	def parse_time(cls, time):
+		"""
+		Parses an ISO time in any of the formats listed below, and returns
+		a tuple with hour, minutes, and seconds. Omitted minutes and/or
+		seconds will be interpreted as 0.
+
+		* hh:mm:ss
+		* hh:mm
+		* hhmmss
+		* hhmm
+		* hh
+		"""
+
+		# full time
+		try:
+			return cls.time(time)
+
+		except ValueError:
+			pass
+
+		# compact time
+		try:
+			return cls.compacttime(time)
+
+		except ValueError:
+			pass
+
+		raise ValueError("Invalid ISO time format for time '{0}'".format(time))
+
+	@classmethod
+	def time(cls, time):
+		"""
+		Parses an ISO time (*hh:mm:ss*), and returns a tuple with hour,
+		minute, and second. Minutes and/or seconds may be omitted, which
+		will be interpreted as 0. Leading zeroes may be omitted, even though
+		the ISO standard requires them.
+		"""
+
+		match = cls.int(cls.regexp(cls.re_time, time))
+
+		h = match["hour"]
+		m = match["minute"] or 0
+		s = match["second"] or 0
+
+		clock.Clock.validate(h, m, s)
+
+		return (h, m, s)
 
 	@classmethod
 	def week(cls, date):

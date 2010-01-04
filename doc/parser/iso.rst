@@ -20,7 +20,7 @@ Format              Example             Description             Method
 =================== =================== ======================= ===============================================
 yyyy-mm-dd hh:mm:ss 2009-12-27 15:27:43 Datetime [#f1]_
 yyyy-mm-dd          2009-12-27          Date                    :meth:`chrono.parser.ISOParser.date`
-hh:mm:ss            15:27:43            Time [#f1]_
+hh:mm:ss            15:27:43            Time [#f1]_             :meth:`chrono.parser.ISOParser.time`
 yyyy-ddd            2009-163            Ordinal day             :meth:`chrono.parser.ISOParser.ordinal`
 yyyy-Www-d          2009-W36-3          Week and day            :meth:`chrono.parser.ISOParser.weekdate`
 yyyy-Www            2009-W36            Week                    :meth:`chrono.parser.ISOParser.week`
@@ -28,7 +28,7 @@ yyyy-mm             2009-12             Month                   :meth:`chrono.pa
 yyyy                2009                Year                    :meth:`chrono.parser.ISOParser.year`
 yyyymmdd hhmmss     20091227 152743     Compact datetime [#f1]_
 yyyymmdd            20091227            Compact date            :meth:`chrono.parser.ISOParser.compactdate`
-hhmmss              152743              Compact time [#f1]_
+hhmmss              152743              Compact time [#f1]_     :meth:`chrono.parser.ISOParser.compacttime`
 yyyyddd             2009163             Compact ordinal day     :meth:`chrono.parser.ISOParser.compactordinal`
 yyyyWwwd            2009W363            Compact week and day    :meth:`chrono.parser.ISOParser.compactweekdate`
 yyyyWww             2009W36             Compact week            :meth:`chrono.parser.ISOParser.compactweek`

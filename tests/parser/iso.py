@@ -81,6 +81,48 @@ class ISOParser_compactordinalTest(unittest.TestCase):
 		)
 
 
+class ISOParser_compacttimeTest(unittest.TestCase):
+
+	def test_invalid_format(self):
+		"ISOParser.compacttime() raises ValueError on invalid format"
+
+		self.assertRaises(ValueError, chrono.parser.ISOParser.compacttime, "16xy")
+
+	def test_invalid_time(self):
+		"ISOParser.compacttime() raises ValueError on invalid time"
+
+		self.assertRaises(ValueError, chrono.parser.ISOParser.compacttime, "242743")
+
+	def test_full(self):
+		"ISOParser.compacttime() accepts full time"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.compacttime("162743"),
+			(16, 27, 43)
+		)
+
+	def test_nominutes(self):
+		"ISOParser.compacttime() accepts missing minutes"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.compacttime("16"),
+			(16, 0, 0)
+		)
+
+	def test_none(self):
+		"ISOParser.compacttime() raises TypeError on None"
+
+		self.assertRaises(TypeError, chrono.parser.ISOParser.compacttime, None)
+
+	def test_noseconds(self):
+		"ISOParser.compacttime() accepts missing seconds"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.compacttime("1627"),
+			(16, 27, 0)
+		)
+
+
 class ISOParser_compactweekTest(unittest.TestCase):
 
 	def test_lowercase(self):
@@ -343,6 +385,85 @@ class ISOParser_parse_dateTest(unittest.TestCase):
 		self.assertEquals(
 			chrono.parser.ISOParser.parse_date("2009"),
 			(2009, 1, 1)
+		)
+
+
+class ISOParser_parse_timeTest(unittest.TestCase):
+
+	def test_compacttime(self):
+		"ISOParser.parse_time() parses compact ISO times (hhmmss)"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.parse_time("162743"),
+			(16, 27, 43)
+		)
+
+	def test_none(self):
+		"ISOParser.parse_time() raises TypeError on None"
+
+		self.assertRaises(TypeError, chrono.parser.ISOParser.parse_time, None)
+
+	def test_time(self):
+		"ISOParser.parse_time() parses ISO times (hh:mm:ss)"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.parse_time("16:27:43"),
+			(16, 27, 43)
+		)
+
+	def test_unknown(self):
+		"ISOParser.parse_time() raises ValueError for unknown time formats"
+
+		self.assertRaises(ValueError, chrono.parser.ISOParser.parse_time, "abc")
+
+
+class ISOParser_timeTest(unittest.TestCase):
+
+	def test_invalid_format(self):
+		"ISOParser.time() raises ValueError on invalid format"
+
+		self.assertRaises(ValueError, chrono.parser.ISOParser.time, "16:xy")
+
+	def test_invalid_time(self):
+		"ISOParser.time() raises ValueError on invalid time"
+
+		self.assertRaises(ValueError, chrono.parser.ISOParser.time, "24:27:43")
+
+	def test_full(self):
+		"ISOParser.time() accepts full time"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.time("16:27:43"),
+			(16, 27, 43)
+		)
+
+	def test_nominutes(self):
+		"ISOParser.time() accepts missing minutes"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.time("16"),
+			(16, 0, 0)
+		)
+
+	def test_none(self):
+		"ISOParser.time() raises TypeError on None"
+
+		self.assertRaises(TypeError, chrono.parser.ISOParser.time, None)
+
+	def test_noseconds(self):
+		"ISOParser.time() accepts missing seconds"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.time("16:27"),
+			(16, 27, 0)
+		)
+
+	def test_nozero(self):
+		"ISOParser.time() accepts missing zeroes"
+
+		self.assertEquals(
+			chrono.parser.ISOParser.time("8:2:4"),
+			(8, 2, 4)
 		)
 
 
