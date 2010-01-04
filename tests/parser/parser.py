@@ -32,6 +32,14 @@ class Parser_intTest(unittest.TestCase):
 			{"a": 123, "b": 456, "c": 789}
 		)
 
+	def test_dict_none(self):
+		"Parser.int() preserves None in dicts"
+
+		self.assertEquals(
+			chrono.parser.Parser.int({"a": "123", "b": None, "c": "789"}),
+			{"a": 123, "b": None, "c": 789}
+		)
+
 	def test_int(self):
 		"Parser.int() converts integer to integer"
 
@@ -45,10 +53,18 @@ class Parser_intTest(unittest.TestCase):
 			[123, 456, 789]
 		)
 
-	def test_none(self):
-		"Parser.int() raises TypeError for None"
+	def test_list_none(self):
+		"Parser.int() preserves None in lists"
 
-		self.assertRaises(TypeError, chrono.parser.Parser.int, None)
+		self.assertEquals(
+			chrono.parser.Parser.int(["123", None, "789"]),
+			[123, None, 789]
+		)
+
+	def test_none(self):
+		"Parser.int() returns None for None"
+
+		self.assertEquals(chrono.parser.Parser.int(None), None)
 
 	def test_nonnumeric(self):
 		"Parser.int() raises ValueError for non-numeric string"
@@ -66,6 +82,14 @@ class Parser_intTest(unittest.TestCase):
 		self.assertEquals(
 			chrono.parser.Parser.int(( "123", "456", "789")),
 			(123, 456, 789)
+		)
+
+	def test_tuple_none(self):
+		"Parser.int() preserves None in tuples"
+
+		self.assertEquals(
+			chrono.parser.Parser.int(( "123", None, "789")),
+			(123, None, 789)
 		)
 
 

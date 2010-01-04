@@ -30,15 +30,18 @@ class Parser(object):
 		integer, or :exc:`ValueError` if *value* couldn't be converted.
 		"""
 
-		if type(value) == list:
-			value = [ int(v) for v in value ]
+		if value is None:
+			return None
+
+		elif type(value) == list:
+			value = [ cls.int(v) for v in value ]
 
 		elif type(value) == tuple:
-			value = tuple([ int(v) for v in value ])
+			value = tuple([ cls.int(v) for v in value ])
 
 		elif type(value) == dict:
 			for k, v in value.items():
-				value[k] = int(v)
+				value[k] = cls.int(v)
 
 		else:
 			value = int(value)
