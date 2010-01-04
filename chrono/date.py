@@ -131,13 +131,13 @@ class Date(object):
 
 		args = []
 
-		if self.year:
+		if self.year != None:
 			args.append("year = {0}".format(self.year))
 
-		if self.month:
+		if self.month != None:
 			args.append("month = {0}".format(self.month))
 
-		if self.day:
+		if self.day != None:
 			args.append("day = {0}".format(self.day))
 
 		return "chrono.Date({0})".format(", ".join(args))
