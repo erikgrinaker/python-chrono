@@ -50,18 +50,6 @@ class Date(object):
 	or values which cannot be parsed to a proper value)
 	"""
 
-	calendar = calendar.ISOCalendar()
-	"""
-	Calendar to be used for calendar-related operations. Should be a
-	subclass of :class:`chrono.calendar.Calendar`.
-	"""
-
-	parser = parser.ISOParser()
-	"""
-	Parser to be used for parsing strings to dates in :meth:`set_string`.
-	Should be a subclass of :class:`chrono.parser.Parser`.
-	"""
-
 	day = None
 	"Day number, range 1-31 depending on :attr:`month` and :attr:`year`"
 
@@ -300,7 +288,7 @@ class Date(object):
 		Returns **True** if the date is in a leap year.
 		"""
 
-		return self.is_set() and self.calendar.leapyear(self.year) or False
+		return self.is_set() and calendar.ISOCalendar.leapyear(self.year) or False
 
 	def monthdays(self):
 		"""
@@ -309,7 +297,7 @@ class Date(object):
 		"""
 
 		if self.is_set():
-			return self.calendar.monthdays(self.year, self.month)
+			return calendar.ISOCalendar.monthdays(self.year, self.month)
 
 	def ordinal(self):
 		"""
@@ -318,7 +306,7 @@ class Date(object):
 		"""
 
 		if self.is_set():
-			return self.calendar.ordinal(self.year, self.month, self.day)
+			return calendar.ISOCalendar.ordinal(self.year, self.month, self.day)
 
 	def set(self, year, month, day):
 		"""
@@ -329,7 +317,7 @@ class Date(object):
 		month = int(month)
 		day = int(day)
 
-		self.calendar.validate(year, month, day)
+		calendar.ISOCalendar.validate(year, month, day)
 
 		self.clear()
 
@@ -368,7 +356,7 @@ class Date(object):
 		Sets the date from a string parsed with Date.parser
 		"""
 
-		y, m, d = self.parser.parse_date(string)
+		y, m, d = parser.ISOParser.parse_date(string)
 
 		self.set(y, m, d)
 
@@ -400,7 +388,7 @@ class Date(object):
 		"""
 
 		if self.is_set():
-			return self.calendar.week(self.year, self.month, self.day)
+			return calendar.ISOCalendar.week(self.year, self.month, self.day)
 
 	def weekdate(self):
 		"""
@@ -409,7 +397,7 @@ class Date(object):
 		"""
 
 		if self.is_set():
-			return self.calendar.weekdate(self.year, self.month, self.day)
+			return calendar.ISOCalendar.weekdate(self.year, self.month, self.day)
 
 	def weekday(self):
 		"""
@@ -418,7 +406,7 @@ class Date(object):
 		"""
 
 		if self.is_set():
-			return self.calendar.weekday(self.year, self.month, self.day)
+			return calendar.ISOCalendar.weekday(self.year, self.month, self.day)
 
 	def weeks(self):
 		"""
@@ -427,7 +415,7 @@ class Date(object):
 		"""
 
 		if self.is_set():
-			return self.calendar.weeks(self.year)
+			return calendar.ISOCalendar.weeks(self.year)
 
 	def yeardays(self):
 		"""
@@ -436,5 +424,5 @@ class Date(object):
 		"""
 
 		if self.is_set():
-			return self.calendar.yeardays(self.year)
+			return calendar.ISOCalendar.yeardays(self.year)
 

@@ -17,19 +17,7 @@ that is used, such as :func:`leapyear` (if date is in a leap year), :func:`month
 Date formats and calendars
 --------------------------
 
-The date formats accepted by :class:`chrono.Date`, and the underlying calendar
-for calendar operations (such as week numbers), are determined by the parser
-and calendar backend respectively. These are set in the attributes
-:attr:`chrono.Date.parser` and :attr:`chrono.Date.calendar`.
-
-The default backends, :class:`chrono.parser.ISOParser` and
-:class:`chrono.calendar.ISOCalendar`, are based on the ISO 8601 standard. This
-standard is widely used internationally, especially in west-Europe and east-Asia.
-More details on accepted formats and calendar characteristics are available
-in the documentation for these classes.
-
-Currently no other backends are available, but backends for U.S. and U.K. date
-handling are planned for an upcoming release.
+See :class:`chrono.parser.ISOParser` and :class:`chrono.parser.ISOCalendar`.
 
 Date arithmetic via attribute overflow
 --------------------------------------
