@@ -7,6 +7,7 @@ Contents:
    :maxdepth: 3
 
    date.rst
+   time.rst
    calendar.rst
    clock.rst
    parser.rst

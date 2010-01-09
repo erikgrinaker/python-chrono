@@ -203,7 +203,6 @@ class Date(object):
 		else:
 			object.__setattr__(self, name, value)
 
-
 	def __str__(self):
 
 		return self.get_iso() or ""
