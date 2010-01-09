@@ -50,18 +50,6 @@ class Time(object):
 	or values which cannot be parsed to a proper value)
 	"""
 
-	clock = clock.Clock()
-	"""
-	Clock to use for clock-related operations. Should be a
-	subclass of :class:`chrono.clock.Clock`.
-	"""
-
-	parser = parser.ISOParser()
-	"""
-	Parser to use for parsing strings. Should be a subclass
-	of :class:`chrono.parser.Parser`.
-	"""
-
 	hour = None
 	"Hour number, range 0-23"
 
@@ -258,7 +246,7 @@ class Time(object):
 		minute = int(minute)
 		second = int(second)
 
-		self.clock.validate(hour, minute, second)
+		clock.Clock.validate(hour, minute, second)
 
 		self.clear()
 
@@ -297,7 +285,7 @@ class Time(object):
 		Sets the time from a string parsed with :attr:`Time.parser`.
 		"""
 
-		h, m, s = self.parser.parse_time(string)
+		h, m, s = parser.ISOParser.parse_time(string)
 
 		self.set(h, m, s)
 
