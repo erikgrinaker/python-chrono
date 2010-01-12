@@ -19,6 +19,7 @@
 from __future__ import absolute_import
 
 from . import clock
+from . import formatter
 from . import parser
 
 import datetime
@@ -202,6 +203,15 @@ class Time(object):
 		self.minute = None
 		self.second = None
 
+	def format(self, template):
+		"""
+		Formats the time using *template*, replacing variables as
+		supported by :class:`formatter.Formatter`.
+		"""
+
+		if self.is_set():
+			return formatter.Formatter(None, None, None, self.hour, self.minute, self.second).format(template)
+
 	def get(self):
 		"""
 		Returns the time as a tuple of hour, minute, and second, or
@@ -226,8 +236,7 @@ class Time(object):
 		**None** if time isn't set.
 		"""
 
-		# FIXME we need a format() method first
-		pass
+		return self.format("$0hour:$0minute:$0second")
 
 	def is_set(self):
 		"""

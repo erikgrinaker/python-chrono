@@ -383,12 +383,12 @@ class Date_formatTest(unittest.TestCase):
 	def test_empty(self):
 		"Date.format() returns None if no date is set"
 
-		self.assertEquals(chrono.Date().format("%Y-%m-%d"), None)
+		self.assertEquals(chrono.Date().format("$0year-$0month-0day"), None)
 
 	def test_format(self):
-		"Date.format() formats date according to time.strftime()"
+		"Date.format() formats date using Formatter"
 
-		self.assertEquals(chrono.Date(1261892718).format("%Y-%m-%d"), "2009-12-27")
+		self.assertEquals(chrono.Date(1261892718).format("$0year-$0month-$0day"), "2009-12-27")
 
 
 class Date_getTest(unittest.TestCase):

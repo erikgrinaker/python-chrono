@@ -19,6 +19,7 @@
 from __future__ import absolute_import
 
 from . import calendar
+from . import formatter
 from . import parser
 
 import datetime
@@ -205,14 +206,14 @@ class Date(object):
 		self.month	= None
 		self.day	= None
 
-	def format(self, format):
+	def format(self, template):
 		"""
-		Formats the date using the template *format*, according to the
-		formatting rules for :func:`time.strftime`.
+		Formats the date using *template*, replacing variables as
+		supported by :class:`formatter.Formatter`.
 		"""
 
 		if self.is_set():
-			return self.get_datetime().strftime(format)
+			return formatter.Formatter(self.year, self.month, self.day).format(template)
 
 	def get(self):
 		"""
@@ -238,7 +239,7 @@ class Date(object):
 		if date isn't set.
 		"""
 
-		return self.format("%Y-%m-%d")
+		return self.format("$0year-$0month-$0day")
 
 	def get_iso_month(self):
 		"""
@@ -246,7 +247,7 @@ class Date(object):
 		if date isn't set.
 		"""
 
-		return self.format("%Y-%m")
+		return self.format("$0year-$0month")
 
 	def get_iso_year(self):
 		"""
@@ -254,7 +255,7 @@ class Date(object):
 		if date isn't set.
 		"""
 
-		return self.format("%Y")
+		return self.format("$0year")
 
 	def get_struct_time(self):
 		"""
