@@ -20,4 +20,5 @@ from . import clock
 from . import formatter
 from . import parser
 from .date import Date
+from .error import *
 from .time import Time

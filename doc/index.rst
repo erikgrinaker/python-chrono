@@ -10,6 +10,7 @@ Contents:
    time.rst
    calendar.rst
    clock.rst
+   error.rst
    parser.rst
 
 Indices and tables
