@@ -19,8 +19,10 @@
 from __future__ import absolute_import
 
 from . import clock
+from . import error
 from . import formatter
 from . import parser
+from . import utility
 
 import datetime
 import time as timemod
@@ -45,10 +47,6 @@ class Time(object):
 		Time(hour = 16, minute = 27, second = 43)
 
 	If both *time* and keywords are specified, *time* takes precedence.
-
-	All methods will generally raise :exc:`TypeError` on invalid types for time
-	input, and :exc:`ValueError` on invalid times (such out-of-range values,
-	or values which cannot be parsed to a proper value)
 	"""
 
 	hour = None
@@ -141,8 +139,8 @@ class Time(object):
 		elif name == "hour":
 
 			# validate hour
-			if not 0 <= int(value) <= 23:
-				raise ValueError("hour must be in range 0-23")
+			if not 0 <= utility.int_hour(value) <= 23:
+				raise error.HourError("Hour '{0}' not in range 0-23".format(value))
 
 			# set the value if value
 			object.__setattr__(self, name, value)

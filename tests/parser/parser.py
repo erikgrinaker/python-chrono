@@ -40,9 +40,9 @@ class Parser_regexpTest(unittest.TestCase):
 		self.assertRaises(TypeError, chrono.parser.Parser.regexp, self.re_isodate, 1)
 
 	def test_nomatch(self):
-		"Parser.regexp() raises ValueError when subject doesn't match expression"
+		"Parser.regexp() raises ParseError when subject doesn't match expression"
 
-		self.assertRaises(ValueError, chrono.parser.Parser.regexp, self.re_isodate, "2009-12-")
+		self.assertRaises(chrono.ParseError, chrono.parser.Parser.regexp, self.re_isodate, "2009-12-")
 
 	def test_nonamed(self):
 		"Parser.regexp() returns a tuple of values if named groups aren't used"

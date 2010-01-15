@@ -32,14 +32,14 @@ class ISOParserTest(unittest.TestCase):
 class ISOParser_compactdateTest(unittest.TestCase):
 
 	def test_invalid_date(self):
-		"ISOParser.compactdate() raises ValueError on invalid date"
+		"ISOParser.compactdate() raises DayError on invalid day"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.compactdate, "20090229")
+		self.assertRaises(chrono.DayError, chrono.parser.ISOParser.compactdate, "20090229")
 
 	def test_invalid_format(self):
-		"ISOParser.compactdate() raises ValueError on invalid format"
+		"ISOParser.compactdate() raises ParseError on invalid format"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.compactdate, "090229")
+		self.assertRaises(chrono.ParseError, chrono.parser.ISOParser.compactdate, "090229")
 
 	def test_none(self):
 		"ISOParser.compactdate() raises TypeError on None"
@@ -58,14 +58,14 @@ class ISOParser_compactdateTest(unittest.TestCase):
 class ISOParser_compactordinalTest(unittest.TestCase):
 
 	def test_invalid_compactordinal(self):
-		"ISOParser.compactordinal() raises ValueError on invalid ordinal date"
+		"ISOParser.compactordinal() raises DayError on invalid ordinal date"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.compactordinal, "2009366")
+		self.assertRaises(chrono.DayError, chrono.parser.ISOParser.compactordinal, "2009366")
 
 	def test_invalid_format(self):
-		"ISOParser.compactordinal() raises ValueError on invalid format"
+		"ISOParser.compactordinal() raises ParseError on invalid format"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.compactordinal, "2009abc")
+		self.assertRaises(chrono.ParseError, chrono.parser.ISOParser.compactordinal, "2009abc")
 
 	def test_none(self):
 		"ISOParser.compactordinal() raises TypeError on None"
@@ -84,14 +84,14 @@ class ISOParser_compactordinalTest(unittest.TestCase):
 class ISOParser_compacttimeTest(unittest.TestCase):
 
 	def test_invalid_format(self):
-		"ISOParser.compacttime() raises ValueError on invalid format"
+		"ISOParser.compacttime() raises ParseError on invalid format"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.compacttime, "16xy")
+		self.assertRaises(chrono.ParseError, chrono.parser.ISOParser.compacttime, "16xy")
 
 	def test_invalid_time(self):
-		"ISOParser.compacttime() raises ValueError on invalid time"
+		"ISOParser.compacttime() raises HourError on invalid time"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.compacttime, "242743")
+		self.assertRaises(chrono.HourError, chrono.parser.ISOParser.compacttime, "242743")
 
 	def test_full(self):
 		"ISOParser.compacttime() accepts full time"
@@ -134,19 +134,19 @@ class ISOParser_compactweekTest(unittest.TestCase):
 		)
 
 	def test_invalid_format(self):
-		"ISOParser.compactweek() raises ValueError on invalid format"
+		"ISOParser.compactweek() raises ParseError on invalid format"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.compactweek, "2009Wxx")
+		self.assertRaises(chrono.ParseError, chrono.parser.ISOParser.compactweek, "2009Wxx")
 
 	def test_invalid_compactweek(self):
-		"ISOParser.compactweek() raises ValueError on invalid week"
+		"ISOParser.compactweek() raises WeekError on invalid week"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.compactweek, "2008W53")
+		self.assertRaises(chrono.WeekError, chrono.parser.ISOParser.compactweek, "2008W53")
 
 	def test_invalid_year(self):
-		"ISOParser.compactweek() raises ValueError on invalid year"
+		"ISOParser.compactweek() raises YearError on invalid year"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.compactweek, "10000W12")
+		self.assertRaises(chrono.YearError, chrono.parser.ISOParser.compactweek, "0000W12")
 
 	def test_none(self):
 		"ISOParser.compactweek() raises TypeError on None"
@@ -181,14 +181,14 @@ class ISOParser_compactweekdateTest(unittest.TestCase):
 		)
 
 	def test_invalid_format(self):
-		"ISOParser.compactweekdate() raises ValueError on invalid format"
+		"ISOParser.compactweekdate() raises ParseError on invalid format"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.compactweekdate, "2009Wxxy")
+		self.assertRaises(chrono.ParseError, chrono.parser.ISOParser.compactweekdate, "2009Wxxy")
 
 	def test_invalid_compactweekdate(self):
-		"ISOParser.compactweekdate() raises ValueError on invalid weekdate"
+		"ISOParser.compactweekdate() raises DayError on invalid weekdate"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.compactweekdate, "2008W528")
+		self.assertRaises(chrono.DayError, chrono.parser.ISOParser.compactweekdate, "2008W528")
 
 	def test_none(self):
 		"ISOParser.compactweekdate() raises TypeError on None"
@@ -207,14 +207,14 @@ class ISOParser_compactweekdateTest(unittest.TestCase):
 class ISOParser_dateTest(unittest.TestCase):
 
 	def test_invalid_date(self):
-		"ISOParser.date() raises ValueError on invalid date"
+		"ISOParser.date() raises DayError on invalid date"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.date, "2009-02-29")
+		self.assertRaises(chrono.DayError, chrono.parser.ISOParser.date, "2009-02-29")
 
 	def test_invalid_format(self):
-		"ISOParser.date() raises ValueError on invalid format"
+		"ISOParser.date() raises ParseError on invalid format"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.date, "xx-yy-zz")
+		self.assertRaises(chrono.ParseError, chrono.parser.ISOParser.date, "xx-yy-zz")
 
 	def test_none(self):
 		"ISOParser.date() raises TypeError on None"
@@ -241,19 +241,19 @@ class ISOParser_dateTest(unittest.TestCase):
 class ISOParser_monthTest(unittest.TestCase):
 
 	def test_invalid_format(self):
-		"ISOParser.month() raises ValueError on invalid format"
+		"ISOParser.month() raises ParseError on invalid format"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.month, "2009-xyz")
+		self.assertRaises(chrono.ParseError, chrono.parser.ISOParser.month, "2009-xyz")
 
 	def test_invalid_month(self):
-		"ISOParser.month() raises ValueError on invalid month"
+		"ISOParser.month() raises MonthError on invalid month"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.month, "2009-13")
+		self.assertRaises(chrono.MonthError, chrono.parser.ISOParser.month, "2009-13")
 
 	def test_invalid_year(self):
-		"ISOParser.month() raises ValueError on invalid year"
+		"ISOParser.month() raises YearError on invalid year"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.month, "10000-12")
+		self.assertRaises(chrono.YearError, chrono.parser.ISOParser.month, "0000-12")
 
 	def test_none(self):
 		"ISOParser.month() raises TypeError on None"
@@ -272,14 +272,14 @@ class ISOParser_monthTest(unittest.TestCase):
 class ISOParser_ordinalTest(unittest.TestCase):
 
 	def test_invalid_ordinal(self):
-		"ISOParser.ordinal() raises ValueError on invalid ordinal date"
+		"ISOParser.ordinal() raises DayError on invalid ordinal date"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.ordinal, "2009-366")
+		self.assertRaises(chrono.DayError, chrono.parser.ISOParser.ordinal, "2009-366")
 
 	def test_invalid_format(self):
-		"ISOParser.ordinal() raises ValueError on invalid format"
+		"ISOParser.ordinal() raises ParseError on invalid format"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.ordinal, "2009-abc")
+		self.assertRaises(chrono.ParseError, chrono.parser.ISOParser.ordinal, "2009-abc")
 
 	def test_none(self):
 		"ISOParser.ordinal() raises TypeError on None"
@@ -359,9 +359,9 @@ class ISOParser_parse_dateTest(unittest.TestCase):
 		)
 
 	def test_unknown(self):
-		"ISOParser.parse_date() raises ValueError for unknown date formats"
+		"ISOParser.parse_date() raises ParseError for unknown date formats"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.parse_date, "abc")
+		self.assertRaises(chrono.ParseError, chrono.parser.ISOParser.parse_date, "abc")
 
 	def test_week(self):
 		"ISOParser.parse_date() parses ISO week dates (yyyy-Www)"
@@ -412,22 +412,22 @@ class ISOParser_parse_timeTest(unittest.TestCase):
 		)
 
 	def test_unknown(self):
-		"ISOParser.parse_time() raises ValueError for unknown time formats"
+		"ISOParser.parse_time() raises ParseError for unknown time formats"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.parse_time, "abc")
+		self.assertRaises(chrono.ParseError, chrono.parser.ISOParser.parse_time, "abc")
 
 
 class ISOParser_timeTest(unittest.TestCase):
 
 	def test_invalid_format(self):
-		"ISOParser.time() raises ValueError on invalid format"
+		"ISOParser.time() raises ParseError on invalid format"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.time, "16:xy")
+		self.assertRaises(chrono.ParseError, chrono.parser.ISOParser.time, "16:xy")
 
 	def test_invalid_time(self):
-		"ISOParser.time() raises ValueError on invalid time"
+		"ISOParser.time() raises HourError on invalid hour"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.time, "24:27:43")
+		self.assertRaises(chrono.HourError, chrono.parser.ISOParser.time, "24:27:43")
 
 	def test_full(self):
 		"ISOParser.time() accepts full time"
@@ -478,19 +478,19 @@ class ISOParser_weekTest(unittest.TestCase):
 		)
 
 	def test_invalid_format(self):
-		"ISOParser.week() raises ValueError on invalid format"
+		"ISOParser.week() raises ParseError on invalid format"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.week, "2009-Wxx")
+		self.assertRaises(chrono.ParseError, chrono.parser.ISOParser.week, "2009-Wxx")
 
 	def test_invalid_week(self):
-		"ISOParser.week() raises ValueError on invalid week"
+		"ISOParser.week() raises WeekError on invalid week"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.week, "2008-W53")
+		self.assertRaises(chrono.WeekError, chrono.parser.ISOParser.week, "2008-W53")
 
 	def test_invalid_year(self):
-		"ISOParser.week() raises ValueError on invalid year"
+		"ISOParser.week() raises YearError on invalid year"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.week, "10000-W12")
+		self.assertRaises(chrono.YearError, chrono.parser.ISOParser.week, "0000-W12")
 
 	def test_none(self):
 		"ISOParser.week() raises TypeError on None"
@@ -525,14 +525,14 @@ class ISOParser_weekdateTest(unittest.TestCase):
 		)
 
 	def test_invalid_format(self):
-		"ISOParser.weekdate() raises ValueError on invalid format"
+		"ISOParser.weekdate() raises ParseError on invalid format"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.weekdate, "2009-Wxx-y")
+		self.assertRaises(chrono.ParseError, chrono.parser.ISOParser.weekdate, "2009-Wxx-y")
 
 	def test_invalid_weekdate(self):
-		"ISOParser.weekdate() raises ValueError on invalid weekdate"
+		"ISOParser.weekdate() raises DayError on invalid weekdate"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.weekdate, "2008-W52-8")
+		self.assertRaises(chrono.DayError, chrono.parser.ISOParser.weekdate, "2008-W52-8")
 
 	def test_none(self):
 		"ISOParser.weekdate() raises TypeError on None"
@@ -559,14 +559,14 @@ class ISOParser_weekdateTest(unittest.TestCase):
 class ISOParser_yearTest(unittest.TestCase):
 
 	def test_invalid_year(self):
-		"ISOParser.year() raises ValueError on invalid year"
+		"ISOParser.year() raises YearError on invalid year"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.year, "10000")
+		self.assertRaises(chrono.YearError, chrono.parser.ISOParser.year, "0")
 
 	def test_invalid_format(self):
-		"ISOParser.year() raises ValueError on invalid format"
+		"ISOParser.year() raises ParseError on invalid format"
 
-		self.assertRaises(ValueError, chrono.parser.ISOParser.year, "abc")
+		self.assertRaises(chrono.ParseError, chrono.parser.ISOParser.year, "abc")
 
 	def test_none(self):
 		"ISOParser.year() raises TypeError on None"

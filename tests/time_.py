@@ -19,6 +19,7 @@
 
 import chrono
 import datetime
+import error
 import time
 import unittest
 
@@ -185,11 +186,11 @@ class Time__reprTest(unittest.TestCase):
 class Time__setattrTest(unittest.TestCase):
 
 	def test_hour_invalid(self):
-		"Time.__setattr__() raises ValueError on hour outside range (0-23)"
+		"Time.__setattr__() raises HourError on hour outside range (0-23)"
 
 		t = chrono.Time("16:27:43")
 
-		self.assertRaises(ValueError, setattr, t, "hour", 24)
+		self.assertRaises(chrono.HourError, setattr, t, "hour", 24)
 
 	def test_minute_negative(self):
 		"Time.__setattr__() handles hour rollunder for negative minutes"
@@ -341,11 +342,11 @@ class Time_is_setTest(unittest.TestCase):
 class Time_setTest(unittest.TestCase):
 
 	def test_invalid_time(self):
-		"Time.set() raises ValueError on invalid time"
+		"Time.set() raises HourError on invalid time"
 
 		t = chrono.Time()
 
-		self.assertRaises(ValueError, t.set, 25, 27, 43)
+		self.assertRaises(chrono.HourError, t.set, 25, 27, 43)
 
 	def test_invalid_type(self):
 		"Time.set() raises TypeError on invalid types"

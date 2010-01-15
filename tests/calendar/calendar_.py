@@ -24,9 +24,9 @@ import unittest
 class Calendar_leapyearTest(unittest.TestCase):
 
 	def test_invalid(self):
-		"Calendar.leapyear() raises ValueError for invalid years"
+		"Calendar.leapyear() raises YearError for invalid years"
 
-		self.assertRaises(ValueError, chrono.calendar.Calendar.leapyear, 10000)
+		self.assertRaises(chrono.YearError, chrono.calendar.Calendar.leapyear, 10000)
 
 	def test_leapyear(self):
 		"Calendar.leapyear() returns True for 2008"
@@ -39,9 +39,9 @@ class Calendar_leapyearTest(unittest.TestCase):
 		self.assertFalse(chrono.calendar.Calendar.leapyear(2007))
 
 	def test_none(self):
-		"Calendar.leapyear() raises TypeError on None"
+		"Calendar.leapyear() raises YearError on None"
 
-		self.assertRaises(TypeError, chrono.calendar.Calendar.leapyear, None)
+		self.assertRaises(chrono.YearError, chrono.calendar.Calendar.leapyear, None)
 
 	def test_string(self):
 		"Calendar.leapyear() handles string input"
@@ -49,9 +49,9 @@ class Calendar_leapyearTest(unittest.TestCase):
 		self.assertTrue(chrono.calendar.Calendar.leapyear("2008"))
 
 	def test_text(self):
-		"Calendar.leapyear() raises ValueError for text input"
+		"Calendar.leapyear() raises YearError for text input"
 
-		self.assertRaises(ValueError, chrono.calendar.Calendar.leapyear, "abc")
+		self.assertRaises(chrono.YearError, chrono.calendar.Calendar.leapyear, "abc")
 
 
 class Calendar_monthdaysTest(unittest.TestCase):
@@ -72,10 +72,10 @@ class Calendar_monthdaysTest(unittest.TestCase):
 		self.assertEquals(chrono.calendar.Calendar.monthdays(2008, 2), 29)
 
 	def test_invalid(self):
-		"Calendar.monthdays() raises ValueError for invalid years and months"
+		"Calendar.monthdays() raises YearError and MonthError for invalid years and months"
 
-		self.assertRaises(ValueError, chrono.calendar.Calendar.monthdays, 10000, 1)
-		self.assertRaises(ValueError, chrono.calendar.Calendar.monthdays, 2009, 13)
+		self.assertRaises(chrono.YearError, chrono.calendar.Calendar.monthdays, 10000, 1)
+		self.assertRaises(chrono.MonthError, chrono.calendar.Calendar.monthdays, 2009, 13)
 
 	def test_january(self):
 		"Calendar.monthdays() returns 31 for 2009-01"
@@ -83,10 +83,10 @@ class Calendar_monthdaysTest(unittest.TestCase):
 		self.assertEquals(chrono.calendar.Calendar.monthdays(2009, 1), 31)
 
 	def test_none(self):
-		"Calendar.monthdays() raises TypeError on None"
+		"Calendar.monthdays() raises YearError and MonthError on None"
 
-		self.assertRaises(TypeError, chrono.calendar.Calendar.monthdays, None, 1)
-		self.assertRaises(TypeError, chrono.calendar.Calendar.monthdays, 2009, None)
+		self.assertRaises(chrono.YearError, chrono.calendar.Calendar.monthdays, None, 1)
+		self.assertRaises(chrono.MonthError, chrono.calendar.Calendar.monthdays, 2009, None)
 
 	def test_string(self):
 		"Calendar.monthdays() accepts string input"
@@ -94,10 +94,10 @@ class Calendar_monthdaysTest(unittest.TestCase):
 		self.assertEquals(chrono.calendar.Calendar.monthdays("2009", "1"), 31)
 
 	def test_text(self):
-		"Calendar.monthdays() raises TypeError on text input"
+		"Calendar.monthdays() raises YearError and MonthError on text input"
 
-		self.assertRaises(ValueError, chrono.calendar.Calendar.monthdays, "abc", 1)
-		self.assertRaises(ValueError, chrono.calendar.Calendar.monthdays, 2009, "abc")
+		self.assertRaises(chrono.YearError, chrono.calendar.Calendar.monthdays, "abc", 1)
+		self.assertRaises(chrono.MonthError, chrono.calendar.Calendar.monthdays, 2009, "abc")
 
 
 class Calendar_ordinalTest(unittest.TestCase):
@@ -108,9 +108,9 @@ class Calendar_ordinalTest(unittest.TestCase):
 		self.assertEquals(chrono.calendar.Calendar.ordinal(2009, 1, 5), 5)
 
 	def test_invalid(self):
-		"Calendar.ordinal() raises ValueError for invalid dates"
+		"Calendar.ordinal() raises DayError for invalid day"
 
-		self.assertRaises(ValueError, chrono.calendar.Calendar.ordinal, 2009, 7, 32)
+		self.assertRaises(chrono.DayError, chrono.calendar.Calendar.ordinal, 2009, 7, 32)
 
 	def test_last(self):
 		"Calendar.ordinal() returns 365 for 2009-12-31"
@@ -123,11 +123,11 @@ class Calendar_ordinalTest(unittest.TestCase):
 		self.assertEquals(chrono.calendar.Calendar.ordinal(2008, 12, 31), 366)
 
 	def test_none(self):
-		"Calendar.ordinal() raises TypeError for None"
+		"Calendar.ordinal() raises proper errors for None"
 
-		self.assertRaises(TypeError, chrono.calendar.Calendar.ordinal, None, 7, 21)
-		self.assertRaises(TypeError, chrono.calendar.Calendar.ordinal, 2009, None, 21)
-		self.assertRaises(TypeError, chrono.calendar.Calendar.ordinal, 2009, 7, None)
+		self.assertRaises(chrono.YearError, chrono.calendar.Calendar.ordinal, None, 7, 21)
+		self.assertRaises(chrono.MonthError, chrono.calendar.Calendar.ordinal, 2009, None, 21)
+		self.assertRaises(chrono.DayError, chrono.calendar.Calendar.ordinal, 2009, 7, None)
 
 	def test_string(self):
 		"Calendar.ordinal() accepts string inputs"
@@ -135,11 +135,11 @@ class Calendar_ordinalTest(unittest.TestCase):
 		self.assertEquals(chrono.calendar.Calendar.ordinal("2009", "7", "21"), 202)
 
 	def test_text(self):
-		"Calendar.ordinal() raises ValueError for text values"
+		"Calendar.ordinal() raises proper error for text values"
 
-		self.assertRaises(ValueError, chrono.calendar.Calendar.ordinal, "abc", 7, 21)
-		self.assertRaises(ValueError, chrono.calendar.Calendar.ordinal, 2009, "abc", 21)
-		self.assertRaises(ValueError, chrono.calendar.Calendar.ordinal, 2009, 7, "abc")
+		self.assertRaises(chrono.YearError, chrono.calendar.Calendar.ordinal, "abc", 7, 21)
+		self.assertRaises(chrono.MonthError, chrono.calendar.Calendar.ordinal, 2009, "abc", 21)
+		self.assertRaises(chrono.DayError, chrono.calendar.Calendar.ordinal, 2009, 7, "abc")
 
 
 class Calendar_ordinal_to_dateTest(unittest.TestCase):
@@ -153,9 +153,9 @@ class Calendar_ordinal_to_dateTest(unittest.TestCase):
 		)
 
 	def test_invalid(self):
-		"Calendar.ordinal_to_date() raises ValueError for invalid dates"
+		"Calendar.ordinal_to_date() raises DayError for invalid days"
 
-		self.assertRaises(ValueError, chrono.calendar.Calendar.ordinal_to_date, 2009, 366)
+		self.assertRaises(chrono.DayError, chrono.calendar.Calendar.ordinal_to_date, 2009, 366)
 
 	def test_last(self):
 		"Calendar.ordinal_to_date() returns 2009-12-31 for 2009-365"
@@ -174,16 +174,16 @@ class Calendar_ordinal_to_dateTest(unittest.TestCase):
 		)
 
 	def test_none(self):
-		"Calendar.ordinal_to_date() raises TypeError for None"
+		"Calendar.ordinal_to_date() raises proper error for None"
 
-		self.assertRaises(TypeError, chrono.calendar.Calendar.ordinal_to_date, None, 202)
-		self.assertRaises(TypeError, chrono.calendar.Calendar.ordinal_to_date, 2009, None)
+		self.assertRaises(chrono.YearError, chrono.calendar.Calendar.ordinal_to_date, None, 202)
+		self.assertRaises(chrono.DayError, chrono.calendar.Calendar.ordinal_to_date, 2009, None)
 
 	def test_nonnumeric(self):
-		"Calendar.ordinal_to_date() raises ValueError for non-numeric values"
+		"Calendar.ordinal_to_date() raises proper error for non-numeric values"
 
-		self.assertRaises(ValueError, chrono.calendar.Calendar.ordinal_to_date, "abc", 202)
-		self.assertRaises(ValueError, chrono.calendar.Calendar.ordinal_to_date, 2009, "abc")
+		self.assertRaises(chrono.YearError, chrono.calendar.Calendar.ordinal_to_date, "abc", 202)
+		self.assertRaises(chrono.DayError, chrono.calendar.Calendar.ordinal_to_date, 2009, "abc")
 
 	def test_string(self):
 		"Calendar.ordinal_to_date() accepts string inputs"
@@ -204,7 +204,7 @@ class Calendar_validateTest(unittest.TestCase):
 	def test_2009_02_29(self):
 		"Calendar.validate() raises ValueError for 2009-02-29"
 
-		self.assertRaises(ValueError, chrono.calendar.Calendar.validate, 2009, 2, 29)
+		self.assertRaises(chrono.DayError, chrono.calendar.Calendar.validate, 2009, 2, 29)
 
 	def test_2009_12_27(self):
 		"Calendar.validate() accepts 2009-12-27"
@@ -212,18 +212,18 @@ class Calendar_validateTest(unittest.TestCase):
 		chrono.calendar.Calendar.validate(2009, 12, 27)
 
 	def test_nonnumeric(self):
-		"Calendar.validate() raises ValueError for non-numeric string"
+		"Calendar.validate() raises proper error for non-numeric string"
 
-		self.assertRaises(ValueError, chrono.calendar.Calendar.validate, "abc", 12, 27)
-		self.assertRaises(ValueError, chrono.calendar.Calendar.validate, 2009, "abc", 27)
-		self.assertRaises(ValueError, chrono.calendar.Calendar.validate, 2009, 12, "abc")
+		self.assertRaises(chrono.YearError, chrono.calendar.Calendar.validate, "abc", 12, 27)
+		self.assertRaises(chrono.MonthError, chrono.calendar.Calendar.validate, 2009, "abc", 27)
+		self.assertRaises(chrono.DayError, chrono.calendar.Calendar.validate, 2009, 12, "abc")
 
 	def test_none(self):
-		"Calendar.validate() raises TypeError for None"
+		"Calendar.validate() raises proper error for None"
 
-		self.assertRaises(TypeError, chrono.calendar.Calendar.validate, None, 12, 27)
-		self.assertRaises(TypeError, chrono.calendar.Calendar.validate, 2009, None, 27)
-		self.assertRaises(TypeError, chrono.calendar.Calendar.validate, 2009, 12, None)
+		self.assertRaises(chrono.YearError, chrono.calendar.Calendar.validate, None, 12, 27)
+		self.assertRaises(chrono.MonthError, chrono.calendar.Calendar.validate, 2009, None, 27)
+		self.assertRaises(chrono.DayError, chrono.calendar.Calendar.validate, 2009, 12, None)
 
 	def test_string(self):
 		"Calendar.validate() accepts string inputs"
@@ -234,14 +234,14 @@ class Calendar_validateTest(unittest.TestCase):
 class Calendar_validate_monthTest(unittest.TestCase):
 
 	def test_0(self):
-		"Calendar.validate_month() raises ValueError for 0"
+		"Calendar.validate_month() raises MonthError for 0"
 
-		self.assertRaises(ValueError, chrono.calendar.Calendar.validate_month, 0)
+		self.assertRaises(chrono.MonthError, chrono.calendar.Calendar.validate_month, 0)
 
 	def test_13(self):
-		"Calendar.validate_month() raises ValueError for 13"
+		"Calendar.validate_month() raises MonthError for 13"
 
-		self.assertRaises(ValueError, chrono.calendar.Calendar.validate_month, 13)
+		self.assertRaises(chrono.MonthError, chrono.calendar.Calendar.validate_month, 13)
 
 	def test_july(self):
 		"Calendar.validate_month() accepts 7"
@@ -249,14 +249,14 @@ class Calendar_validate_monthTest(unittest.TestCase):
 		chrono.calendar.Calendar.validate_month(7)
 
 	def test_none(self):
-		"Calendar.validate_month() raises TypeError for None"
+		"Calendar.validate_month() raises MonthError for None"
 
-		self.assertRaises(TypeError, chrono.calendar.Calendar.validate_month, None)
+		self.assertRaises(chrono.MonthError, chrono.calendar.Calendar.validate_month, None)
 
 	def test_nonnumeric(self):
-		"Calendar.validate_month() raises ValueError for non-numeric string"
+		"Calendar.validate_month() raises MonthError for non-numeric string"
 
-		self.assertRaises(ValueError, chrono.calendar.Calendar.validate_month, "abc")
+		self.assertRaises(chrono.MonthError, chrono.calendar.Calendar.validate_month, "abc")
 
 	def test_string(self):
 		"Calendar.validate_month() accepts strings"
@@ -277,16 +277,16 @@ class Calendar_validate_ordinalTest(unittest.TestCase):
 		chrono.calendar.Calendar.validate_ordinal(2009, 365)
 
 	def test_nonnumeric(self):
-		"Calendar.validate_ordinal() raises ValueError for non-numeric string"
+		"Calendar.validate_ordinal() raises proper error for non-numeric string"
 
-		self.assertRaises(ValueError, chrono.calendar.Calendar.validate_ordinal, "abc", 202)
-		self.assertRaises(ValueError, chrono.calendar.Calendar.validate_ordinal, 2009, "abc")
+		self.assertRaises(chrono.YearError, chrono.calendar.Calendar.validate_ordinal, "abc", 202)
+		self.assertRaises(chrono.DayError, chrono.calendar.Calendar.validate_ordinal, 2009, "abc")
 
 	def test_none(self):
-		"Calendar.validate_ordinal() raises TypeError for None"
+		"Calendar.validate_ordinal() raises proper error for None"
 
-		self.assertRaises(TypeError, chrono.calendar.Calendar.validate_ordinal, None, 202)
-		self.assertRaises(TypeError, chrono.calendar.Calendar.validate_ordinal, 2009, None)
+		self.assertRaises(chrono.YearError, chrono.calendar.Calendar.validate_ordinal, None, 202)
+		self.assertRaises(chrono.DayError, chrono.calendar.Calendar.validate_ordinal, 2009, None)
 
 	def test_ordinal(self):
 		"Calendar.validate_ordinal() accepts 2009-202"
@@ -318,14 +318,14 @@ class Calendar_validate_weekdateTest(unittest.TestCase):
 class Calendar_validate_weekdayTest(unittest.TestCase):
 
 	def test_0(self):
-		"Calendar.validate_weekday() raises ValueError for 0"
+		"Calendar.validate_weekday() raises DayError for 0"
 
-		self.assertRaises(ValueError, chrono.calendar.Calendar.validate_weekday, 0)
+		self.assertRaises(chrono.DayError, chrono.calendar.Calendar.validate_weekday, 0)
 
 	def test_8(self):
-		"Calendar.validate_weekday() raises ValueError for 8"
+		"Calendar.validate_weekday() raises DayError for 8"
 
-		self.assertRaises(ValueError, chrono.calendar.Calendar.validate_weekday, 8)
+		self.assertRaises(chrono.DayError, chrono.calendar.Calendar.validate_weekday, 8)
 
 	def test_monday(self):
 		"Calendar.validate_weekday() accepts 1"
@@ -333,14 +333,14 @@ class Calendar_validate_weekdayTest(unittest.TestCase):
 		chrono.calendar.Calendar.validate_weekday(1)
 
 	def test_none(self):
-		"Calendar.validate_weekday() raises TypeError for None"
+		"Calendar.validate_weekday() raises DayError for None"
 
-		self.assertRaises(TypeError, chrono.calendar.Calendar.validate_weekday, None)
+		self.assertRaises(chrono.DayError, chrono.calendar.Calendar.validate_weekday, None)
 
 	def test_nonnumeric(self):
-		"Calendar.validate_weekday() raises ValueError for non-numeric string"
+		"Calendar.validate_weekday() raises DayError for non-numeric string"
 
-		self.assertRaises(ValueError, chrono.calendar.Calendar.validate_weekday, "abc")
+		self.assertRaises(chrono.DayError, chrono.calendar.Calendar.validate_weekday, "abc")
 
 	def test_string(self):
 		"Calendar.validate_weekday() accepts strings"
@@ -356,9 +356,9 @@ class Calendar_validate_weekdayTest(unittest.TestCase):
 class Calendar_validate_yearTest(unittest.TestCase):
 
 	def test_0(self):
-		"Calendar.validate_year() raises ValueError for 0"
+		"Calendar.validate_year() raises YearError for 0"
 
-		self.assertRaises(ValueError, chrono.calendar.Calendar.validate_year, 0)
+		self.assertRaises(chrono.YearError, chrono.calendar.Calendar.validate_year, 0)
 
 	def test_1(self):
 		"Calendar.validate_year() accepts 1"
@@ -366,9 +366,9 @@ class Calendar_validate_yearTest(unittest.TestCase):
 		chrono.calendar.Calendar.validate_year(1)
 
 	def test_10000(self):
-		"Calendar.validate_year() raises ValueError for 10000"
+		"Calendar.validate_year() raises YearError for 10000"
 
-		self.assertRaises(ValueError, chrono.calendar.Calendar.validate_year, 10000)
+		self.assertRaises(chrono.YearError, chrono.calendar.Calendar.validate_year, 10000)
 
 	def test_2009(self):
 		"Calendar.validate_year() accepts 2009"
@@ -381,14 +381,14 @@ class Calendar_validate_yearTest(unittest.TestCase):
 		chrono.calendar.Calendar.validate_year(9999)
 
 	def test_none(self):
-		"Calendar.validate_year() raises TypeError for None"
+		"Calendar.validate_year() raises YearError for None"
 
-		self.assertRaises(TypeError, chrono.calendar.Calendar.validate_year, None)
+		self.assertRaises(chrono.YearError, chrono.calendar.Calendar.validate_year, None)
 
 	def test_nonnumeric(self):
-		"Calendar.validate_year() raises TypeError for non-numeric string"
+		"Calendar.validate_year() raises YearError for non-numeric string"
 
-		self.assertRaises(ValueError, chrono.calendar.Calendar.validate_year, "abc")
+		self.assertRaises(chrono.YearError, chrono.calendar.Calendar.validate_year, "abc")
 
 	def test_string(self):
 		"Calendar.validate_year() accepts string"
@@ -457,19 +457,19 @@ class Calendar_yeardaysTest(unittest.TestCase):
 		self.assertEquals(chrono.calendar.Calendar.yeardays(2008), 366)
 
 	def test_invalid(self):
-		"Calendar.yeardays() raises ValueError on invalid year"
+		"Calendar.yeardays() raises YearError on invalid year"
 
-		self.assertRaises(ValueError, chrono.calendar.Calendar.yeardays, 10000)
+		self.assertRaises(chrono.YearError, chrono.calendar.Calendar.yeardays, 10000)
 
 	def test_none(self):
-		"Calendar.yeardays() raises TypeError on None"
+		"Calendar.yeardays() raises YearError on None"
 
-		self.assertRaises(TypeError, chrono.calendar.Calendar.yeardays, None)
+		self.assertRaises(chrono.YearError, chrono.calendar.Calendar.yeardays, None)
 
 	def test_nonnumeric(self):
-		"Calendar.yeardays() raises ValueError on non-numeric input"
+		"Calendar.yeardays() raises YearError on non-numeric input"
 
-		self.assertRaises(ValueError, chrono.calendar.Calendar.yeardays, "abc")
+		self.assertRaises(chrono.YearError, chrono.calendar.Calendar.yeardays, "abc")
 
 	def test_string(self):
 		"Calendar.yeardays() accepts strings"

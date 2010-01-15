@@ -18,6 +18,9 @@
 
 from __future__ import absolute_import
 
+from .. import error
+from .. import utility
+
 import calendar
 import datetime
 
@@ -44,10 +47,8 @@ class Clock(object):
 		Validates an hour: must be in 0-23 range.
 		"""
 
-		hour = int(hour)
-
-		if not 0 <= hour <= 23:
-			raise ValueError("Hour must be in range 0 to 23")
+		if not 0 <= utility.int_hour(hour) <= 23:
+			raise error.HourError("Hour '{0}' not in range 0-23".format(hour))
 
 	@classmethod
 	def validate_minute(cls, minute):
@@ -55,10 +56,8 @@ class Clock(object):
 		Validates a minute: must be in 0-59 range.
 		"""
 
-		minute = int(minute)
-
-		if not 0 <= minute <= 59:
-			raise ValueError("Minute must be in range 0 to 59")
+		if not 0 <= utility.int_minute(minute) <= 59:
+			raise error.MinuteError("Minute '{0}' not in range 0-59".format(minute))
 
 	@classmethod
 	def validate_second(cls, second):
@@ -66,8 +65,6 @@ class Clock(object):
 		Validates a second: must be in 0-59 range.
 		"""
 
-		second = int(second)
-
-		if not 0 <= second <= 59:
-			raise ValueError("Minute must be in range 0 to 59")
+		if not 0 <= utility.int_second(second) <= 59:
+			raise error.SecondError("Second '{0}' not in range 0-59".format(second))
 

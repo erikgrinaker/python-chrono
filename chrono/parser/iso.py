@@ -21,6 +21,7 @@ from __future__ import absolute_import
 from . import parser
 from .. import calendar
 from .. import clock
+from .. import error
 from .. import utility
 
 import re
@@ -362,7 +363,7 @@ class ISOParser(parser.Parser):
 			pass
 
 		# handle unknown formats
-		raise ValueError("Invalid ISO date format for date '{0}'".format(date))
+		raise error.ParseError("Invalid ISO date value '{0}'".format(date))
 
 	@classmethod
 	def parse_time(cls, time):
@@ -392,7 +393,7 @@ class ISOParser(parser.Parser):
 		except ValueError:
 			pass
 
-		raise ValueError("Invalid ISO time format for time '{0}'".format(time))
+		raise error.ParseError("Invalid ISO time value '{0}'".format(time))
 
 	@classmethod
 	def time(cls, time):

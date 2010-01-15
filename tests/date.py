@@ -337,11 +337,11 @@ class Date__setattrTest(unittest.TestCase):
 		self.assertEquals(d.get(), (2007, 12, 21))
 
 	def test_year_invalid(self):
-		"Date.__setattr__() raises ValueError on year outside range (1-9999)"
+		"Date.__setattr__() raises YearError on year outside range (1-9999)"
 
 		d = chrono.Date("2008-12-27")
 
-		self.assertRaises(ValueError, setattr, d, "year", 10000)
+		self.assertRaises(chrono.YearError, setattr, d, "year", 10000)
 
 	def test_year_leap(self):
 		"Date.__setattr__() handles leap years when changing year"

@@ -19,8 +19,10 @@
 from __future__ import absolute_import
 
 from . import calendar
+from . import error
 from . import formatter
 from . import parser
+from . import utility
 
 import datetime
 import time
@@ -45,10 +47,6 @@ class Date(object):
 		Date(year = 2000, month = 10, day = 16)
 
 	If both *date* and keywords are specified, *date* takes precedence.
-
-	All methods will generally raise :exc:`TypeError` on invalid types for date
-	input, and :exc:`ValueError` on invalid dates (such out-of-range values,
-	or values which cannot be parsed to a proper value)
 	"""
 
 	day = None
@@ -141,8 +139,8 @@ class Date(object):
 		elif name == "year":
 
 			# validate year
-			if not 1 <= int(value) <= 9999:
-				raise ValueError("year must be in range 1-9999")
+			if not 1 <= utility.int_year(value) <= 9999:
+				raise error.YearError("Year '{0}' not in range 1-9999")
 
 			# just set the year directly if it's valid
 			object.__setattr__(self, name, value)

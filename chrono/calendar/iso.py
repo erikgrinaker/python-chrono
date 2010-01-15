@@ -18,6 +18,8 @@
 
 from __future__ import absolute_import
 
+from .. import error
+from .. import utility
 from .calendar import Calendar
 
 import calendar
@@ -32,10 +34,6 @@ class ISOCalendar(Calendar):
 
 	* Weeks start on Monday
 	* The first week of a year is the week containing the first Thursday
-
-	All methods accept either integers or strings as parameters, and raises
-	:exc:`TypeError` on invalid type for parameters, and :exc:`ValueError` on
-	invalid parameter values (such as non-numeric strings or invalid dates).
 	"""
 
 	@classmethod
@@ -44,16 +42,13 @@ class ISOCalendar(Calendar):
 		Validates a week: *week* must be in range 1-53, depending on *year*.
 		"""
 
-		year = int(year)
-		week = int(week)
-
 		cls.validate_year(year)
 
 		weeks = cls.weeks(year)
 
-		if not 1 <= week <= weeks:
-			raise ValueError(
-				"Week number '{0}' not in valid range 1-{1} for year '{2}'"
+		if not 1 <= utility.int_week(week) <= weeks:
+			raise error.WeekError(
+				"Week '{0}' not in range 1-{1} for year '{2}'"
 				.format(week, weeks, year)
 			)
 
@@ -73,13 +68,13 @@ class ISOCalendar(Calendar):
 		Returns the ISO week number containing the given date.
 		"""
 
-		year = int(year)
-		month = int(month)
-		day = int(day)
-
 		cls.validate(year, month, day)
 
-		return datetime.date(year, month, day).isocalendar()[0:2]
+		return datetime.date(
+			utility.int_year(year),
+			utility.int_month(month),
+			utility.int_day(day)
+		).isocalendar()[0:2]
 
 	@classmethod
 	def weekdate(cls, year, month, day):
@@ -88,13 +83,13 @@ class ISOCalendar(Calendar):
 		and weekday.
 		"""
 
-		year = int(year)
-		month = int(month)
-		day = int(day)
-
 		cls.validate(year, month, day)
 
-		return datetime.date(year, month, day).isocalendar()
+		return datetime.date(
+			utility.int_year(year),
+			utility.int_month(month),
+			utility.int_day(day)
+		).isocalendar()
 
 	@classmethod
 	def week_to_date(cls, year, week):
@@ -103,12 +98,11 @@ class ISOCalendar(Calendar):
 		year, month, and day.
 		"""
 
-		year = int(year)
-		week = int(week)
-
 		cls.validate_week(year, week)
 
-		d = datetime.date(year, 1, 4)
+		week = int(week)
+
+		d = datetime.date(utility.int_year(year), 1, 4)
 
 		if d.isoweekday() > 1:
 			d -= datetime.timedelta(d.isoweekday() - 1)
@@ -125,17 +119,13 @@ class ISOCalendar(Calendar):
 		and day.
 		"""
 
-		year = int(year)
-		week = int(week)
-		day = int(day)
-
 		cls.validate_weekdate(year, week, day)
 
 		y, m, d = cls.week_to_date(year, week)
 
 		if day > 1:
 			dt = datetime.date(y, m, d)
-			dt += datetime.timedelta(day - 1)
+			dt += datetime.timedelta(utility.int_day(day) - 1)
 
 			y = dt.year
 			m = dt.month
@@ -149,13 +139,13 @@ class ISOCalendar(Calendar):
 		Returns the weekday of the given date (1 = Monday, 7 = Sunday).
 		"""
 
-		year = int(year)
-		month = int(month)
-		day = int(day)
-
 		cls.validate(year, month, day)
 
-		return calendar.weekday(year, month, day) + 1
+		return calendar.weekday(
+			utility.int_year(year),
+			utility.int_month(month),
+			utility.int_day(day)
+		) + 1
 
 	@classmethod
 	def weeks(cls, year):

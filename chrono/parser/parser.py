@@ -16,6 +16,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+from __future__ import absolute_import
+
+from .. import error
+
+
 class Parser(object):
 	"""
 	Base parser class, with various utility methods for subclasses
@@ -25,7 +30,7 @@ class Parser(object):
 	def regexp(cls, regexp, subject):
 		"""
 		Parses the string *subject* based on the regular expression object *regexp*,
-		and returns a dict of named captured groups. Raises :exc:`ValueError`
+		and returns a dict of named captured groups. Raises :exc:`chrono.ParseError`
 		if the subject doesn't match the expression, or :exc:`TypeError` on
 		invalid subject type (ie non-string).
 		"""
@@ -34,11 +39,11 @@ class Parser(object):
 			match = regexp.match(subject)
 
 		except TypeError:
-			raise TypeError("Subject is not a string")
+			raise TypeError("Input is not a string")
 
 		if not match:
-			raise ValueError(
-				"The subject '{0}' doesn't match the regular expression"
+			raise error.ParseError(
+				"The value '{0}' doesn't match the expected pattern"
 				.format(subject)
 			)
 

@@ -18,6 +18,9 @@
 
 from __future__ import absolute_import
 
+from .. import error
+from .. import utility
+
 import calendar
 import datetime
 
@@ -25,10 +28,6 @@ import datetime
 class Calendar(object):
 	"""
 	Base calendar class, with common calendar functionality.
-
-	All methods accept either integers or strings as parameters, and raises
-	:exc:`TypeError` on invalid type for parameters, and :exc:`ValueError` on
-	invalid parameter values (such as non-numeric strings or invalid dates).
 
 	Calendar-specific (ie ISO, gregorian etc) methods will raise
 	:exc:`NotImplementedError` if called directly from this base class.
@@ -40,11 +39,9 @@ class Calendar(object):
 		Returns **True** if *year* is a leap year.
 		"""
 
-		year = int(year)
-
 		cls.validate_year(year)
 
-		return calendar.isleap(year)
+		return calendar.isleap(utility.int_year(year))
 
 	@classmethod
 	def monthdays(cls, year, month):
@@ -53,13 +50,16 @@ class Calendar(object):
 		to handle leap years.
 		"""
 
-		year = int(year)
-		month = int(month)
+		year = utility.int_year(year)
+		month = utility.int_month(month)
 
 		cls.validate_year(year)
 		cls.validate_month(month)
 
-		return calendar.monthrange(year, month)[1]
+		return calendar.monthrange(
+			utility.int_year(year),
+			utility.int_month(month)
+		)[1]
 
 	@classmethod
 	def ordinal(cls, year, month, day):
@@ -67,18 +67,14 @@ class Calendar(object):
 		Returns the ordinal date (day number in the year) for the given date.
 		"""
 
-		year = int(year)
-		month = int(month)
-		day = int(day)
-
 		cls.validate(year, month, day)
 
 		ordinal = 0
 
-		for m in range(1, month):
-			ordinal += cls.monthdays(year, m)
+		for m in range(1, utility.int_month(month)):
+			ordinal += cls.monthdays(utility.int_year(year), m)
 
-		ordinal += day
+		ordinal += utility.int_day(day)
 
 		return ordinal
 
@@ -88,15 +84,16 @@ class Calendar(object):
 		Returns a tuple of year, month, and day for the given ordinal date.
 		"""
 
-		year = int(year)
-		day = int(day)
-
 		cls.validate_ordinal(year, day)
 
-		dt = datetime.date(year = year, month = 1, day = 1)
+		dt = datetime.date(
+			year = utility.int_year(year),
+			month = 1,
+			day = 1
+		)
 
 		if day > 1:
-			dt += datetime.timedelta(days = day - 1)
+			dt += datetime.timedelta(days = utility.int_day(day) - 1)
 
 		return (dt.year, dt.month, dt.day)
 
@@ -107,17 +104,15 @@ class Calendar(object):
 		1-12 range, and day in 1-<monthdays> range.
 		"""
 
-		day = int(day)
-
 		cls.validate_year(year)
 		cls.validate_month(month)
 
 		monthdays = cls.monthdays(year, month)
 
-		if not 1 <= day <= monthdays:
-			raise ValueError(
-				"Day must be in range 1 to {0} for year {1} month {2}"
-				.format(monthdays, year, month)
+		if not 1 <= utility.int_day(day) <= monthdays:
+			raise error.DayError(
+				"Day '{0}' not in range 1-{1} for year {2}, month {3}"
+				.format(day, monthdays, year, month)
 			)
 
 	@classmethod
@@ -126,8 +121,8 @@ class Calendar(object):
 		Validates *month*: must be in 1-12 range.
 		"""
 
-		if not 1 <= int(month) <= 12:
-			raise ValueError("Month must be in range 1 - 12")
+		if not 1 <= utility.int_month(month) <= 12:
+			raise error.MonthError("Month {0} not in range 1-12".format(month))
 
 	@classmethod
 	def validate_ordinal(cls, year, day):
@@ -136,16 +131,13 @@ class Calendar(object):
 		if *year* is a leap year.
 		"""
 
-		year = int(year)
-		day = int(day)
-
 		cls.validate_year(year)
 
 		yeardays = cls.yeardays(year)
 
-		if not 1 <= int(day) <= yeardays:
-			raise ValueError(
-				"Ordinal day '{0}' not in valid range 1-{1} for year '{2}'"
+		if not 1 <= utility.int_day(day) <= yeardays:
+			raise error.DayError(
+				"Ordinal day '{0}' not in range 1-{1} for year '{2}'"
 				.format(day, yeardays, year)
 			)
 
@@ -184,8 +176,8 @@ class Calendar(object):
 		Validates a week day: *day* must be in range 1-7.
 		"""
 
-		if not 1 <= int(day) <= 7:
-			raise ValueError("Weekday must be in range 1-7")
+		if not 1 <= utility.int_day(day) <= 7:
+			raise error.DayError("Weekday '{0}' not in range 1-7")
 
 	@classmethod
 	def validate_year(cls, year):
@@ -193,8 +185,8 @@ class Calendar(object):
 		Validates *year*: must be in 1-9999 range.
 		"""
 
-		if not 1 <= int(year) <= 9999:
-			raise ValueError("Year must be in range 1 - 9999")
+		if not 1 <= utility.int_year(year) <= 9999:
+			raise error.YearError("Year '{0}' not in range 1-9999".format(year))
 
 	@classmethod
 	def week(cls, year, month, day):
