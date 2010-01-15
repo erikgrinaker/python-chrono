@@ -337,6 +337,11 @@ class ISOParser_parse_dateTest(unittest.TestCase):
 			(2009, 12, 27)
 		)
 
+	def test_invalid(self):
+		"ISOParser.parse_date() raises MonthError for invalid month"
+
+		self.assertRaises(chrono.MonthError, chrono.parser.ISOParser.parse_date, "2009-13-27")
+
 	def test_month(self):
 		"ISOParser.parse_date() parses ISO month dates (yyyy-mm)"
 
@@ -397,6 +402,11 @@ class ISOParser_parse_timeTest(unittest.TestCase):
 			chrono.parser.ISOParser.parse_time("162743"),
 			(16, 27, 43)
 		)
+
+	def test_invalid(self):
+		"ISOParser.parse_time() raises HourError for invalid hours"
+
+		self.assertRaises(chrono.HourError, chrono.parser.ISOParser.parse_time, "24:27:43")
 
 	def test_none(self):
 		"ISOParser.parse_time() raises TypeError on None"

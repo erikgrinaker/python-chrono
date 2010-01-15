@@ -282,14 +282,14 @@ class ISOParser(parser.Parser):
 		try:
 			return cls.date(date)
 
-		except ValueError:
+		except error.ParseError:
 			pass
 
 		# compact date (yyyymmdd)
 		try:
 			return cls.compactdate(date)
 
-		except ValueError:
+		except error.ParseError:
 			pass
 
 		# month (yyyy-mm)
@@ -298,14 +298,14 @@ class ISOParser(parser.Parser):
 
 			return (y, m, 1)
 
-		except ValueError:
+		except error.ParseError:
 			pass
 
 		# year (yyyy)
 		try:
 			return (cls.year(date), 1, 1)
 
-		except ValueError:
+		except error.ParseError:
 			pass
 
 		# week (yyyy-Www)
@@ -314,7 +314,7 @@ class ISOParser(parser.Parser):
 
 			return calendar.ISOCalendar.week_to_date(y, w)
 
-		except ValueError:
+		except error.ParseError:
 			pass
 
 		# compact week (yyyyWww)
@@ -323,7 +323,7 @@ class ISOParser(parser.Parser):
 
 			return calendar.ISOCalendar.week_to_date(y, w)
 
-		except ValueError:
+		except error.ParseError:
 			pass
 
 		# weekdate (yyyy-Www-d)
@@ -332,7 +332,7 @@ class ISOParser(parser.Parser):
 
 			return calendar.ISOCalendar.weekdate_to_date(y, w, d)
 
-		except ValueError:
+		except error.ParseError:
 			pass
 
 		# compact weekdate (yyyyWwwd)
@@ -341,7 +341,7 @@ class ISOParser(parser.Parser):
 
 			return calendar.ISOCalendar.weekdate_to_date(y, w, d)
 
-		except ValueError:
+		except error.ParseError:
 			pass
 
 		# ordinal (yyyy-ddd)
@@ -350,7 +350,7 @@ class ISOParser(parser.Parser):
 
 			return calendar.ISOCalendar.ordinal_to_date(y, d)
 
-		except ValueError:
+		except error.ParseError:
 			pass
 
 		# compact ordinal (yyyy-ddd)
@@ -359,7 +359,7 @@ class ISOParser(parser.Parser):
 
 			return calendar.ISOCalendar.ordinal_to_date(y, d)
 
-		except ValueError:
+		except error.ParseError:
 			pass
 
 		# handle unknown formats
@@ -383,14 +383,14 @@ class ISOParser(parser.Parser):
 		try:
 			return cls.time(time)
 
-		except ValueError:
+		except error.ParseError:
 			pass
 
 		# compact time
 		try:
 			return cls.compacttime(time)
 
-		except ValueError:
+		except error.ParseError:
 			pass
 
 		raise error.ParseError("Invalid ISO time value '{0}'".format(time))
