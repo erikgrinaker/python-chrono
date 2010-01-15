@@ -19,6 +19,7 @@ from . import calendar
 from . import clock
 from . import formatter
 from . import parser
+from . import utility
 from .date import Date
 from .error import *
 from .time import Time

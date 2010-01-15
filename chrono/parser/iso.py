@@ -21,6 +21,7 @@ from __future__ import absolute_import
 from . import parser
 from .. import calendar
 from .. import clock
+from .. import utility
 
 import re
 
@@ -129,7 +130,7 @@ class ISOParser(parser.Parser):
 		year, month, and day.
 		"""
 
-		match = cls.int(cls.regexp(cls.re_compactdate, date))
+		match = utility.integer(cls.regexp(cls.re_compactdate, date))
 
 		calendar.ISOCalendar.validate(
 			match["year"],
@@ -146,7 +147,7 @@ class ISOParser(parser.Parser):
 		year and ordinal day.
 		"""
 
-		match = cls.int(cls.regexp(cls.re_compactordinal, date))
+		match = utility.integer(cls.regexp(cls.re_compactordinal, date))
 
 		calendar.ISOCalendar.validate_ordinal(
 			match["year"],
@@ -163,7 +164,7 @@ class ISOParser(parser.Parser):
 		which will be interpreted as 0.
 		"""
 
-		match = cls.int(cls.regexp(cls.re_compacttime, time))
+		match = utility.integer(cls.regexp(cls.re_compacttime, time))
 
 		h = match["hour"]
 		m = match["minute"] or 0
@@ -181,7 +182,7 @@ class ISOParser(parser.Parser):
 		standard requires them.
 		"""
 
-		match = cls.int(cls.regexp(cls.re_compactweek, date))
+		match = utility.integer(cls.regexp(cls.re_compactweek, date))
 
 		calendar.ISOCalendar.validate_week(
 			match["year"],
@@ -197,7 +198,7 @@ class ISOParser(parser.Parser):
 		week, and weekday.
 		"""
 
-		match = cls.int(cls.regexp(cls.re_compactweekdate, date))
+		match = utility.integer(cls.regexp(cls.re_compactweekdate, date))
 
 		calendar.ISOCalendar.validate_weekdate(
 			match["year"],
@@ -215,7 +216,7 @@ class ISOParser(parser.Parser):
 		standard requires them.
 		"""
 
-		match = cls.int(cls.regexp(cls.re_date, date))
+		match = utility.integer(cls.regexp(cls.re_date, date))
 
 		calendar.ISOCalendar.validate(
 			match["year"],
@@ -233,7 +234,7 @@ class ISOParser(parser.Parser):
 		requires them.
 		"""
 
-		match = cls.int(cls.regexp(cls.re_month, date))
+		match = utility.integer(cls.regexp(cls.re_month, date))
 
 		calendar.ISOCalendar.validate_year(match["year"])
 		calendar.ISOCalendar.validate_month(match["month"])
@@ -247,7 +248,7 @@ class ISOParser(parser.Parser):
 		year and ordinal day.
 		"""
 
-		match = cls.int(cls.regexp(cls.re_ordinal, date))
+		match = utility.integer(cls.regexp(cls.re_ordinal, date))
 
 		calendar.ISOCalendar.validate_ordinal(
 			match["year"],
@@ -402,7 +403,7 @@ class ISOParser(parser.Parser):
 		the ISO standard requires them.
 		"""
 
-		match = cls.int(cls.regexp(cls.re_time, time))
+		match = utility.integer(cls.regexp(cls.re_time, time))
 
 		h = match["hour"]
 		m = match["minute"] or 0
@@ -420,7 +421,7 @@ class ISOParser(parser.Parser):
 		standard requires them.
 		"""
 
-		match = cls.int(cls.regexp(cls.re_week, date))
+		match = utility.integer(cls.regexp(cls.re_week, date))
 
 		calendar.ISOCalendar.validate_week(
 			match["year"],
@@ -437,7 +438,7 @@ class ISOParser(parser.Parser):
 		the ISO standard requires them.
 		"""
 
-		match = cls.int(cls.regexp(cls.re_weekdate, date))
+		match = utility.integer(cls.regexp(cls.re_weekdate, date))
 
 		calendar.ISOCalendar.validate_weekdate(
 			match["year"],
@@ -454,7 +455,7 @@ class ISOParser(parser.Parser):
 		omitted, even though the ISO standard requires them.
 		"""
 
-		match = cls.int(cls.regexp(cls.re_year, date))
+		match = utility.integer(cls.regexp(cls.re_year, date))
 
 		calendar.ISOCalendar.validate_year(match["year"])
 

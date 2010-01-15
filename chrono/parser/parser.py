@@ -22,33 +22,6 @@ class Parser(object):
 	"""
 
 	@classmethod
-	def int(cls, value):
-		"""
-		Converts *value* to an integer. If *value* is a sequence or
-		dictionary, members will be converted to integers. Raises
-		:exc:`TypeError` if *value* (or members) isn't a string or
-		integer, or :exc:`ValueError` if *value* couldn't be converted.
-		"""
-
-		if value is None:
-			return None
-
-		elif type(value) == list:
-			value = [ cls.int(v) for v in value ]
-
-		elif type(value) == tuple:
-			value = tuple([ cls.int(v) for v in value ])
-
-		elif type(value) == dict:
-			for k, v in value.items():
-				value[k] = cls.int(v)
-
-		else:
-			value = int(value)
-
-		return value
-
-	@classmethod
 	def regexp(cls, regexp, subject):
 		"""
 		Parses the string *subject* based on the regular expression object *regexp*,
