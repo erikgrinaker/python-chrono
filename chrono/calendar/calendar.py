@@ -122,7 +122,7 @@ class Calendar(object):
 		"""
 
 		if not 1 <= utility.int_month(month) <= 12:
-			raise error.MonthError("Month {0} not in range 1-12".format(month))
+			raise error.MonthError("Month '{0}' not in range 1-12".format(month))
 
 	@classmethod
 	def validate_ordinal(cls, year, day):
