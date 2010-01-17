@@ -49,45 +49,55 @@ The exception tree is structured as follows:
 
 
 class DateTimeError(ValueError):
-	"Error for invalid date and/or time."
-	pass
+    "Error for invalid date and/or time."
+    pass
+
 
 class DateError(DateTimeError):
-	"Error for invalid date."
-	pass
+    "Error for invalid date."
+    pass
+
 
 class YearError(DateError):
-	"Error for invalid year."
-	pass
+    "Error for invalid year."
+    pass
+
 
 class MonthError(DateError):
-	"Error for invalid month."
-	pass
+    "Error for invalid month."
+    pass
+
 
 class WeekError(DateError):
-	"Error for invalid week."
-	pass
+    "Error for invalid week."
+    pass
+
 
 class DayError(DateError):
-	"Error for invalid day."
-	pass
+    "Error for invalid day."
+    pass
+
 
 class TimeError(DateTimeError):
-	"Error for invalid time."
-	pass
+    "Error for invalid time."
+    pass
+
 
 class HourError(TimeError):
-	"Error for invalid hour."
-	pass
+    "Error for invalid hour."
+    pass
+
 
 class MinuteError(TimeError):
-	"Error for invalid minute."
-	pass
+    "Error for invalid minute."
+    pass
+
 
 class SecondError(TimeError):
-	"Error for invalid second."
-	pass
+    "Error for invalid second."
+    pass
+
 
 class ParseError(ValueError):
-	"Error for parse failures."
-	pass
+    "Error for parse failures."
+    pass
