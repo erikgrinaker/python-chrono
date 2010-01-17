@@ -13,7 +13,7 @@ Contents:
    intro.rst
    date.rst
    time.rst
-   calendar.rst
+   calendar/index.rst
    clock.rst
    error.rst
    parser.rst

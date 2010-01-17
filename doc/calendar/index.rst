@@ -6,5 +6,5 @@
 .. toctree::
    :maxdepth: 2
 
-   calendar/calendar.rst
-   calendar/iso.rst
+   calendar.rst
+   iso.rst

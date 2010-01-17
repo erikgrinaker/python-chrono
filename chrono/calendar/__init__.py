@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #
 # python-chrono - a date/time module for python
 #
@@ -16,8 +17,8 @@
 #
 
 """
-This module contains various classes that provide calendar-related functionality,
-related to issues like week numbers, leap years, validation, etc.
+This module contains various classes that provide calendar-related
+functionality, such as week numbers, leap years, validation, etc.
 
 :class:`chrono.calendar.Calendar` is a base class which implements methods
 common to all gregorian-based calendars, while calendar-specific methods will
