@@ -16,7 +16,36 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from __future__ import absolute_import
+"""
+This module contains various exceptions used by python-chrono.
+
+.. note::
+
+   These exceptions are imported into the main :mod:`chrono` module,
+   and can therefore be referenced both via (for example)
+   :class:`chrono.error.YearError` and :class:`chrono.YearError`.
+
+The exception tree is structured as follows:
+
+* :class:`ValueError`
+
+  * :class:`chrono.error.DateTimeError`
+
+    * :class:`chrono.error.DateError`
+
+      * :class:`chrono.error.DayError`
+      * :class:`chrono.error.MonthError`
+      * :class:`chrono.error.WeekError`
+      * :class:`chrono.error.YearError`
+
+    * :class:`chrono.error.TimeError`
+
+      * :class:`chrono.error.HourError`
+      * :class:`chrono.error.MinuteError`
+      * :class:`chrono.error.SecondError`
+
+  * :class:`chrono.error.ParseError`
+"""
 
 
 class DateTimeError(ValueError):

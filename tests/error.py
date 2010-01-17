@@ -24,7 +24,7 @@ import unittest
 class DateErrorTest(unittest.TestCase):
 
 	def test_subclass(self):
-		"DateError is subclass of DatetimeError"
+		"DateError is a subclass of DatetimeError"
 
 		self.assertTrue(issubclass(chrono.DateError, chrono.DateTimeError))
 
@@ -32,7 +32,7 @@ class DateErrorTest(unittest.TestCase):
 class DateTimeErrorTest(unittest.TestCase):
 
 	def test_subclass(self):
-		"DateTimeError is subclass of ValueError"
+		"DateTimeError is a subclass of ValueError"
 
 		self.assertTrue(issubclass(chrono.DateTimeError, ValueError))
 
@@ -40,7 +40,7 @@ class DateTimeErrorTest(unittest.TestCase):
 class DayErrorTest(unittest.TestCase):
 
 	def test_subclass(self):
-		"DayError is subclass of DateError"
+		"DayError is a subclass of DateError"
 
 		self.assertTrue(issubclass(chrono.DayError, chrono.DateError))
 
@@ -48,7 +48,7 @@ class DayErrorTest(unittest.TestCase):
 class HourErrorTest(unittest.TestCase):
 
 	def test_subclass(self):
-		"HourError is subclass of TimeError"
+		"HourError is a subclass of TimeError"
 
 		self.assertTrue(issubclass(chrono.HourError, chrono.TimeError))
 
@@ -56,7 +56,7 @@ class HourErrorTest(unittest.TestCase):
 class MinuteErrorTest(unittest.TestCase):
 
 	def test_subclass(self):
-		"MinuteError is subclass of TimeError"
+		"MinuteError is a subclass of TimeError"
 
 		self.assertTrue(issubclass(chrono.MinuteError, chrono.TimeError))
 
@@ -64,7 +64,7 @@ class MinuteErrorTest(unittest.TestCase):
 class MonthErrorTest(unittest.TestCase):
 
 	def test_subclass(self):
-		"MonthError is subclass of DateError"
+		"MonthError is a subclass of DateError"
 
 		self.assertTrue(issubclass(chrono.MonthError, chrono.DateError))
 
@@ -72,7 +72,7 @@ class MonthErrorTest(unittest.TestCase):
 class ParseErrorTest(unittest.TestCase):
 
 	def test_subclass(self):
-		"ParseError is subclass of ValueError"
+		"ParseError is a subclass of ValueError"
 
 		self.assertTrue(issubclass(chrono.ParseError, ValueError))
 
@@ -80,7 +80,7 @@ class ParseErrorTest(unittest.TestCase):
 class SecondErrorTest(unittest.TestCase):
 
 	def test_subclass(self):
-		"SecondError is subclass of TimeError"
+		"SecondError is a subclass of TimeError"
 
 		self.assertTrue(issubclass(chrono.SecondError, chrono.TimeError))
 
@@ -88,7 +88,7 @@ class SecondErrorTest(unittest.TestCase):
 class TimeErrorTest(unittest.TestCase):
 
 	def test_subclass(self):
-		"TimeError is subclass of DatetimeError"
+		"TimeError is a subclass of DatetimeError"
 
 		self.assertTrue(issubclass(chrono.TimeError, chrono.DateTimeError))
 
@@ -96,7 +96,7 @@ class TimeErrorTest(unittest.TestCase):
 class WeekErrorTest(unittest.TestCase):
 
 	def test_subclass(self):
-		"WeekError is subclass of DateError"
+		"WeekError is a subclass of DateError"
 
 		self.assertTrue(issubclass(chrono.WeekError, chrono.DateError))
 
@@ -104,7 +104,7 @@ class WeekErrorTest(unittest.TestCase):
 class YearErrorTest(unittest.TestCase):
 
 	def test_subclass(self):
-		"YearError is subclass of DateError"
+		"YearError is a subclass of DateError"
 
 		self.assertTrue(issubclass(chrono.YearError, chrono.DateError))
 
