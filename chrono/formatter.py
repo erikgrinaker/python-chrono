@@ -18,6 +18,8 @@
 
 from __future__ import absolute_import
 
+from . import calendar
+
 import re
 import string
 
@@ -90,6 +92,19 @@ class Formatter(object):
 		elif name == "0month":
 			return self.month and str(self.month).zfill(2) or ""
 
+		elif name == "monthname":
+			return self.month and calendar.Calendar.monthname(self.month) or ""
+
+		elif name == "shortmonthname":
+			return self.month and calendar.Calendar.monthname(self.month, True) or ""
+
+		# handle week formatting
+		elif name == "week":
+			return self.year and self.month and self.day and str(calendar.ISOCalendar.week(self.year, self.month, self.day)[1]) or ""
+
+		elif name == "0week":
+			return self.year and self.month and self.day and str(calendar.ISOCalendar.week(self.year, self.month, self.day)[1]).zfill(2) or ""
+
 		# handle day formatting
 		elif name == "day":
 			return self.day and str(self.day) or ""
@@ -97,12 +112,31 @@ class Formatter(object):
 		elif name == "0day":
 			return self.day and str(self.day).zfill(2) or ""
 
+		# handle weekday formatting
+		elif name == "weekday":
+			return self.year and self.month and self.day and str(calendar.ISOCalendar.weekday(self.year, self.month, self.day)) or ""
+
+		elif name == "weekdayname":
+			return self.year and self.month and self.day and calendar.ISOCalendar.weekdayname(calendar.ISOCalendar.weekday(self.year, self.month, self.day)) or ""
+
+		elif name == "shortweekdayname":
+			return self.year and self.month and self.day and calendar.ISOCalendar.weekdayname(calendar.ISOCalendar.weekday(self.year, self.month, self.day), True) or ""
+
 		# handle hour formatting
 		elif name == "hour":
 			return self.hour is not None and str(self.hour) or ""
 
 		elif name == "0hour":
 			return self.hour is not None and str(self.hour).zfill(2) or ""
+
+		elif name == "012hour":
+			return self.hour is not None and str(self.hour > 12 and str(self.hour - 12).zfill(2) or self.hour) or ""
+
+		elif name == "12hour":
+			return self.hour is not None and str(self.hour > 12 and str(self.hour - 12) or self.hour) or ""
+
+		elif name == "ampm":
+			return self.hour is not None and self.hour >= 12 and "PM" or "AM"
 
 		# handle minute formatting
 		elif name == "minute":
