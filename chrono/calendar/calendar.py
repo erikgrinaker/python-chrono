@@ -62,6 +62,22 @@ class Calendar(object):
 		)[1]
 
 	@classmethod
+	def monthname(cls, month, short = False):
+		"""
+		Returns the name of the given month, according to the
+		current system locale. If *short* is **True**, returns
+		the abbreviated month name.
+		"""
+
+		month = utility.int_month(month)
+
+		cls.validate_month(month)
+
+		d = datetime.date(2000, month, 1)
+
+		return d.strftime(short and "%b" or "%B")
+
+	@classmethod
 	def ordinal(cls, year, month, day):
 		"""
 		Returns the ordinal date (day number in the year) for the given date.
@@ -251,6 +267,21 @@ class Calendar(object):
 	def weekday(cls, year, month, day):
 		"""
 		Returns the weekday of the given date.
+
+		.. note:: This is a placeholder method which just raises
+		   :exc:`NotImplementedError`, it is implemented in
+		   calendar-specific subclasses.
+		"""
+
+		raise NotImplementedError(
+			"This is a calendar-specific method to be handled in subclasses"
+		)
+
+	@classmethod
+	def weekdayname(cls, weekday, short = False):
+		"""
+		Returns the weekday name of the given weekday. If *short*
+		is **True**, returns the abbreviated weekday name.
 
 		.. note:: This is a placeholder method which just raises
 		   :exc:`NotImplementedError`, it is implemented in

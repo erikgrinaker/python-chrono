@@ -148,6 +148,21 @@ class ISOCalendar(Calendar):
 		) + 1
 
 	@classmethod
+	def weekdayname(cls, weekday, short = False):
+		"""
+		Returns the weekday name of the given weekday. If *short*
+		is **True**, returns the abbreviated weekday name.
+		"""
+
+		weekday = utility.int_day(weekday)
+
+		cls.validate_weekday(weekday)
+
+		d = datetime.date(2000, 1, 2 + weekday)
+
+		return d.strftime(short and "%a" or "%A")
+
+	@classmethod
 	def weeks(cls, year):
 		"""
 		Returns the number of weeks in *year*.

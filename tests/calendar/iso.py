@@ -431,6 +431,24 @@ class ISOCalendar_weekdayTest(unittest.TestCase):
 		self.assertEquals(chrono.calendar.ISOCalendar.weekday(2009, 12, 27), 7)
 
 
+class ISOCalendar_weekdaynameTest(unittest.TestCase):
+
+	def test_full(self):
+		"ISOCalendar.weekdayname() returns full weekday name"
+
+		self.assertEquals(chrono.calendar.ISOCalendar.weekdayname(4), "Thursday")
+
+	def test_short(self):
+		"ISOCalendar.weekdayname() returns short weekday name on short-parameter"
+
+		self.assertEquals(chrono.calendar.ISOCalendar.weekdayname(4, True), "Thu")
+
+	def test_invalid(self):
+		"ISOCalendar.weekdayname() raises DayError on invalid weekday"
+
+		self.assertRaises(chrono.DayError, chrono.calendar.ISOCalendar.weekdayname, 8)
+
+
 class ISOCalendar_weeksTest(unittest.TestCase):
 
 	def test_2008(self):

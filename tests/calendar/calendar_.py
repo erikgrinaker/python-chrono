@@ -100,6 +100,24 @@ class Calendar_monthdaysTest(unittest.TestCase):
 		self.assertRaises(chrono.MonthError, chrono.calendar.Calendar.monthdays, 2009, "abc")
 
 
+class Calendar_monthnameTest(unittest.TestCase):
+
+	def test_full(self):
+		"Calendar.monthname() returns full month name"
+
+		self.assertEquals(chrono.calendar.Calendar.monthname(4), "April")
+
+	def test_short(self):
+		"Calendar.monthname() returns short month name on short-parameter"
+
+		self.assertEquals(chrono.calendar.Calendar.monthname(4, True), "Apr")
+
+	def test_invalid(self):
+		"Calendar.monthname() raises MonthError on invalid month"
+
+		self.assertRaises(chrono.MonthError, chrono.calendar.Calendar.monthname, 13)
+
+
 class Calendar_ordinalTest(unittest.TestCase):
 
 	def test_2009_01_05(self):
@@ -434,6 +452,14 @@ class Calendar_weekdayTest(unittest.TestCase):
 		"Calendar.weekday() raises NotImplementedError"
 
 		self.assertRaises(NotImplementedError, chrono.calendar.Calendar.weekday, 2009, 12, 28)
+
+
+class Calendar_weekdaynameTest(unittest.TestCase):
+
+	def test_notimplemented(self):
+		"Calendar.weekdayname() raises NotImplementedError"
+
+		self.assertRaises(NotImplementedError, chrono.calendar.Calendar.weekdayname, 4)
 
 
 class Calendar_weeksTest(unittest.TestCase):
