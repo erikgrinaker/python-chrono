@@ -16,6 +16,7 @@ Contents:
    calendar/index.rst
    clock.rst
    error.rst
+   formatter.rst
    parser.rst
    utility.rst
 

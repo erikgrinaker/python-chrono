@@ -23,138 +23,199 @@ import unittest
 
 class Formatter_formatTest(unittest.TestCase):
 
-	def setUp(self):
-		unittest.TestCase.setUp(self)
+    def test_012hour(self):
+        "Formatter.format() handles $012hour"
 
-		self.f = chrono.formatter.Formatter(2010, 8, 4, 1, 2, 3)
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$012hour", 2010, 8, 4, 15, 2, 3
+        ), "03")
 
-	def test_012hour(self):
-		"Formatter.format() handles $012hour"
+    def test_0day(self):
+        "Formatter.format() handles $0day"
 
-		self.f.hour = 15
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$0day", 2010, 8, 4, 1, 2, 3
+        ), "04")
 
-		self.assertEqual(self.f.format("$012hour"), "03")
+    def test_0hour(self):
+        "Formatter.format() handles $0hour"
 
-	def test_0day(self):
-		"Formatter.format() handles $0day"
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$0hour", 2010, 8, 4, 1, 2, 3
+        ), "01")
 
-		self.assertEqual(self.f.format("$0day"), "04")
+    def test_0minute(self):
+        "Formatter.format() handles $0minute"
 
-	def test_0hour(self):
-		"Formatter.format() handles $0hour"
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$0minute", 2010, 8, 4, 1, 2, 3
+        ), "02")
 
-		self.assertEqual(self.f.format("$0hour"), "01")
+    def test_0month(self):
+        "Formatter.format() handles $0month"
 
-	def test_0minute(self):
-		"Formatter.format() handles $0minute"
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$0month", 2010, 8, 4, 1, 2, 3
+        ), "08")
 
-		self.assertEqual(self.f.format("$0minute"), "02")
+    def test_0second(self):
+        "Formatter.format() handles $0second"
 
-	def test_0month(self):
-		"Formatter.format() handles $0month"
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$0second", 2010, 8, 4, 1, 2, 3
+        ), "03")
 
-		self.assertEqual(self.f.format("$0month"), "08")
+    def test_0week(self):
+        "Formatter.format() handles $0week"
 
-	def test_0second(self):
-		"Formatter.format() handles $0second"
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$0week", 2010, 2, 4, 1, 2, 3
+        ), "05")
 
-		self.assertEqual(self.f.format("$0second"), "03")
+    def test_0year(self):
+        "Formatter.format() handles $0year"
 
-	def test_0week(self):
-		"Formatter.format() handles $0week"
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$0year", 492, 8, 4, 1, 2, 3
+        ), "0492")
 
-		self.f.month = 2
+    def test_12hour(self):
+        "Formatter.format() handles $12hour"
 
-		self.assertEqual(self.f.format("$0week"), "05")
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$12hour", 2010, 8, 4, 15, 2, 3
+        ), "3")
 
-	def test_0year(self):
-		"Formatter.format() handles $0year"
+    def test_ampm(self):
+        "Formatter.format() handles $ampm"
 
-		self.f.year = 492
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$ampm", 2010, 8, 4, 1, 2, 3
+        ), "AM")
 
-		self.assertEqual(self.f.format("$0year"), "0492")
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$ampm", 2010, 8, 4, 12, 2, 3
+        ), "PM")
 
-	def test_12hour(self):
-		"Formatter.format() handles $12hour"
+    def test_day(self):
+        "Formatter.format() handles $day"
 
-		self.f.hour = 15
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$day", 2010, 8, 4, 1, 2, 3
+        ), "4")
 
-		self.assertEqual(self.f.format("$12hour"), "3")
+    def test_escape(self):
+        "Formatter.format() handles escaped $ signs"
 
-	def test_ampm(self):
-		"Formatter.format() handles $ampm"
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$year$$$month", 2010, 8, 4, 1, 2, 3
+        ), "2010$8")
 
-		self.assertEqual(self.f.format("$ampm"), "AM")
+    def test_hour(self):
+        "Formatter.format() handles $hour"
 
-		self.f.hour = 12
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$hour", 2010, 8, 4, 1, 2, 3
+        ), "1")
 
-		self.assertEqual(self.f.format("$ampm"), "PM")
+    def test_invalid(self):
+        "Formatter.format() ignores invalid patterns"
 
-	def test_day(self):
-		"Formatter.format() handles $day"
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$-}", 2010, 8, 4, 1, 2, 3
+        ), "$-}")
 
-		self.assertEqual(self.f.format("$day"), "4")
+    def test_minute(self):
+        "Formatter.format() handles $minute"
 
-	def test_hour(self):
-		"Formatter.format() handles $hour"
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$minute", 2010, 8, 4, 1, 2, 3
+        ), "2")
 
-		self.assertEqual(self.f.format("$hour"), "1")
+    def test_missing(self):
+        "Formatter.format() returns blank content for variables with no value"
 
-	def test_minute(self):
-		"Formatter.format() handles $minute"
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$0year-$0month-$0day", 2010, None, 4, 1, 2, 3
+        ), "2010--04")
 
-		self.assertEqual(self.f.format("$minute"), "2")
+    def test_month(self):
+        "Formatter.format() handles $month"
 
-	def test_month(self):
-		"Formatter.format() handles $month"
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$month", 2010, 8, 4, 1, 2, 3
+        ), "8")
 
-		self.assertEqual(self.f.format("$month"), "8")
+    def test_monthname(self):
+        "Formatter.format() handles $monthname"
 
-	def test_monthname(self):
-		"Formatter.format() handles $monthname"
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$monthname", 2010, 8, 4, 1, 2, 3
+        ), "August")
 
-		self.assertEqual(self.f.format("$monthname"), "August")
+    def test_second(self):
+        "Formatter.format() handles $second"
 
-	def test_second(self):
-		"Formatter.format() handles $second"
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$second", 2010, 8, 4, 1, 2, 3
+        ), "3")
 
-		self.assertEqual(self.f.format("$second"), "3")
+    def test_shortmonthname(self):
+        "Formatter.format() handles $shortmonthname"
 
-	def test_shortmonthname(self):
-		"Formatter.format() handles $shortmonthname"
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$shortmonthname", 2010, 8, 4, 1, 2, 3
+        ), "Aug")
 
-		self.assertEqual(self.f.format("$shortmonthname"), "Aug")
+    def test_shortweekdayname(self):
+        "Formatter.format() handles $shortweekdayname"
 
-	def test_shortweekdayname(self):
-		"Formatter.format() handles $shortweekdayname"
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$shortweekdayname", 2010, 8, 4, 1, 2, 3
+        ), "Wed")
 
-		self.assertEqual(self.f.format("$shortweekdayname"), "Wed")
+    def test_shortyear(self):
+        "Formatter.format() handles $shortyear"
 
-	def test_shortyear(self):
-		"Formatter.format() handles $shortyear"
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$shortyear", 2010, 8, 4, 1, 2, 3
+        ), "10")
 
-		self.assertEqual(self.f.format("$shortyear"), "10")
+    def test_unknown(self):
+        "Formatter.format() ignores unknown variables"
 
-	def test_week(self):
-		"Formatter.format() handles $week"
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$0year-$dummy-$0day", 2010, 8, 4, 1, 2, 3
+        ), "2010-$dummy-04")
 
-		self.assertEqual(self.f.format("$week"), "31")
+    def test_week(self):
+        "Formatter.format() handles $week"
 
-	def test_weekday(self):
-		"Formatter.format() handles $weekday"
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$week", 2010, 8, 4, 1, 2, 3
+        ), "31")
 
-		self.assertEqual(self.f.format("$weekday"), "3")
+    def test_weekday(self):
+        "Formatter.format() handles $weekday"
 
-	def test_weekdayname(self):
-		"Formatter.format() handles $weekdayname"
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$weekday", 2010, 8, 4, 1, 2, 3
+        ), "3")
 
-		self.assertEqual(self.f.format("$weekdayname"), "Wednesday")
+    def test_weekdayname(self):
+        "Formatter.format() handles $weekdayname"
 
-	def test_year(self):
-		"Formatter.format() handles $year"
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$weekdayname", 2010, 8, 4, 1, 2, 3
+        ), "Wednesday")
 
-		self.assertEqual(self.f.format("$year"), "2010")
+    def test_year(self):
+        "Formatter.format() handles $year"
+
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$year", 2010, 8, 4, 1, 2, 3
+        ), "2010")
 
 
 if __name__ == "__main__":
-	unittest.main()
+    unittest.main()

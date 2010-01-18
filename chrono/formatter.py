@@ -25,135 +25,178 @@ import string
 
 
 class Formatter(object):
-	"""
-	Date/time template formatter. Template variables are defined as *{name}*,
-	for example: *{year}-{0month}-{0day}* is formatted as *2010-01-11*.
+    """
+    Date/time template formatter, main format method is
+    :meth:`chrono.formatter.Formatter.format`.
+    """
 
-	Valid variable names:
+    __re_replace = re.compile('''
+        \$(?:                           # starting variable delimiter
+        (?P<escaped>\$)             |   # escape sequence (two delimiters)
+        (?P<named>[a-z0-9_]+)       |   # delimiter and identifier
+        \{(?P<braced>[a-z0-9_]+)\}  |   # delimiter and braced identifier
+        (?P<invalid>)                   # invalid delimiter expression
+        )
+    ''', re.VERBOSE | re.IGNORECASE)
 
-	* year
-	* month
-	* day
-	"""
+    @classmethod
+    def __cb_replace(cls, match, year, month, day, hour, minute, second):
+        "Callback function for replacing variables in a template"
 
-	year	= None
-	month	= None
-	day	= None
-	hour	= None
-	minute	= None
-	second	= None
+        # handle escaped delimiters
+        if match.group("escaped") is not None:
+            return "$"
 
-	re_replace = re.compile('''
-		\$(?:					# starting variable delimiter
-		(?P<escaped>\$)			|	# escape sequence (two delimiters)
-		(?P<named>[a-z0-9_]+)		|	# delimiter and identifier
-		\{(?P<braced>[a-z0-9_]+)\}	|	# delimiter and braced identifier
-		(?P<invalid>)				# invalid delimiter expression
-		)
-	''', re.VERBOSE | re.IGNORECASE)
+        # handle invalid identifiers
+        elif match.group("invalid") is not None:
+            return match.group(0)
 
-	def __init__(self, year = None, month = None, day = None, hour = None, minute = None, second = None):
+        # otherwise, find name to use
+        name = match.group("named") or match.group("braced")
 
-		self.year	= year
-		self.month	= month
-		self.day	= day
-		self.hour	= hour
-		self.minute	= minute
-		self.second	= second
+        # handle year formatting
+        if name == "year":
+            return year and str(year) or ""
 
-	def __re_replace(self, match):
-		"Callback function for replacing variables in a template"
+        elif name == "0year":
+            return year and str(year).zfill(4) or ""
 
-		# handle escaped delimiters
-		if match.group("escaped") is not None:
-			return "$"
+        elif name == "shortyear":
+            return year and str(year)[-2:] or ""
 
-		# handle invalid identifiers
-		elif match.group("invalid") is not None:
-			return match.group(0)
+        # handle month formatting
+        elif name == "month":
+            return month and str(month) or ""
 
-		# otherwise, find name to use
-		name = match.group("named") or match.group("braced")
+        elif name == "0month":
+            return month and str(month).zfill(2) or ""
 
-		# handle year formatting
-		if name == "year":
-			return self.year and str(self.year) or ""
+        elif name == "monthname":
+            return month and calendar.Calendar.monthname(month) or ""
 
-		elif name == "0year":
-			return self.year and str(self.year).zfill(4) or ""
+        elif name == "shortmonthname":
+            return month and calendar.Calendar.monthname(month, True) or ""
 
-		elif name == "shortyear":
-			return self.year and str(self.year)[-2:] or ""
+        # handle week formatting
+        elif name == "week":
+            return year and month and day and \
+                str(calendar.ISOCalendar.week(year, month, day)[1]) or ""
 
-		# handle month formatting
-		elif name == "month":
-			return self.month and str(self.month) or ""
+        elif name == "0week":
+            return year and month and day and str(
+                calendar.ISOCalendar.week(year, month, day)[1]
+            ).zfill(2) or ""
 
-		elif name == "0month":
-			return self.month and str(self.month).zfill(2) or ""
+        # handle day formatting
+        elif name == "day":
+            return day and str(day) or ""
 
-		elif name == "monthname":
-			return self.month and calendar.Calendar.monthname(self.month) or ""
+        elif name == "0day":
+            return day and str(day).zfill(2) or ""
 
-		elif name == "shortmonthname":
-			return self.month and calendar.Calendar.monthname(self.month, True) or ""
+        # handle weekday formatting
+        elif name == "weekday":
+            return year and month and day and \
+                str(calendar.ISOCalendar.weekday(year, month, day)) or ""
 
-		# handle week formatting
-		elif name == "week":
-			return self.year and self.month and self.day and str(calendar.ISOCalendar.week(self.year, self.month, self.day)[1]) or ""
+        elif name == "weekdayname":
+            return year and month and day and \
+                calendar.ISOCalendar.weekdayname(
+                    calendar.ISOCalendar.weekday(year, month, day)
+                ) or ""
 
-		elif name == "0week":
-			return self.year and self.month and self.day and str(calendar.ISOCalendar.week(self.year, self.month, self.day)[1]).zfill(2) or ""
+        elif name == "shortweekdayname":
+            return year and month and day and \
+                calendar.ISOCalendar.weekdayname(
+                    calendar.ISOCalendar.weekday(year, month, day), True
+                ) or ""
 
-		# handle day formatting
-		elif name == "day":
-			return self.day and str(self.day) or ""
+        # handle hour formatting
+        elif name == "hour":
+            return hour is not None and str(hour) or ""
 
-		elif name == "0day":
-			return self.day and str(self.day).zfill(2) or ""
+        elif name == "0hour":
+            return hour is not None and str(hour).zfill(2) or ""
 
-		# handle weekday formatting
-		elif name == "weekday":
-			return self.year and self.month and self.day and str(calendar.ISOCalendar.weekday(self.year, self.month, self.day)) or ""
+        elif name == "012hour":
+            return hour is not None and str(hour > 12 and \
+                str(hour - 12).zfill(2) or hour) or ""
 
-		elif name == "weekdayname":
-			return self.year and self.month and self.day and calendar.ISOCalendar.weekdayname(calendar.ISOCalendar.weekday(self.year, self.month, self.day)) or ""
+        elif name == "12hour":
+            return hour is not None and str(hour > 12 and \
+                str(hour - 12) or hour) or ""
 
-		elif name == "shortweekdayname":
-			return self.year and self.month and self.day and calendar.ISOCalendar.weekdayname(calendar.ISOCalendar.weekday(self.year, self.month, self.day), True) or ""
+        elif name == "ampm":
+            return hour is not None and hour >= 12 and "PM" or "AM"
 
-		# handle hour formatting
-		elif name == "hour":
-			return self.hour is not None and str(self.hour) or ""
+        # handle minute formatting
+        elif name == "minute":
+            return minute is not None and str(minute) or ""
 
-		elif name == "0hour":
-			return self.hour is not None and str(self.hour).zfill(2) or ""
+        elif name == "0minute":
+            return minute is not None and str(minute).zfill(2) or ""
 
-		elif name == "012hour":
-			return self.hour is not None and str(self.hour > 12 and str(self.hour - 12).zfill(2) or self.hour) or ""
+        # handle second formatting
+        elif name == "second":
+            return second is not None and str(second) or ""
 
-		elif name == "12hour":
-			return self.hour is not None and str(self.hour > 12 and str(self.hour - 12) or self.hour) or ""
+        elif name == "0second":
+            return second is not None and str(second).zfill(2) or ""
 
-		elif name == "ampm":
-			return self.hour is not None and self.hour >= 12 and "PM" or "AM"
+        # handle unknown variables
+        else:
+            return match.group(0)
 
-		# handle minute formatting
-		elif name == "minute":
-			return self.minute is not None and str(self.minute) or ""
+    @classmethod
+    def format(
+        cls, template,
+        year=None, month=None, day=None,
+        hour=None, minute=None, second=None
+    ):
+        """
+        Formats *template* by replacing substitution variables of the form
+        ``$name`` or ``${name}`` with formatted values based on the input
+        date.
 
-		elif name == "0minute":
-			return self.minute is not None and str(self.minute).zfill(2) or ""
+        If any necessary values are missing (ie **None**) for a substitution
+        variable, it will be replaced with an empty string.
 
-		# handle second formatting
-		elif name == "second":
-			return self.second is not None and str(self.second) or ""
+        Valid substitution variables:
 
-		elif name == "0second":
-			return self.second is not None and str(self.second).zfill(2) or ""
+        =================== ==================================
+        Variable            Description
+        =================== ==================================
+        012hour             Hour, 12-hour, zero-padded
+        0hour               Hour, zero-padded
+        0day                Day, zero-padded
+        0minute             Minute, zero-padded
+        0month              Month, zero-padded
+        0second             Second, zero-padded
+        0week               Week, zero-padded
+        0year               Year, zero-padded
+        12hour              Hour, 12-hour
+        ampm                AM/PM, based on hour
+        day                 Day
+        hour                Hour
+        minute              Minute
+        month               Month
+        monthname           Month name
+        second              Second
+        shortmonthname      Month name, abbreviated
+        shortweekdayname    Weekday name, abbreviated
+        shortyear           Year, two digits
+        week                Week
+        weekday             Weekday
+        weekdayname         Weekday name
+        year                Year
+        =================== ==================================
+        """
 
-	def format(self, template):
-		"Formats a template"
+        # wrapper function, needed to get access to date variables, and pass
+        # them on to the actual callback function
+        def wrapper(match):
+            return cls.__cb_replace(
+                match, year, month, day, hour, minute, second
+            )
 
-		return self.re_replace.sub(self.__re_replace, template)
-
+        return cls.__re_replace.sub(wrapper, template)
