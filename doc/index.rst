@@ -17,7 +17,7 @@ Contents:
    clock.rst
    error.rst
    formatter.rst
-   parser.rst
+   parser/index.rst
    utility.rst
 
 Indices and tables

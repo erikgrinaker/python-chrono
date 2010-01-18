@@ -24,49 +24,55 @@ import unittest
 
 class Parser_regexpTest(unittest.TestCase):
 
-	re_isodate = re.compile('''
-		^\s*			# ignore whitespace at start
-		(?P<year>\d{1,4})	# year
-		-(?P<month>\d{1,2})	# month
-		-(?P<day>\d{1,2})	# day
-		\s*$			# ignore whitespace at end
-	''', re.VERBOSE)
+    re_isodate = re.compile('''
+        ^\s*                # ignore whitespace at start
+        (?P<year>\d{1,4})   # year
+        -(?P<month>\d{1,2}) # month
+        -(?P<day>\d{1,2})   # day
+        \s*$                # ignore whitespace at end
+    ''', re.VERBOSE)
 
-	re_keyval = re.compile('^\s*(.*?)\s*:\s*(.*?)\s*$')
+    re_keyval = re.compile('^\s*(.*?)\s*:\s*(.*?)\s*$')
 
-	def test_integer(self):
-		"Parser.regexp() raises TypeError for integer subject"
+    def test_integer(self):
+        "Parser.regexp() raises TypeError for integer subject"
 
-		self.assertRaises(TypeError, chrono.parser.Parser.regexp, self.re_isodate, 1)
+        self.assertRaises(
+            TypeError, chrono.parser.Parser.regexp, self.re_isodate, 1
+        )
 
-	def test_nomatch(self):
-		"Parser.regexp() raises ParseError when subject doesn't match expression"
+    def test_nomatch(self):
+        "Parser.regexp() raises ParseError if input doesn't match expression"
 
-		self.assertRaises(chrono.ParseError, chrono.parser.Parser.regexp, self.re_isodate, "2009-12-")
+        self.assertRaises(
+            chrono.ParseError,
+            chrono.parser.Parser.regexp, self.re_isodate, "2009-12-"
+        )
 
-	def test_nonamed(self):
-		"Parser.regexp() returns a tuple of values if named groups aren't used"
+    def test_nonamed(self):
+        "Parser.regexp() returns a tuple of values if named groups aren't used"
 
-		groups = chrono.parser.Parser.regexp(self.re_keyval, " key: value ")
+        self.assertEquals(
+            chrono.parser.Parser.regexp(self.re_keyval, " key: value "),
+            ("key", "value")
+        )
 
-		self.assertEquals(groups, ("key", "value"))
+    def test_none(self):
+        "Parser.regexp() raises TypeError for None subject"
 
-	def test_none(self):
-		"Parser.regexp() raises TypeError for None subject"
+        self.assertRaises(
+            TypeError, chrono.parser.Parser.regexp, self.re_isodate, None
+        )
 
-		self.assertRaises(TypeError, chrono.parser.Parser.regexp, self.re_isodate, None)
+    def test_parse(self):
+        "Parser.regexp() parses string using regexp, returns named groups"
 
-	def test_parse(self):
-		"Parser.regexp() parses a string with a regexp, and returns named groups"
 
-		groups = chrono.parser.Parser.regexp(self.re_isodate, "2009-12-27")
-
-		self.assertEquals(groups, {
-			"year": "2009",
-			"month": "12",
-			"day": "27",
-		})
+        self.assertEquals(
+            chrono.parser.Parser.regexp(self.re_isodate, "2009-12-27"),
+            {"year": "2009", "month": "12", "day": "27"}
+        )
 
 
 if __name__ == "__main__":
-	unittest.main()
+    unittest.main()

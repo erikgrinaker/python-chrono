@@ -22,34 +22,34 @@ from .. import error
 
 
 class Parser(object):
-	"""
-	Base parser class, with various utility methods for subclasses
-	"""
+    """
+    Base parser class, with utility methods for subclasses.
+    """
 
-	@classmethod
-	def regexp(cls, regexp, subject):
-		"""
-		Parses the string *subject* based on the regular expression object *regexp*,
-		and returns a dict of named captured groups. Raises :exc:`chrono.ParseError`
-		if the subject doesn't match the expression, or :exc:`TypeError` on
-		invalid subject type (ie non-string).
-		"""
+    @classmethod
+    def regexp(cls, regexp, subject):
+        """
+        Parses *subject* based on the regular expression object *regexp*,
+        returns a dict of named captured groups. Raises
+        :exc:`chrono.error.ParseError` if the subject doesn't match the
+        expression, or :exc:`TypeError` on invalid (ie non-string) subject
+        type.
+        """
 
-		try:
-			match = regexp.match(subject)
+        try:
+            match = regexp.match(subject)
 
-		except TypeError:
-			raise TypeError("Input is not a string")
+        except TypeError:
+            raise TypeError("Input is not a string")
 
-		if not match:
-			raise error.ParseError(
-				"The value '{0}' doesn't match the expected pattern"
-				.format(subject)
-			)
+        if not match:
+            raise error.ParseError(
+                "The value '{0}' doesn't match the expected pattern"
+                .format(subject)
+            )
 
-		if match.groupdict():
-			return match.groupdict()
+        if match.groupdict():
+            return match.groupdict()
 
-		else:
-			return match.groups()
-
+        else:
+            return match.groups()

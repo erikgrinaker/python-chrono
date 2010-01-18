@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #
 # python-chrono - a date/time module for python
 #
@@ -16,11 +17,10 @@
 #
 
 """
-This module contains various classes that are used to parse different date/time formats.
+This module contains classes for parsing various date/time formats.
 
-:class:`chrono.parser.Parser` is a base class with various utility methods for subclasses.
-Actual parsing will always be handled by subclasses, either through a :meth:`parse`
-method, or more specialized methods.
+:class:`chrono.parser.Parser` is a base class with utility methods for
+subclasses.
 """
 
 from .iso import ISOParser
