@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #
 # python-chrono - a date/time module for python
 #
@@ -16,7 +17,7 @@
 #
 
 """
-This module contains various classes that provide clock-related functionality,
+This module contains classes that provide clock-related functionality,
 mainly for validation.
 """
 

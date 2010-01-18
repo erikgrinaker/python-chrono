@@ -26,45 +26,54 @@ import datetime
 
 
 class Clock(object):
-	"""
-	Basic 24-hour clock.
-	"""
+    """
+    Basic 24-hour clock handling.
+    """
 
-	@classmethod
-	def validate(cls, hour, minute, second):
-		"""
-		Validates a time: *hour* must be in 0-23 range, *minute* in
-		0-59 range, and *second* in 0-59 range.
-		"""
+    @classmethod
+    def validate(cls, hour, minute, second):
+        """
+        Validates a time: *hour* must be in range 0-23, *minute* in range
+        0-59, and *second* in range 0-59. If *hour*, *minute*, or *second*
+        is invalid, :exc:`chrono.error.HourError`,
+        :exc:`chrono.error.MinuteError`, or :exc:`chrono.error.SecondError`
+        will be raised.
+        """
 
-		cls.validate_hour(hour)
-		cls.validate_minute(minute)
-		cls.validate_second(second)
+        cls.validate_hour(hour)
+        cls.validate_minute(minute)
+        cls.validate_second(second)
 
-	@classmethod
-	def validate_hour(cls, hour):
-		"""
-		Validates an hour: must be in 0-23 range.
-		"""
+    @classmethod
+    def validate_hour(cls, hour):
+        """
+        Validates an hour: must be in range 0-23, otherwise raises
+        :exc:`chrono.error.HourError`.
+        """
 
-		if not 0 <= utility.int_hour(hour) <= 23:
-			raise error.HourError("Hour '{0}' not in range 0-23".format(hour))
+        if not 0 <= utility.int_hour(hour) <= 23:
+            raise error.HourError("Hour '{0}' not in range 0-23".format(hour))
 
-	@classmethod
-	def validate_minute(cls, minute):
-		"""
-		Validates a minute: must be in 0-59 range.
-		"""
+    @classmethod
+    def validate_minute(cls, minute):
+        """
+        Validates a minute: must be in range 0-59, otherwise raises
+        :exc:`chrono.error.MinuteError`.
+        """
 
-		if not 0 <= utility.int_minute(minute) <= 59:
-			raise error.MinuteError("Minute '{0}' not in range 0-59".format(minute))
+        if not 0 <= utility.int_minute(minute) <= 59:
+            raise error.MinuteError(
+                "Minute '{0}' not in range 0-59".format(minute)
+            )
 
-	@classmethod
-	def validate_second(cls, second):
-		"""
-		Validates a second: must be in 0-59 range.
-		"""
+    @classmethod
+    def validate_second(cls, second):
+        """
+        Validates a second: must be in range 0-59, otherwise raises
+        :exc:`chrono.error.SecondError`.
+        """
 
-		if not 0 <= utility.int_second(second) <= 59:
-			raise error.SecondError("Second '{0}' not in range 0-59".format(second))
-
+        if not 0 <= utility.int_second(second) <= 59:
+            raise error.SecondError(
+                "Second '{0}' not in range 0-59".format(second)
+            )
