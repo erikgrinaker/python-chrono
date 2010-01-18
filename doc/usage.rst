@@ -1,9 +1,5 @@
-Introduction
-============
-
-python-chrono is a Python module for simple and convenient date/time
-handling, including parsing, arithmetic, comparison, formatting,
-and calendar functionality.
+Usage
+=====
 
 The main classes are :class:`chrono.Date`, :class:`chrono.Time`, and
 :class:`chrono.DateTime`, which handles dates, times, and date/times
@@ -85,7 +81,7 @@ be handled according to the object type::
    (2010, 1, 17)
 
    >>> # fetch data from time.struct_time objects
-   >>> chrono.Date(time.localtime())
+   >>> chrono.Date(time.localtime()).get()
    (2010, 1, 23)
 
    >>> # fetch data from datetime.date objects
@@ -118,8 +114,8 @@ Date formatting
 ---------------
 
 Date formatting is done via the :meth:`chrono.Date.format` method, which
-takes a string containing substitution variables of the form ''$name'' or
-''${name}'', and replaces them with actual values::
+takes a string containing substitution variables of the form ``$name`` or
+``${name}``, and replaces them with actual values::
 
    >>> # full human-readable date
    >>> chrono.Date("2009-07-23").format("$weekdayname $day. $monthname $year")
@@ -129,8 +125,8 @@ takes a string containing substitution variables of the form ''$name'' or
    >>> chrono.Date("2009-07-23").format("$0year-$0month-$0day")
    '2009-07-23'
 
-For a full list of substitution variables, see the :class:`chrono.Formatter`
-documentation.
+For a full list of substitution variables, see the
+:class:`chrono.formatter.Formatter` documentation.
 
 Calendar information
 --------------------

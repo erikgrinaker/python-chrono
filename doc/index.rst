@@ -10,7 +10,7 @@ Contents:
 .. toctree::
    :maxdepth: 3
 
-   intro.rst
+   usage.rst
    date.rst
    time.rst
    calendar/index.rst
