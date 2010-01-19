@@ -1,13 +1,15 @@
+.. _usage:
+
 Usage
 =====
 
 The main classes are :class:`chrono.Date`, :class:`chrono.Time`, and
 :class:`chrono.DateTime`, which handles dates, times, and date/times
-respectively. It also contains a range of support modules which provide
+respectively. A range of other classes are also available, which provide
 the functionaliy that these classes build upon.
 
-Currently, python-chrono is built for the ISO 8601 date standard, which
-is widely used internationally (especially in west-Europe and east-Asia),
+Currently, python-chrono uses the ISO 8601 date standard, which is
+widely used internationally (especially in west-Europe and east-Asia),
 with the notable exception of the United States. As such, it only accepts
 dates in ISO format (for example, *yyyy-mm-dd*), and calendar-related
 functionality is based on the ISO calendar - more on this later. Support
