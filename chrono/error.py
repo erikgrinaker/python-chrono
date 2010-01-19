@@ -27,24 +27,31 @@ This module contains various exceptions used by python-chrono.
 
 The exception tree is structured as follows:
 
-* :class:`ValueError`
+* :class:`Exception`
 
-  * :class:`chrono.error.DateTimeError`
+  * :class:`chrono.error.NoDateTimeError`
 
-    * :class:`chrono.error.DateError`
+    * :class:`chrono.error.NoDateError`
+    * :class:`chrono.error.NoTimeError`
 
-      * :class:`chrono.error.DayError`
-      * :class:`chrono.error.MonthError`
-      * :class:`chrono.error.WeekError`
-      * :class:`chrono.error.YearError`
+  * :class:`ValueError`
 
-    * :class:`chrono.error.TimeError`
+    * :class:`chrono.error.DateTimeError`
 
-      * :class:`chrono.error.HourError`
-      * :class:`chrono.error.MinuteError`
-      * :class:`chrono.error.SecondError`
+      * :class:`chrono.error.DateError`
 
-  * :class:`chrono.error.ParseError`
+        * :class:`chrono.error.DayError`
+        * :class:`chrono.error.MonthError`
+        * :class:`chrono.error.WeekError`
+        * :class:`chrono.error.YearError`
+
+      * :class:`chrono.error.TimeError`
+
+        * :class:`chrono.error.HourError`
+        * :class:`chrono.error.MinuteError`
+        * :class:`chrono.error.SecondError`
+
+    * :class:`chrono.error.ParseError`
 """
 
 
@@ -95,6 +102,21 @@ class MinuteError(TimeError):
 
 class SecondError(TimeError):
     "Error for invalid second."
+    pass
+
+
+class NoDateTimeError(Exception):
+    "Error for missing date/time data."
+    pass
+
+
+class NoDateError(NoDateTimeError):
+    "Error for missing date."
+    pass
+
+
+class NoTimeError(NoDateTimeError):
+    "Error for missing time."
     pass
 
 
