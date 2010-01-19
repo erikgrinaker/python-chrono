@@ -429,6 +429,85 @@ class ISOParser_parse_dateTest(unittest.TestCase):
         )
 
 
+class ISOParser_parse_datetimeTest(unittest.TestCase):
+
+    def test_datetime(self):
+        "ISOParser.parse_datetime() parses datetimes"
+
+        self.assertEquals(
+            chrono.parser.ISOParser.parse_datetime("2010-07-23 16:27:43"),
+            (2010, 7, 23, 16, 27, 43)
+        )
+
+    def test_invalid_datetime(self):
+        "ISOParser.parse_datetime() raises proper error for invalid values"
+
+        self.assertRaises(
+            chrono.YearError,
+            chrono.parser.ISOParser.parse_datetime, "0000-07-23 16:27:43"
+        )
+        self.assertRaises(
+            chrono.MonthError,
+            chrono.parser.ISOParser.parse_datetime, "2010-13-23 16:27:43"
+        )
+        self.assertRaises(
+            chrono.DayError,
+            chrono.parser.ISOParser.parse_datetime, "2010-07-32 16:27:43"
+        )
+        self.assertRaises(
+            chrono.HourError,
+            chrono.parser.ISOParser.parse_datetime, "2010-07-23 24:27:43"
+        )
+        self.assertRaises(
+            chrono.MinuteError,
+            chrono.parser.ISOParser.parse_datetime, "2010-07-23 16:60:43"
+        )
+        self.assertRaises(
+            chrono.SecondError,
+            chrono.parser.ISOParser.parse_datetime, "2010-07-23 16:27:60"
+        )
+
+    def test_invalid_format(self):
+        "ISOParser.parse_datetime() raises ParseError for invalid format"
+
+        self.assertRaises(
+            chrono.ParseError,
+            chrono.parser.ISOParser.parse_datetime, "2010-07-23 16:27:43 xyz"
+        )
+
+    def test_nominutes(self):
+        "ISOParser.parse_datetime() handles times without minutes"
+
+        self.assertEquals(
+            chrono.parser.ISOParser.parse_datetime("2010-07-23 16"),
+            (2010, 7, 23, 16, 0, 0)
+        )
+
+    def test_noseconds(self):
+        "ISOParser.parse_datetime() handles times without seconds"
+
+        self.assertEquals(
+            chrono.parser.ISOParser.parse_datetime("2010-07-23 16:27"),
+            (2010, 7, 23, 16, 27, 0)
+        )
+
+    def test_t(self):
+        "ISOParser.parse_datetime() parses T-separated datetimes"
+
+        self.assertEquals(
+            chrono.parser.ISOParser.parse_datetime("2010-07-23T16:27:43"),
+            (2010, 7, 23, 16, 27, 43)
+        )
+
+    def test_t_lowercase(self):
+        "ISOParser.parse_datetime() parses t-separated datetimes"
+
+        self.assertEquals(
+            chrono.parser.ISOParser.parse_datetime("2010-07-23t16:27:43"),
+            (2010, 7, 23, 16, 27, 43)
+        )
+
+
 class ISOParser_parse_timeTest(unittest.TestCase):
 
     def test_compacttime(self):

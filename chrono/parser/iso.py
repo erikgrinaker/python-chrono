@@ -36,7 +36,8 @@ class ISOParser(parser.Parser):
     The most commonly used ISO formats are *yyyy-mm-dd* and
     *yyyy-mm-dd hh:mm:ss*, but the standard specifies a range of formats,
     listed below. Datetimes can be composed of any combination of
-    the date and time formats listed.
+    the date and time formats listed, separated by whitespace or
+    a T.
     
     =================== =================== ======================= ===============================================
     Format              Example             Description             Method
@@ -103,6 +104,14 @@ class ISOParser(parser.Parser):
         -(?P<day>\d{1,2})       # day
         \s*$                    # ignore whitespace at end
     ''', re.VERBOSE)
+
+    re_datetime = re.compile('''
+        ^\s*                    # ignore whitespace at start
+        (?P<date>\S+?)          # date
+        (?:T|\s+)               # separator
+        (?P<time>\S+?)          # time
+        \s*$                    # ignore whitespace at end
+    ''', re.VERBOSE | re.IGNORECASE)
 
     re_month = re.compile('''
         ^\s*                    # ignore whitespace at start
@@ -403,6 +412,25 @@ class ISOParser(parser.Parser):
 
         # handle unknown formats
         raise error.ParseError("Invalid ISO date value '{0}'".format(date))
+
+    @classmethod
+    def parse_datetime(cls, datetime):
+        """
+        Parses an ISO datetime in any supported format and returns a tuple
+        with year, month, day, hour, minute, and second. Omitted minutes
+        and/or seconds will be interpreted as 0. Raises
+        :exc:`chrono.error.ParseError` for invalid input format,
+        :exc:`TypeError` for invalid input type, and an appropriate
+        :exc:`chrono.error.DateTimeError` subclass for invalid datetime
+        values.
+        """
+
+        match = cls.regexp(cls.re_datetime, datetime)
+
+        year, month, day = cls.parse_date(match["date"])
+        hour, minute, second = cls.parse_time(match["time"])
+
+        return (year, month, day, hour, minute, second)
 
     @classmethod
     def parse_time(cls, time):
