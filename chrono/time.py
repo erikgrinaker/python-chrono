@@ -200,7 +200,7 @@ class Time(object):
         except error.NoTimeError:
             return ""
 
-    def assert_time(self):
+    def assert_set(self):
         """
         Makes sure the object has a full time set, ie the attributes
         :attr:`chrono.Time.hour`, :attr:`chrono.Time.minute`, and
@@ -208,7 +208,7 @@ class Time(object):
         :exc:`chrono.error.NoTimeError` if not.
         """
 
-        if not self.has_time():
+        if not self.is_set():
             raise error.NoTimeError(
                 "Time object doesn't contain complete time data"
             )
@@ -232,7 +232,7 @@ class Time(object):
         Raises :exc:`chrono.error.NoTimeError` on missing time data.
         """
 
-        self.assert_time()
+        self.assert_set()
 
         return formatter.Formatter().format(
             template, None, None, None, self.hour, self.minute, self.second
@@ -245,7 +245,7 @@ class Time(object):
         Raises :exc:`chrono.error.NoTimeError` on missing time data.
         """
 
-        self.assert_time()
+        self.assert_set()
 
         return (self.hour, self.minute, self.second)
 
@@ -256,7 +256,7 @@ class Time(object):
         Raises :exc:`chrono.error.NoTimeError` on missing time data.
         """
 
-        self.assert_time()
+        self.assert_set()
 
         return datetime.time(self.hour, self.minute, self.second)
 
@@ -269,7 +269,7 @@ class Time(object):
 
         return self.format("$0hour:$0minute:$0second")
 
-    def has_time(self):
+    def is_set(self):
         """
         Returns **True** if a time is set, ie if the attributes
         :attr:`chrono.Time.hour`, :attr:`chrono.Time.minute`

@@ -57,14 +57,14 @@ class Date(object):
     day = None
     """
     Day number, range 1-31 depending on :attr:`chrono.Date.month` and
-    :attr:`chrono.Date.year`
+    :attr:`chrono.Date.year`.
     """
 
     month = None
-    "Month number, range 1-12"
+    "Month number, range 1-12."
 
     year = None
-    "Year number, range 1-9999"
+    "Year number, range 1-9999."
 
     def __cmp__(self, other):
 
@@ -202,7 +202,7 @@ class Date(object):
         except error.NoDateError:
             return ""
 
-    def assert_date(self):
+    def assert_set(self):
         """
         Makes sure the object has a full date set, ie the attributes
         :attr:`chrono.Date.year`, :attr:`chrono.Date.month`, and
@@ -210,7 +210,7 @@ class Date(object):
         :exc:`chrono.error.NoDateError` if not.
         """
 
-        if not self.has_date():
+        if not self.is_set():
             raise error.NoDateError(
                 "Date object doesn't contain complete date data"
             )
@@ -233,7 +233,7 @@ class Date(object):
         Raises :exc:`chrono.error.NoDateError` on missing date data.
         """
 
-        self.assert_date()
+        self.assert_set()
 
         return formatter.Formatter.format(
             template, self.year, self.month, self.day
@@ -246,7 +246,7 @@ class Date(object):
         Raises :exc:`chrono.error.NoDateError` on missing date data.
         """
 
-        self.assert_date()
+        self.assert_set()
 
         return (self.year, self.month, self.day)
 
@@ -257,7 +257,7 @@ class Date(object):
         Raises :exc:`chrono.error.NoDateError` on missing date data.
         """
 
-        self.assert_date()
+        self.assert_set()
 
         return datetime.date(self.year, self.month, self.day)
 
@@ -278,7 +278,7 @@ class Date(object):
         Raises :exc:`chrono.error.NoDateError` on missing date data.
         """
 
-        self.assert_date()
+        self.assert_set()
 
         return time.struct_time(self.get_datetime().timetuple())
 
@@ -289,11 +289,11 @@ class Date(object):
         Raises :exc:`chrono.error.NoDateError` on missing date data.
         """
 
-        self.assert_date()
+        self.assert_set()
 
         return int(time.mktime(self.get_struct_time()))
 
-    def has_date(self):
+    def is_set(self):
         """
         Returns **True** if a date is set, ie if the attributes
         :attr:`chrono.Date.year`, :attr:`chrono.Date.month` and
@@ -310,7 +310,7 @@ class Date(object):
         Raises :exc:`chrono.error.NoDateError` on missing date data.
         """
 
-        self.assert_date()
+        self.assert_set()
 
         return calendar.ISOCalendar.leapyear(self.year)
 
@@ -321,7 +321,7 @@ class Date(object):
         Raises :exc:`chrono.error.NoDateError` on missing date data.
         """
 
-        self.assert_date()
+        self.assert_set()
 
         return calendar.ISOCalendar.monthdays(self.year, self.month)
 
@@ -332,7 +332,7 @@ class Date(object):
         Raises :exc:`chrono.error.NoDateError` on missing date data.
         """
 
-        self.assert_date()
+        self.assert_set()
 
         return calendar.ISOCalendar.ordinal(self.year, self.month, self.day)
 
@@ -414,7 +414,7 @@ class Date(object):
         Raises :exc:`chrono.error.NoDateError` on missing date data.
         """
 
-        self.assert_date()
+        self.assert_set()
 
         return calendar.ISOCalendar.week(self.year, self.month, self.day)
 
@@ -426,7 +426,7 @@ class Date(object):
         Raises :exc:`chrono.error.NoDateError` on missing date data.
         """
 
-        self.assert_date()
+        self.assert_set()
 
         return calendar.ISOCalendar.weekdate(self.year, self.month, self.day)
 
@@ -438,7 +438,7 @@ class Date(object):
         Raises :exc:`chrono.error.NoDateError` on missing date data.
         """
 
-        self.assert_date()
+        self.assert_set()
 
         return calendar.ISOCalendar.weekday(self.year, self.month, self.day)
 
@@ -449,7 +449,7 @@ class Date(object):
         Raises :exc:`chrono.error.NoDateError` on missing date data.
         """
 
-        self.assert_date()
+        self.assert_set()
 
         return calendar.ISOCalendar.weeks(self.year)
 
@@ -460,6 +460,6 @@ class Date(object):
         Raises :exc:`chrono.error.NoDateError` on missing date data.
         """
 
-        self.assert_date()
+        self.assert_set()
 
         return calendar.ISOCalendar.yeardays(self.year)

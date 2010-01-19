@@ -376,26 +376,26 @@ class Date__strTest(unittest.TestCase):
         self.assertEquals(str(chrono.Date("2009-12-27")), "2009-12-27")
 
 
-class Time_assert_dateTest(unittest.TestCase):
+class Time_assert_setTest(unittest.TestCase):
 
     def test_empty(self):
-        "Date.assert_date() raises NoDateError on empty date"
+        "Date.assert_set() raises NoDateError on empty date"
 
         self.assertRaises(
-            chrono.error.NoDateError, chrono.Date().assert_date
+            chrono.error.NoDateError, chrono.Date().assert_set
         )
 
     def test_full(self):
-        "Date.assert_date() doesn't raise exception on date"
+        "Date.assert_set() doesn't raise exception on date"
 
-        chrono.Date("2010-07-23").assert_date()
+        chrono.Date("2010-07-23").assert_set()
 
     def test_partial(self):
-        "Date.assert_date() raises NoDateError on partial date"
+        "Date.assert_set() raises NoDateError on partial date"
 
         self.assertRaises(
             chrono.error.NoDateError,
-            chrono.Date(year=2010, month=7).assert_date
+            chrono.Date(year=2010, month=7).assert_set
         )
 
 
@@ -522,26 +522,26 @@ class Date_get_unixTest(unittest.TestCase):
         self.assertEquals(chrono.Date("2009-12-27").get_unix(), 1261846800)
 
 
-class Date_has_dateTest(unittest.TestCase):
+class Date_is_setTest(unittest.TestCase):
 
     def test_empty(self):
-        "Date.has_date() returns False if no attributes are set"
+        "Date.is_set() returns False if no attributes are set"
 
-        self.assertFalse(chrono.Date().has_date())
+        self.assertFalse(chrono.Date().is_set())
 
     def test_partial(self):
-        "Date.has_date() returns False if only some attributes are set"
+        "Date.is_set() returns False if only some attributes are set"
 
         d = chrono.Date()
         d.year = 2009
         d.day = 27
 
-        self.assertFalse(d.has_date())
+        self.assertFalse(d.is_set())
 
     def test_set(self):
-        "Date.has_date() returns True if date is set"
+        "Date.is_set() returns True if date is set"
 
-        self.assertTrue(chrono.Date(True).has_date())
+        self.assertTrue(chrono.Date(True).is_set())
 
 
 class Date_leapyearTest(unittest.TestCase):

@@ -320,26 +320,26 @@ class Time__strTest(unittest.TestCase):
         self.assertEquals(str(chrono.Time("16:27:43")), "16:27:43")
 
 
-class Time_assert_timeTest(unittest.TestCase):
+class Time_assert_setTest(unittest.TestCase):
 
     def test_empty(self):
-        "Time.assert_time() raises NoTimeError on empty time"
+        "Time.assert_set() raises NoTimeError on empty time"
 
         self.assertRaises(
-            chrono.error.NoTimeError, chrono.Time().assert_time
+            chrono.error.NoTimeError, chrono.Time().assert_set
         )
 
     def test_full(self):
-        "Time.assert_time() doesn't raise exception on time"
+        "Time.assert_set() doesn't raise exception on time"
 
-        chrono.Time("16:27:43").assert_time()
+        chrono.Time("16:27:43").assert_set()
 
     def test_partial(self):
-        "Time.assert_time() raises NoTimeError on partial time"
+        "Time.assert_set() raises NoTimeError on partial time"
 
         self.assertRaises(
             chrono.error.NoTimeError,
-            chrono.Time(hour=16, minute=27).assert_time
+            chrono.Time(hour=16, minute=27).assert_set
         )
 
 
@@ -424,22 +424,22 @@ class Time_get_stringTest(unittest.TestCase):
         self.assertEquals(chrono.Time("16:27:43").get_string(), "16:27:43")
 
 
-class Time_has_timeTest(unittest.TestCase):
+class Time_is_setTest(unittest.TestCase):
 
     def test_empty(self):
-        "Time.has_time() returns False if no attributes are set"
+        "Time.is_set() returns False if no attributes are set"
 
-        self.assertFalse(chrono.Time().has_time())
+        self.assertFalse(chrono.Time().is_set())
 
     def test_partial(self):
-        "Time.has_time() returns False if only some attributes are set"
+        "Time.is_set() returns False if only some attributes are set"
 
-        self.assertFalse(chrono.Time(hour=16, second=43).has_time())
+        self.assertFalse(chrono.Time(hour=16, second=43).is_set())
 
     def test_set(self):
-        "Time.has_time() returns True if time is set"
+        "Time.is_set() returns True if time is set"
 
-        self.assertTrue(chrono.Time(hour=16, minute=27, second=43).has_time())
+        self.assertTrue(chrono.Time(hour=16, minute=27, second=43).is_set())
 
 
 class Time_setTest(unittest.TestCase):
