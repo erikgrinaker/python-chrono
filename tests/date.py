@@ -125,13 +125,11 @@ class Date__initTest(unittest.TestCase):
         )
 
     def test_kwargs_partial(self):
-        "Date.__init__() accepts partial kwargs"
+        "Date.__init__() raises proper error on partial kwargs"
 
-        d = chrono.Date(year=2009, day=20)
-
-        self.assertEquals(d.year, 2009)
-        self.assertEquals(d.month, None)
-        self.assertEquals(d.day, 20)
+        self.assertRaises(chrono.YearError, chrono.Date, month=7, day=23)
+        self.assertRaises(chrono.MonthError, chrono.Date, year=2010, day=23)
+        self.assertRaises(chrono.DayError, chrono.Date, year=2010, month=7)
 
     def test_none(self):
         "Date.__init__() with none sets up empty date"
@@ -179,10 +177,10 @@ class Date__reprTest(unittest.TestCase):
     def test_partial(self):
         "Date.__repr__() handles partial dates"
 
-        self.assertEquals(
-            repr(chrono.Date(year=2009, day=27)),
-            "chrono.Date(year=2009, day=27)"
-        )
+        d = chrono.Date("2010-07-23")
+        d.month = None
+
+        self.assertEquals(repr(d), "chrono.Date(year=2010, day=23)")
 
     def test_repr(self):
         "Date.__repr__() shows code to recreate object"
@@ -393,10 +391,10 @@ class Time_assert_setTest(unittest.TestCase):
     def test_partial(self):
         "Date.assert_set() raises NoDateError on partial date"
 
-        self.assertRaises(
-            chrono.error.NoDateError,
-            chrono.Date(year=2010, month=7).assert_set
-        )
+        d = chrono.Date("2010-07-23")
+        d.day = None
+
+        self.assertRaises(chrono.error.NoDateError, d.assert_set)
 
 
 class Date_clearTest(unittest.TestCase):

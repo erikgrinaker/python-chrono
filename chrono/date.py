@@ -101,17 +101,9 @@ class Date(object):
             self.set_struct_time(date)
 
         elif "year" in kwargs or "month" in kwargs or "day" in kwargs:
-            y = kwargs.get("year")
-            m = kwargs.get("month")
-            d = kwargs.get("day")
-
-            if y and m and d:
-                self.set(y, m, d)
-
-            else:
-                self.year = y
-                self.month = m
-                self.day = d
+            self.set(
+                kwargs.get("year"), kwargs.get("month"), kwargs.get("day")
+            )
 
         elif date is False:
             pass
