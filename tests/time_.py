@@ -109,13 +109,11 @@ class Time__initTest(unittest.TestCase):
         )
 
     def test_kwargs_partial(self):
-        "Time.__init__() accepts partial kwargs"
+        "Time.__init__() raises proper error on partial kwargs"
 
-        t = chrono.Time(hour=16, second=43)
-
-        self.assertEquals(t.hour, 16)
-        self.assertEquals(t.minute, None)
-        self.assertEquals(t.second, 43)
+        self.assertRaises(chrono.HourError, chrono.Time, minute=27, second=43)
+        self.assertRaises(chrono.MinuteError, chrono.Time, hour=16, second=43)
+        self.assertRaises(chrono.SecondError, chrono.Time, hour=16, minute=27)
 
     def test_kwargs_precedence(self):
         "Time.__init__() prefers time over kwargs"
@@ -178,10 +176,11 @@ class Time__reprTest(unittest.TestCase):
     def test_partial(self):
         "Time.__repr__() handles partial times"
 
-        self.assertEquals(
-            repr(chrono.Time(hour=16, second=27)),
-            "chrono.Time(hour=16, second=27)"
-        )
+        t = chrono.Time()
+        t.hour = 16
+        t.second =43
+
+        self.assertEquals(repr(t), "chrono.Time(hour=16, second=43)")
 
     def test_repr(self):
         "Time.__repr__() shows code to recreate object"
@@ -337,10 +336,10 @@ class Time_assert_setTest(unittest.TestCase):
     def test_partial(self):
         "Time.assert_set() raises NoTimeError on partial time"
 
-        self.assertRaises(
-            chrono.error.NoTimeError,
-            chrono.Time(hour=16, minute=27).assert_set
-        )
+        t = chrono.Time("16:27:43")
+        t.minute = None
+
+        self.assertRaises(chrono.error.NoTimeError, t.assert_set)
 
 
 class Time_clearTest(unittest.TestCase):
@@ -434,7 +433,10 @@ class Time_is_setTest(unittest.TestCase):
     def test_partial(self):
         "Time.is_set() returns False if only some attributes are set"
 
-        self.assertFalse(chrono.Time(hour=16, second=43).is_set())
+        t = chrono.Time("16:27:43")
+        t.minute = None
+
+        self.assertFalse(t.is_set())
 
     def test_set(self):
         "Time.is_set() returns True if time is set"

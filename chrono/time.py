@@ -100,17 +100,9 @@ class Time(object):
             self.set_struct_time(time)
 
         elif ("hour" in kwargs or "minute" in kwargs or "second" in kwargs):
-            h = kwargs.get("hour")
-            m = kwargs.get("minute")
-            s = kwargs.get("second")
-
-            if h and m and s:
-                self.set(h, m, s)
-
-            else:
-                self.hour = h
-                self.minute = m
-                self.second = s
+            self.set(
+                kwargs.get("hour"), kwargs.get("minute"), kwargs.get("second")
+            )
 
         elif time is False:
             pass
