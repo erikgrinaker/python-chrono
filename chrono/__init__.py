@@ -22,5 +22,6 @@ from . import formatter
 from . import parser
 from . import utility
 from .date import Date
+from .datetime import DateTime
 from .error import *
 from .time import Time

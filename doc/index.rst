@@ -12,6 +12,7 @@ Contents:
 
    usage.rst
    date.rst
+   datetime.rst
    time.rst
    calendar/index.rst
    clock.rst
