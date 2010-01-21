@@ -1,0 +1,5 @@
+Making a release
+================
+
+* update the version number in chrono/__init__.py
+* update the NEWS file
