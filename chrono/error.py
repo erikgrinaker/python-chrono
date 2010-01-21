@@ -30,10 +30,6 @@ The exception tree is structured as follows:
 * :class:`Exception`
 
   * :class:`chrono.error.NoDateTimeError`
-
-    * :class:`chrono.error.NoDateError`
-    * :class:`chrono.error.NoTimeError`
-
   * :class:`ValueError`
 
     * :class:`chrono.error.DateTimeError`
@@ -107,16 +103,6 @@ class SecondError(TimeError):
 
 class NoDateTimeError(Exception):
     "Error for missing date/time data."
-    pass
-
-
-class NoDateError(NoDateTimeError):
-    "Error for missing date."
-    pass
-
-
-class NoTimeError(NoDateTimeError):
-    "Error for missing time."
     pass
 
 

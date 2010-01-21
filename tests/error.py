@@ -69,28 +69,12 @@ class MonthErrorTest(unittest.TestCase):
         self.assertTrue(issubclass(chrono.MonthError, chrono.DateError))
 
 
-class NoDateError(unittest.TestCase):
-
-    def test_subclass(self):
-        "NoDateError is subclass of NoDateTimeError"
-
-        self.assertTrue(issubclass(chrono.NoDateError, chrono.NoDateTimeError))
-
-
 class NoDateTimeError(unittest.TestCase):
 
     def test_subclass(self):
-        "NoDateError is subclass of Exception"
+        "NoDateTimeError is subclass of Exception"
 
         self.assertTrue(issubclass(chrono.NoDateTimeError, Exception))
-
-
-class NoTimeError(unittest.TestCase):
-
-    def test_subclass(self):
-        "NoTimeError is subclass of NoDateTimeError"
-
-        self.assertTrue(issubclass(chrono.NoTimeError, chrono.NoDateTimeError))
 
 
 class ParseErrorTest(unittest.TestCase):

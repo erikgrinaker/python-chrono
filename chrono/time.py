@@ -189,7 +189,7 @@ class Time(object):
         try:
             return self.get_string()
 
-        except error.NoTimeError:
+        except error.NoDateTimeError:
             return ""
 
     def assert_set(self):
@@ -197,11 +197,11 @@ class Time(object):
         Makes sure the object has a full time set, ie the attributes
         :attr:`chrono.Time.hour`, :attr:`chrono.Time.minute`, and
         :attr:`chrono.Time.second` are not **None**, and raises
-        :exc:`chrono.error.NoTimeError` if not.
+        :exc:`chrono.error.NoDateTimeError` if not.
         """
 
         if not self.is_set():
-            raise error.NoTimeError(
+            raise error.NoDateTimeError(
                 "Time object doesn't contain complete time data"
             )
 
@@ -221,7 +221,7 @@ class Time(object):
         Formats the time using *template*, replacing variables as
         supported by :class:`chrono.formatter.Formatter`.
 
-        Raises :exc:`chrono.error.NoTimeError` on missing time data.
+        Raises :exc:`chrono.error.NoDateTimeError` on missing time data.
         """
 
         self.assert_set()
@@ -234,7 +234,7 @@ class Time(object):
         """
         Returns the time as a tuple of hour, minute, and second.
 
-        Raises :exc:`chrono.error.NoTimeError` on missing time data.
+        Raises :exc:`chrono.error.NoDateTimeError` on missing time data.
         """
 
         self.assert_set()
@@ -245,7 +245,7 @@ class Time(object):
         """
         Returns a :class:`datetime.time` instance based on the time.
 
-        Raises :exc:`chrono.error.NoTimeError` on missing time data.
+        Raises :exc:`chrono.error.NoDateTimeError` on missing time data.
         """
 
         self.assert_set()
@@ -256,7 +256,7 @@ class Time(object):
         """
         Returns a string represenation (*hh:mm:ss*) of the time.
 
-        Raises :exc:`chrono.error.NoTimeError` on missing time data.
+        Raises :exc:`chrono.error.NoDateTimeError` on missing time data.
         """
 
         return self.format("$0hour:$0minute:$0second")
