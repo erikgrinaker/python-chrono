@@ -101,7 +101,7 @@ class Date__initTest(unittest.TestCase):
     def test_default(self):
         "Date.__init__() without parameters sets up empty date"
 
-        self.assertRaises(chrono.error.NoDateError, chrono.Date().get)
+        self.assertRaises(chrono.error.NoDateTimeError, chrono.Date().get)
 
     def test_integer(self):
         "Date.__init__() with integer parameter assumes UNIX timestamp"
@@ -135,7 +135,7 @@ class Date__initTest(unittest.TestCase):
         "Date.__init__() with none sets up empty date"
 
         self.assertRaises(
-            chrono.error.NoDateError, chrono.Date(None).get
+            chrono.error.NoDateTimeError, chrono.Date(None).get
         )
 
     def test_string(self):
@@ -377,10 +377,10 @@ class Date__strTest(unittest.TestCase):
 class Time_assert_setTest(unittest.TestCase):
 
     def test_empty(self):
-        "Date.assert_set() raises NoDateError on empty date"
+        "Date.assert_set() raises NoDateTimeError on empty date"
 
         self.assertRaises(
-            chrono.error.NoDateError, chrono.Date().assert_set
+            chrono.error.NoDateTimeError, chrono.Date().assert_set
         )
 
     def test_full(self):
@@ -389,12 +389,12 @@ class Time_assert_setTest(unittest.TestCase):
         chrono.Date("2010-07-23").assert_set()
 
     def test_partial(self):
-        "Date.assert_set() raises NoDateError on partial date"
+        "Date.assert_set() raises NoDateTimeError on partial date"
 
         d = chrono.Date("2010-07-23")
         d.day = None
 
-        self.assertRaises(chrono.error.NoDateError, d.assert_set)
+        self.assertRaises(chrono.error.NoDateTimeError, d.assert_set)
 
 
 class Date_clearTest(unittest.TestCase):
@@ -413,10 +413,10 @@ class Date_clearTest(unittest.TestCase):
 class Date_formatTest(unittest.TestCase):
 
     def test_empty(self):
-        "Date.format() raises NoDateError if no date is set"
+        "Date.format() raises NoDateTimeError if no date is set"
 
         self.assertRaises(
-            chrono.error.NoDateError,
+            chrono.error.NoDateTimeError,
             chrono.Date().format, "$0year-$0month-0day"
         )
 
@@ -432,10 +432,10 @@ class Date_formatTest(unittest.TestCase):
 class Date_getTest(unittest.TestCase):
 
     def test_empty(self):
-        "Date.get() raises NoDateError if date isn't set"
+        "Date.get() raises NoDateTimeError if date isn't set"
 
         self.assertRaises(
-            chrono.error.NoDateError, chrono.Date().get
+            chrono.error.NoDateTimeError, chrono.Date().get
         )
 
     def test_get(self):
@@ -458,20 +458,20 @@ class Date_get_datetimeTest(unittest.TestCase):
         self.assertEquals(dt.day, 27)
 
     def test_empty(self):
-        "Date.get_datetime() raises NoDateError on empty date"
+        "Date.get_datetime() raises NoDateTimeError on empty date"
 
         self.assertRaises(
-            chrono.error.NoDateError, chrono.Date().get_datetime
+            chrono.error.NoDateTimeError, chrono.Date().get_datetime
         )
 
 
 class Date_get_stringTest(unittest.TestCase):
 
     def test_empty(self):
-        "Date.get_string() raises NoDateError on empty date"
+        "Date.get_string() raises NoDateTimeError on empty date"
 
         self.assertRaises(
-            chrono.error.NoDateError, chrono.Date().get_string
+            chrono.error.NoDateTimeError, chrono.Date().get_string
         )
 
     def test_string(self):
@@ -483,10 +483,10 @@ class Date_get_stringTest(unittest.TestCase):
 class Date_get_struct_timeTest(unittest.TestCase):
 
     def test_empty(self):
-        "Date.get_struct_time() raises NoDateError if date isn't set"
+        "Date.get_struct_time() raises NoDateTimeError if date isn't set"
 
         self.assertRaises(
-            chrono.error.NoDateError, chrono.Date().get_struct_time
+            chrono.error.NoDateTimeError, chrono.Date().get_struct_time
         )
 
     def test_struct_time(self):
@@ -510,9 +510,9 @@ class Date_get_struct_timeTest(unittest.TestCase):
 class Date_get_unixTest(unittest.TestCase):
 
     def test_empty(self):
-        "Date.get_unix() raises NoDateError if date isn't set"
+        "Date.get_unix() raises NoDateTimeError if date isn't set"
 
-        self.assertRaises(chrono.error.NoDateError, chrono.Date().get_unix)
+        self.assertRaises(chrono.error.NoDateTimeError, chrono.Date().get_unix)
 
     def test_unix(self):
         "Date.get_unix() returns unix timestamp"
@@ -545,9 +545,9 @@ class Date_is_setTest(unittest.TestCase):
 class Date_leapyearTest(unittest.TestCase):
 
     def test_empty(self):
-        "Date.leapyear() raises NoDateError if date isn't set"
+        "Date.leapyear() raises NoDateTimeError if date isn't set"
 
-        self.assertRaises(chrono.error.NoDateError, chrono.Date().leapyear)
+        self.assertRaises(chrono.error.NoDateTimeError, chrono.Date().leapyear)
 
     def test_leap(self):
         "Date.leapyear() returns True for 2008"
@@ -563,9 +563,9 @@ class Date_leapyearTest(unittest.TestCase):
 class Date_monthdaysTest(unittest.TestCase):
 
     def test_empty(self):
-        "Date.monthdays() raises NoDateError if date isn't set"
+        "Date.monthdays() raises NoDateTimeError if date isn't set"
 
-        self.assertRaises(chrono.error.NoDateError, chrono.Date().monthdays)
+        self.assertRaises(chrono.error.NoDateTimeError, chrono.Date().monthdays)
 
     def test_monthdays(self):
         "Date.monthdays() returns 29 for 2008-02"
@@ -576,9 +576,9 @@ class Date_monthdaysTest(unittest.TestCase):
 class Date_ordinalTest(unittest.TestCase):
 
     def test_empty(self):
-        "Date.ordinal() raises NoDateError if date isn't set"
+        "Date.ordinal() raises NoDateTimeError if date isn't set"
 
-        self.assertRaises(chrono.error.NoDateError, chrono.Date().ordinal)
+        self.assertRaises(chrono.error.NoDateTimeError, chrono.Date().ordinal)
 
     def test_ordinal(self):
         "Date.ordinal() returns 366 for 2008-12-31"
@@ -694,9 +694,9 @@ class Date_set_unixText(unittest.TestCase):
 class Date_weekTest(unittest.TestCase):
 
     def test_empty(self):
-        "Date.week() raises NoDateError if date isn't set"
+        "Date.week() raises NoDateTimeError if date isn't set"
 
-        self.assertRaises(chrono.error.NoDateError, chrono.Date().week)
+        self.assertRaises(chrono.error.NoDateTimeError, chrono.Date().week)
 
     def test_week(self):
         "Date.week() returns 2009-W53 for 2010-01-01"
@@ -707,9 +707,9 @@ class Date_weekTest(unittest.TestCase):
 class Date_weekdateTest(unittest.TestCase):
 
     def test_empty(self):
-        "Date.weekdate() raises NoDateError if date isn't set"
+        "Date.weekdate() raises NoDateTimeError if date isn't set"
 
-        self.assertRaises(chrono.error.NoDateError, chrono.Date().weekdate)
+        self.assertRaises(chrono.error.NoDateTimeError, chrono.Date().weekdate)
 
     def test_weekdate(self):
         "Date.weekdate() returns 2009-W30-2 for 2009-07-21"
@@ -723,9 +723,9 @@ class Date_weekdateTest(unittest.TestCase):
 class Date_weekdayTest(unittest.TestCase):
 
     def test_empty(self):
-        "Date.weekday() raises NoDateError if date isn't set"
+        "Date.weekday() raises NoDateTimeError if date isn't set"
 
-        self.assertRaises(chrono.error.NoDateError, chrono.Date().weekday)
+        self.assertRaises(chrono.error.NoDateTimeError, chrono.Date().weekday)
 
     def test_weekday(self):
         "Date.weekday() returns 7 for 2009-12-27"
@@ -736,9 +736,9 @@ class Date_weekdayTest(unittest.TestCase):
 class Date_weeksTest(unittest.TestCase):
 
     def test_empty(self):
-        "Date.weeks() raises NoDateError if date isn't set"
+        "Date.weeks() raises NoDateTimeError if date isn't set"
 
-        self.assertRaises(chrono.error.NoDateError, chrono.Date().weeks)
+        self.assertRaises(chrono.error.NoDateTimeError, chrono.Date().weeks)
 
     def test_weeks(self):
         "Date.weeks() returns 53 for 2009"
@@ -749,9 +749,9 @@ class Date_weeksTest(unittest.TestCase):
 class Date_yeardaysTest(unittest.TestCase):
 
     def test_empty(self):
-        "Date.yeardays() raises NoDateError if date isn't set"
+        "Date.yeardays() raises NoDateTimeError if date isn't set"
 
-        self.assertRaises(chrono.error.NoDateError, chrono.Date().yeardays)
+        self.assertRaises(chrono.error.NoDateTimeError, chrono.Date().yeardays)
 
     def test_yeardays(self):
         "Date.yeardays() returns 366 for 2008"

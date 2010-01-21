@@ -93,12 +93,12 @@ class Time__initTest(unittest.TestCase):
     def test_default(self):
         "Time.__init__() without parameters sets up empty date"
 
-        self.assertRaises(chrono.error.NoTimeError, chrono.Time().get)
+        self.assertRaises(chrono.error.NoDateTimeError, chrono.Time().get)
 
     def test_false(self):
         "Time,__init__() with False sets up empty time"
 
-        self.assertRaises(chrono.error.NoTimeError, chrono.Time(False).get)
+        self.assertRaises(chrono.error.NoDateTimeError, chrono.Time(False).get)
 
     def test_kwargs(self):
         "Time.__init__() accepts keyword arguments"
@@ -127,7 +127,7 @@ class Time__initTest(unittest.TestCase):
     def test_none(self):
         "Time.__init__() with None sets up empty time"
 
-        self.assertRaises(chrono.error.NoTimeError, chrono.Time(None).get)
+        self.assertRaises(chrono.error.NoDateTimeError, chrono.Time(None).get)
 
     def test_string(self):
         "Time.__init__() parses strings using the parser"
@@ -322,10 +322,10 @@ class Time__strTest(unittest.TestCase):
 class Time_assert_setTest(unittest.TestCase):
 
     def test_empty(self):
-        "Time.assert_set() raises NoTimeError on empty time"
+        "Time.assert_set() raises NoDateTimeError on empty time"
 
         self.assertRaises(
-            chrono.error.NoTimeError, chrono.Time().assert_set
+            chrono.error.NoDateTimeError, chrono.Time().assert_set
         )
 
     def test_full(self):
@@ -334,12 +334,12 @@ class Time_assert_setTest(unittest.TestCase):
         chrono.Time("16:27:43").assert_set()
 
     def test_partial(self):
-        "Time.assert_set() raises NoTimeError on partial time"
+        "Time.assert_set() raises NoDateTimeError on partial time"
 
         t = chrono.Time("16:27:43")
         t.minute = None
 
-        self.assertRaises(chrono.error.NoTimeError, t.assert_set)
+        self.assertRaises(chrono.error.NoDateTimeError, t.assert_set)
 
 
 class Time_clearTest(unittest.TestCase):
@@ -358,10 +358,10 @@ class Time_clearTest(unittest.TestCase):
 class Time_formatTest(unittest.TestCase):
 
     def test_empty(self):
-        "Time.format() raises NoTimeError on missing time"
+        "Time.format() raises NoDateTimeError on missing time"
 
         self.assertRaises(
-            chrono.error.NoTimeError,
+            chrono.error.NoDateTimeError,
             chrono.Time().format, "$hour:$minute:$second"
         )
 
@@ -376,9 +376,9 @@ class Time_formatTest(unittest.TestCase):
 class Time_getTest(unittest.TestCase):
 
     def test_empty(self):
-        "Time.get() raises NoTimeError if time is not set"
+        "Time.get() raises NoDateTimeError if time is not set"
 
-        self.assertRaises(chrono.error.NoTimeError, chrono.Time().get)
+        self.assertRaises(chrono.error.NoDateTimeError, chrono.Time().get)
 
     def test_get(self):
         "Time.get() returns tuple of hour, minute, and second"
@@ -395,7 +395,7 @@ class Time_get_datetimeTest(unittest.TestCase):
         "Time.get_datetime() returns None if time is not set"
 
         self.assertRaises(
-            chrono.error.NoTimeError, chrono.Time().get_datetime
+            chrono.error.NoDateTimeError, chrono.Time().get_datetime
         )
 
     def test_get_datetime(self):
@@ -413,9 +413,9 @@ class Time_get_datetimeTest(unittest.TestCase):
 class Time_get_stringTest(unittest.TestCase):
 
     def test_empty(self):
-        "Time.get_string() raises NoTimeError if time is not set"
+        "Time.get_string() raises NoDateTimeError if time is not set"
 
-        self.assertRaises(chrono.error.NoTimeError, chrono.Time().get_string)
+        self.assertRaises(chrono.error.NoDateTimeError, chrono.Time().get_string)
 
     def test_get(self):
         "Time.get_string() returns time string"
