@@ -55,7 +55,7 @@ class ISOParser(parser.Parser):
     yyyyWwwd            2009W363            Compact week and day    :meth:`chrono.parser.ISOParser.compactweekdate`
     yyyyWww             2009W36             Compact week            :meth:`chrono.parser.ISOParser.compactweek`
     =================== =================== ======================= ===============================================
-    
+
     .. [#f1] Seconds and minutes may be omitted in times
     """
 
@@ -239,9 +239,9 @@ class ISOParser(parser.Parser):
     @classmethod
     def compactweekdate(cls, date):
         """
-        Parses a compact ISO weekdate (*yyyyWwwd*), and returns a tuple with year,
-        week, and weekday. Raises :exc:`chrono.error.ParseError` for invalid
-        input format, :exc:`TypeError` for invalid input type, and
+        Parses a compact ISO weekdate (*yyyyWwwd*), and returns a tuple with
+        year, week, and weekday. Raises :exc:`chrono.error.ParseError` for
+        invalid input format, :exc:`TypeError` for invalid input type, and
         :exc:`chrono.error.YearError`, :exc:`chrono.error.WeekError`,
         or :exc:`chrono.error.DayError` for invalid date values.
         """
@@ -537,4 +537,3 @@ class ISOParser(parser.Parser):
         calendar.ISOCalendar.validate_year(match["year"])
 
         return match["year"]
-

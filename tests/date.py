@@ -565,7 +565,9 @@ class Date_monthdaysTest(unittest.TestCase):
     def test_empty(self):
         "Date.monthdays() raises NoDateTimeError if date isn't set"
 
-        self.assertRaises(chrono.error.NoDateTimeError, chrono.Date().monthdays)
+        self.assertRaises(
+            chrono.error.NoDateTimeError, chrono.Date().monthdays
+        )
 
     def test_monthdays(self):
         "Date.monthdays() returns 29 for 2008-02"

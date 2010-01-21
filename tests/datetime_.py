@@ -224,7 +224,7 @@ class DateTime__reprTest(unittest.TestCase):
         d.month = None
 
         self.assertEquals(
-            repr(d), 
+            repr(d),
             "chrono.DateTime(year=2010, day=23, hour=16, minute=27, second=43)"
         )
 
@@ -233,7 +233,8 @@ class DateTime__reprTest(unittest.TestCase):
 
         self.assertEquals(
             repr(chrono.DateTime("2010-07-23 16:27:43")),
-            "chrono.DateTime(year=2010, month=7, day=23, hour=16, minute=27, second=43)"
+            "chrono.DateTime(year=2010, month=7, day=23, hour=16, " + \
+            "minute=27, second=43)"
         )
 
 
@@ -248,7 +249,7 @@ class DateTime__setattrTest(unittest.TestCase):
         self.assertEquals(d.get(), (2009, 6, 25, 16, 27, 43))
 
     def test_day_negative_doublemonth(self):
-        "DateTime.__setattr__() handles double month rollunder for negative days"
+        "DateTime.__setattr__() handles double rollunder for negative days"
 
         d = chrono.DateTime("2009-07-15 16:27:43")
         d.day -= 50
@@ -368,7 +369,7 @@ class DateTime__setattrTest(unittest.TestCase):
         self.assertEquals(d.get(), (2010, 7, 23, 15, 57, 43))
 
     def test_minute_negative_doublehour(self):
-        "DateTime.__setattr__() handles double hour rollunder for negative minutes"
+        "DateTime.__setattr__() handles double rollunder for negative minutes"
 
         d = chrono.DateTime("2010-07-23 16:27:43")
         d.minute -= 120
@@ -384,7 +385,7 @@ class DateTime__setattrTest(unittest.TestCase):
         self.assertEquals(d.get(), (2010, 7, 23, 17, 12, 43))
 
     def test_minute_overflow_doublehour(self):
-        "DateTime.__setattr__() handles double hour rollover for minute overflow"
+        "DateTime.__setattr__() handles double rollover for minute overflow"
 
         d = chrono.DateTime("2010-07-23 16:27:43")
         d.minute += 120
@@ -408,7 +409,7 @@ class DateTime__setattrTest(unittest.TestCase):
         self.assertEquals(d.get(), (2008, 10, 15, 16, 27, 43))
 
     def test_month_negative_doublemonth(self):
-        "DateTime.__setattr__() handles double year rollunder for negative months"
+        "DateTime.__setattr__() handles double rollunder for negative months"
 
         d = chrono.DateTime("2009-07-15 16:27:43")
         d.month -= 30
@@ -432,7 +433,7 @@ class DateTime__setattrTest(unittest.TestCase):
         self.assertEquals(d.get(), (2010, 5, 15, 16, 27, 43))
 
     def test_month_overflow_doubleyear(self):
-        "DateTime.__setattr__() handles double year rollover for month overflow"
+        "DateTime.__setattr__() handles double rollover for month overflow"
 
         d = chrono.DateTime("2009-03-15 16:27:43")
         d.month += 30
@@ -464,7 +465,7 @@ class DateTime__setattrTest(unittest.TestCase):
         self.assertEquals(d.get(), (2010, 7, 23, 16, 26, 43))
 
     def test_second_negative_doubleminute(self):
-        "DateTime.__setattr__() handles double minute rollunder for negative secs"
+        "DateTime.__setattr__() handles double rollunder for negative secs"
 
         d = chrono.DateTime("2010-07-23 16:27:43")
         d.second -= 120
@@ -488,7 +489,7 @@ class DateTime__setattrTest(unittest.TestCase):
         self.assertEquals(d.get(), (2010, 7, 23, 16, 28, 28))
 
     def test_second_overflow_doubleminute(self):
-        "DateTime.__setattr__() handles double minute rollover for second overflow"
+        "DateTime.__setattr__() handles double rollover for second overflow"
 
         d = chrono.DateTime("2010-07-23 16:27:43")
         d.second += 120
@@ -504,7 +505,7 @@ class DateTime__setattrTest(unittest.TestCase):
         self.assertEquals(d.get(), (2010, 7, 23, 17, 27, 43))
 
     def test_year_invalid(self):
-        "DateTime.__setattr__() raises YearError on year outside range (1-9999)"
+        "DateTime.__setattr__() raises YearError on year outside range 1-9999"
 
         d = chrono.DateTime("2008-12-27 16:27:43")
 

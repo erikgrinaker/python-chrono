@@ -275,7 +275,7 @@ class Time(object):
     def set(self, hour, minute, second):
         """
         Sets the time.
-        
+
         Raises :exc:`chrono.error.HourError`, :exc:`chrono.error.MinuteError`,
         or :exc:`chrono.error.SecondError` for invalid values.
         """

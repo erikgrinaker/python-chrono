@@ -20,18 +20,18 @@
 from distutils.core import setup
 
 setup(
-	name		= "python-chrono",
-	version		= "0.0.0",
-	description	= "a date/time module for python",
-	url		= "http://oss.codepoet.no/python-chrono",
-	author		= "Erik Grinaker",
-	author_email	= "erikg@codepoet.no",
-	license		= "GPL 3",
-	keywords	= "calendar date datetime time",
-	packages	= (
-		"chrono",
-		"chrono.calendar",
-		"chrono.clock",
-		"chrono.parser",
-	),
+    name="python-chrono",
+    version="0.0.0",
+    description="a date/time module for python",
+    url="http://oss.codepoet.no/python-chrono",
+    author="Erik Grinaker",
+    author_email="erikg@codepoet.no",
+    license="GPL 3",
+    keywords="calendar date datetime time",
+    packages=(
+        "chrono",
+        "chrono.calendar",
+        "chrono.clock",
+        "chrono.parser",
+    ),
 )

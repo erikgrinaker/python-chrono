@@ -178,7 +178,7 @@ class Time__reprTest(unittest.TestCase):
 
         t = chrono.Time()
         t.hour = 16
-        t.second =43
+        t.second = 43
 
         self.assertEquals(repr(t), "chrono.Time(hour=16, second=43)")
 
@@ -373,6 +373,7 @@ class Time_formatTest(unittest.TestCase):
             "16:27:43"
         )
 
+
 class Time_getTest(unittest.TestCase):
 
     def test_empty(self):
@@ -415,7 +416,9 @@ class Time_get_stringTest(unittest.TestCase):
     def test_empty(self):
         "Time.get_string() raises NoDateTimeError if time is not set"
 
-        self.assertRaises(chrono.error.NoDateTimeError, chrono.Time().get_string)
+        self.assertRaises(
+            chrono.error.NoDateTimeError, chrono.Time().get_string
+        )
 
     def test_get(self):
         "Time.get_string() returns time string"
