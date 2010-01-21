@@ -1,0 +1,10 @@
+python-chrono is a Python module for simple and convenient date/time
+handling, including parsing, arithmetic, comparison, formatting,
+and calendar functionality.
+
+This software is licensed under the terms of the GNU General Public
+License version 3, the full text is available in the file LICENSE.
+
+See the python-chrono website for more information:
+
+http://oss.codepoet.no/python-chrono

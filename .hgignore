@@ -1,3 +1,6 @@
 ^build/
-^doc/_build/
+^dist/
+^doc/doctrees/
+^doc/html/
+^python_chrono\.egg-info/
 \.pyc$

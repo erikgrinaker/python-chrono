@@ -17,17 +17,33 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from distutils.core import setup
+from setuptools import setup
+
+import os.path
+import sys
+
+sys.path.insert(0, os.path.abspath("."))
+
+import chrono
+
 
 setup(
     name="python-chrono",
-    version="0.0.0",
+    version=chrono.__version__,
     description="A Python module for easy and convenient date/time handling",
-    url="http://oss.codepoet.no/python-chrono",
+    long_description=open("README").read(),
+    license="GNU General Public License 3",
     author="Erik Grinaker",
     author_email="erikg@codepoet.no",
-    license="GPL 3",
-    keywords="calendar date datetime time",
+    url="http://oss.codepoet.no/python-chrono/",
+    classifiers=(
+        "Development Status :: 3 - Alpha",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: GNU General Public License (GPL)",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+    ),
     packages=(
         "chrono",
         "chrono.calendar",

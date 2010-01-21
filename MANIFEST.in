@@ -1,0 +1,4 @@
+include AUTHORS
+include LICENSE
+include NEWS
+recursive-include doc *

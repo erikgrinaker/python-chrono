@@ -16,6 +16,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+__version_info__ = ("0", "0", "0")
+__version__ = ".".join(__version_info__)
+
 from . import calendar
 from . import clock
 from . import formatter
