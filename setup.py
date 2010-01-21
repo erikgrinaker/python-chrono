@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
-# python-chrono - a date/time module for python
+# python-chrono - a Python module for easy and convenient date/time handling
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ from distutils.core import setup
 setup(
     name="python-chrono",
     version="0.0.0",
-    description="a date/time module for python",
+    description="A Python module for easy and convenient date/time handling",
     url="http://oss.codepoet.no/python-chrono",
     author="Erik Grinaker",
     author_email="erikg@codepoet.no",
