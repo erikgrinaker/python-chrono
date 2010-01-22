@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import chrono
 import re
 import unittest
@@ -53,3 +55,7 @@ class Parser_regexpTest(unittest.TestCase):
             chrono.parser.Parser.regexp(self.re_isodate, "2009-12-27"),
             {"year": "2009", "month": "12", "day": "27"}
         )
+
+
+if __name__ == "__main__":
+    unittest.main()

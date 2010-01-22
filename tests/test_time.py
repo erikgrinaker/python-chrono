@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import chrono
 import datetime
 import time
@@ -524,3 +526,7 @@ class Time_set_struct_timeTest(unittest.TestCase):
         t.set_struct_time(time.localtime(1262621257))
 
         self.assertEquals(t.get(), (23, 7, 37))
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import chrono
 import unittest
 
@@ -96,3 +98,7 @@ class YearErrorTest(unittest.TestCase):
         "YearError is a subclass of DateError"
 
         self.assertTrue(issubclass(chrono.YearError, chrono.DateError))
+
+
+if __name__ == "__main__":
+    unittest.main()

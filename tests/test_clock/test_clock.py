@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import chrono
 import unittest
 
@@ -110,3 +112,7 @@ class Clock_validate_secondTest(unittest.TestCase):
         self.assertRaises(
             chrono.SecondError, chrono.clock.Clock.validate_second, -1
         )
+
+
+if __name__ == "__main__":
+    unittest.main()

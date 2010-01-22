@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import chrono
 import unittest
 
@@ -403,3 +405,7 @@ class Calendar_yeardaysTest(unittest.TestCase):
         "Calendar.yeardays() accepts strings"
 
         self.assertEquals(chrono.calendar.Calendar.yeardays("2008"), 366)
+
+
+if __name__ == "__main__":
+    unittest.main()

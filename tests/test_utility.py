@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import chrono
 import unittest
 
@@ -232,3 +234,7 @@ class integerTest(unittest.TestCase):
             chrono.utility.integer(("123", None, "789")),
             (123, None, 789)
         )
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import chrono
 import datetime
 import unittest
@@ -740,3 +742,7 @@ class Date_yeardaysTest(unittest.TestCase):
         "Date.yeardays() returns 366 for 2008"
 
         self.assertEquals(chrono.Date("2008-01-01").yeardays(), 366)
+
+
+if __name__ == "__main__":
+    unittest.main()
