@@ -3,3 +3,4 @@ include HACKING
 include LICENSE
 include NEWS
 recursive-include doc *
+recursive-include tests *.py

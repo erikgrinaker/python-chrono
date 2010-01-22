@@ -2,5 +2,5 @@
 ^dist/
 ^doc/doctrees/
 ^doc/html/
-^python_chrono\.egg-info/
+^MANIFEST$
 \.pyc$

@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from setuptools import setup
+from distutils.core import setup
 
 import os.path
 import sys
@@ -26,6 +26,14 @@ sys.path.insert(0, os.path.abspath("."))
 
 import chrono
 
+cmdclass = {}
+
+if "sdist" in sys.argv and not "build_sphinx" in sys.argv:
+        sys.argv.insert(1, "build_sphinx")
+
+if "build_sphinx" in sys.argv:
+    from sphinx.setup_command import BuildDoc
+    cmdclass["build_sphinx"] = BuildDoc
 
 setup(
     name="python-chrono",
@@ -50,4 +58,5 @@ setup(
         "chrono.clock",
         "chrono.parser",
     ),
+    cmdclass=cmdclass
 )
