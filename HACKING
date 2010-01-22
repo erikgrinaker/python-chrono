@@ -1,5 +1,16 @@
-Making a release
+Making a Release
 ================
 
 * update the version number in chrono/__init__.py
 * update the NEWS file
+
+Unit Tests
+==========
+
+To run unit tests, use the nosetests script:
+
+$ nosetests
+
+To run a specific test suite, use the proper module name:
+
+$ nosetests tests.datetime

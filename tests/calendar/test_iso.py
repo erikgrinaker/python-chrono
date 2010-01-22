@@ -1,6 +1,3 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
 import chrono
 import unittest
 
@@ -445,7 +442,3 @@ class ISOCalendar_weeksTest(unittest.TestCase):
         "ISOCalendar.weeks() accepts string input"
 
         self.assertEquals(chrono.calendar.ISOCalendar.weeks("2008"), 52)
-
-
-if __name__ == "__main__":
-    unittest.main()

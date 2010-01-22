@@ -1,6 +1,3 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
 import chrono
 import unittest
 
@@ -199,7 +196,3 @@ class Formatter_formatTest(unittest.TestCase):
         self.assertEqual(chrono.formatter.Formatter.format(
             "$year", 2010, 8, 4, 1, 2, 3
         ), "2010")
-
-
-if __name__ == "__main__":
-    unittest.main()

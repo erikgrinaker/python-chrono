@@ -1,6 +1,3 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
 import chrono
 import unittest
 
@@ -701,7 +698,3 @@ class ISOParser_yearTest(unittest.TestCase):
         "ISOParser.year() parses proper ISO compact dates (yyyymmdd)"
 
         self.assertEquals(chrono.parser.ISOParser.year("2009"), 2009)
-
-
-if __name__ == "__main__":
-    unittest.main()

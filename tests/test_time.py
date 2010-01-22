@@ -1,9 +1,5 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
 import chrono
 import datetime
-import error
 import time
 import unittest
 
@@ -528,7 +524,3 @@ class Time_set_struct_timeTest(unittest.TestCase):
         t.set_struct_time(time.localtime(1262621257))
 
         self.assertEquals(t.get(), (23, 7, 37))
-
-
-if __name__ == "__main__":
-    unittest.main()
