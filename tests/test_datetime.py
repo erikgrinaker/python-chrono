@@ -8,6 +8,16 @@ import time
 
 class DateTime__eqTest(unittest.TestCase):
 
+    def test_date(self):
+        "DateTime.__eq__() handles Date objects"
+
+        self.assertTrue(
+            chrono.DateTime("2009-12-27 00:00:00") == chrono.Date("2009-12-27")
+        )
+        self.assertFalse(
+            chrono.DateTime("2009-12-27 16:27:43") == chrono.Date("2009-12-27")
+        )
+
     def test_datetime(self):
         "DateTime.__eq__() handles DateTime objects"
 
@@ -38,6 +48,19 @@ class DateTime__eqTest(unittest.TestCase):
 
 
 class DateTime__geTest(unittest.TestCase):
+
+    def test_date(self):
+        "DateTime.__ge__() handles Date objects"
+
+        self.assertTrue(
+            chrono.DateTime("2009-12-28 16:27:43") >= chrono.Date("2009-12-28")
+        )
+        self.assertTrue(
+            chrono.DateTime("2009-12-28 00:00:00") >= chrono.Date("2009-12-28")
+        )
+        self.assertFalse(
+            chrono.DateTime("2009-12-28 16:27:43") >= chrono.Date("2009-12-29")
+        )
 
     def test_datetime(self):
         "DateTime.__ge__() handles DateTime objects"
@@ -77,6 +100,19 @@ class DateTime__geTest(unittest.TestCase):
 
 class DateTime__gtTest(unittest.TestCase):
 
+    def test_date(self):
+        "DateTime.__gt__() handles Date objects"
+
+        self.assertTrue(
+            chrono.DateTime("2009-12-27 16:27:43") > chrono.Date("2009-12-27")
+        )
+        self.assertFalse(
+            chrono.DateTime("2009-12-27 00:00:00") > chrono.Date("2009-12-27")
+        )
+        self.assertFalse(
+            chrono.DateTime("2009-12-28 16:27:43") > chrono.Date("2009-12-29")
+        )
+
     def test_datetime(self):
         "DateTime.__gt__() handles DateTime objects"
 
@@ -114,6 +150,14 @@ class DateTime__gtTest(unittest.TestCase):
 
 
 class DateTime__initTest(unittest.TestCase):
+
+    def test_date(self):
+        "DateTime.__init__() with Date parameter copies attributes"
+
+        self.assertEquals(
+            chrono.DateTime(chrono.Date("2009-12-27")).get(),
+            (2009, 12, 27, 0, 0, 0)
+        )
 
     def test_datetime(self):
         "DateTime.__init__() with DateTime parameter copies attributes"
@@ -239,6 +283,19 @@ class DateTime__initTest(unittest.TestCase):
 
 class DateTime__leTest(unittest.TestCase):
 
+    def test_date(self):
+        "DateTime.__le__() handles Date objects"
+
+        self.assertTrue(
+            chrono.DateTime("2009-12-26 16:27:43") <= chrono.Date("2009-12-27")
+        )
+        self.assertTrue(
+            chrono.DateTime("2009-12-27 00:00:00") <= chrono.Date("2009-12-27")
+        )
+        self.assertFalse(
+            chrono.DateTime("2009-12-28 16:27:43") <= chrono.Date("2009-12-27")
+        )
+
     def test_datetime(self):
         "DateTime.__le__() handles DateTime objects"
 
@@ -277,6 +334,19 @@ class DateTime__leTest(unittest.TestCase):
 
 class DateTime__ltTest(unittest.TestCase):
 
+    def test_date(self):
+        "DateTime.__lt__() handles Date objects"
+
+        self.assertTrue(
+            chrono.DateTime("2009-12-26 16:27:43") < chrono.Date("2009-12-27")
+        )
+        self.assertFalse(
+            chrono.DateTime("2009-12-27 00:00:00") < chrono.Date("2009-12-27")
+        )
+        self.assertFalse(
+            chrono.DateTime("2009-12-28 16:27:43") < chrono.Date("2009-12-27")
+        )
+
     def test_datetime(self):
         "DateTime.__lt__() handles DateTime objects"
 
@@ -314,6 +384,16 @@ class DateTime__ltTest(unittest.TestCase):
 
 
 class DateTime__neTest(unittest.TestCase):
+
+    def test_date(self):
+        "DateTime.__ne__() handles Date objects"
+
+        self.assertTrue(
+            chrono.DateTime("2009-12-27 16:27:43") != chrono.Date("2009-12-27")
+        )
+        self.assertFalse(
+            chrono.DateTime("2009-12-27 00:00:00") != chrono.Date("2009-12-27")
+        )
 
     def test_datetime(self):
         "DateTime.__ne__() handles DateTime objects"

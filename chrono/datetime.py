@@ -92,6 +92,9 @@ class DateTime(date.Date, time.Time):
                 datetime.hour, datetime.minute, datetime.second
             )
 
+        elif isinstance(datetime, date.Date):
+            self.set(datetime.year, datetime.month, datetime.day, 0, 0, 0)
+
         elif isinstance(datetime, datetimemod.datetime):
             self.set_datetime(datetime)
 
