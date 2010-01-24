@@ -20,8 +20,8 @@ savings time, but this is planned for a future release.
 
 The following sections describe some typical usage of the
 :class:`chrono.Date` class. The :class:`chrono.Time` and :class:`chrono.DateTime`
-classes behave in much the same way, but only :class:`chrono.Date` is
-covered, for simplicity.
+classes behave in much the same way, but for simplicity only :class:`chrono.Date` is
+covered here.
 
 Date parsing
 ------------
@@ -29,7 +29,7 @@ Date parsing
 Date parsing is done simply by instantiating a :class:`chrono.Date` object,
 passing the date string to be parsed as input. Once instantiated, the
 attributes :attr:`chrono.Date.year`, :attr:`chrono.Date.month`, and
-:attr:`chrono.Date.day` contain the respective date parts, like so::
+:attr:`chrono.Date.day` will contain the respective date parts::
 
    >>> date = chrono.Date("2009-07-23")
    >>> date.year
@@ -39,7 +39,7 @@ attributes :attr:`chrono.Date.year`, :attr:`chrono.Date.month`, and
    >>> date.day
    23
 
-To retrieve all the attributes at once, you can use :meth:`chrono.Date.get`::
+To retrieve all the attributes at once, use :meth:`chrono.Date.get`::
 
    >>> date = chrono.Date("2009-07-23")
    >>> date.get()
@@ -93,9 +93,8 @@ be handled according to the object type::
 For a complete list of valid formats, see the :class:`chrono.parser.ISOParser`
 documentation. For other input types, see the :class:`chrono.Date` documentation.
 
-If you would like to parse date strings without instantiating a
-:class:`chrono.Date` object, you can use the underlying
-:class:`chrono.parser.ISOParser` class directly::
+To parse date strings without instantiating a :class:`chrono.Date` object, you
+can use the underlying :class:`chrono.parser.ISOParser` class directly::
 
    >>> # parses all supported date formats
    >>> chrono.parser.ISOParser.parse_date("2009-07-23")

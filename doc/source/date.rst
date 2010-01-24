@@ -1,4 +1,4 @@
-:class:`chrono.Date` - main class for date handling
+:class:`chrono.Date` - Main class for date handling
 ===================================================
 
 .. autoclass:: chrono.Date

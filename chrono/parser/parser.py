@@ -30,8 +30,9 @@ class Parser(object):
     def regexp(cls, regexp, subject):
         """
         Parses *subject* based on the regular expression object *regexp*,
-        returns a dict of named captured groups. Raises
-        :exc:`chrono.error.ParseError` if the subject doesn't match the
+        returns a dict of named captured groups.
+
+        Raises :exc:`chrono.error.ParseError` if the subject doesn't match the
         expression, or :exc:`TypeError` on invalid (ie non-string) subject
         type.
         """

@@ -1,4 +1,4 @@
-:class:`chrono.Time` - main class for time handling
+:class:`chrono.Time` - Main class for time handling
 ===================================================
 
 .. autoclass:: chrono.Time

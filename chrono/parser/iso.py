@@ -38,7 +38,7 @@ class ISOParser(parser.Parser):
     listed below. Datetimes can be composed of any combination of
     the date and time formats listed, separated by whitespace or
     a T.
-    
+
     =================== =================== ======================= ===============================================
     Format              Example             Description             Method
     =================== =================== ======================= ===============================================
@@ -160,9 +160,11 @@ class ISOParser(parser.Parser):
     def compactdate(cls, date):
         """
         Parses a compact ISO date (*yyyymmdd*), and returns a tuple with
-        year, month, and day. Raises :exc:`chrono.error.ParseError` for
-        invalid input format, :exc:`TypeError` for invalid input type,
-        and :exc:`chrono.error.YearError`, :exc:`chrono.error.MonthError`,
+        year, month, and day.
+
+        Raises :exc:`chrono.error.ParseError` for invalid input format,
+        :exc:`TypeError` for invalid input type, and
+        :exc:`chrono.error.YearError`, :exc:`chrono.error.MonthError`,
         or :exc:`chrono.error.DayError` for invalid date values.
         """
 
@@ -180,7 +182,9 @@ class ISOParser(parser.Parser):
     def compactordinal(cls, date):
         """
         Parses a compact ISO ordinal date (*yyyyddd*), and returns a tuple
-        with year and ordinal day. Raises :exc:`chrono.error.ParseError` for
+        with year and ordinal day.
+
+        Raises :exc:`chrono.error.ParseError` for
         invalid input format, :exc:`TypeError` for invalid input type,
         and :exc:`chrono.error.YearError` or :exc:`chrono.error.DayError`
         for invalid date values.
@@ -200,7 +204,9 @@ class ISOParser(parser.Parser):
         """
         Parses a compact ISO time (*hhmmss*), and returns a tuple with
         hour, minute, and second. Minutes and/or seconds may be omitted,
-        which will be interpreted as 0. Raises :exc:`chrono.error.ParseError`
+        which will be interpreted as 0.
+
+        Raises :exc:`chrono.error.ParseError`
         for invalid input format, :exc:`TypeError` for invalid input type,
         and :exc:`chrono.error.HourError`, :exc:`chrono.error.MinuteError`,
         or :exc:`chrono.error.SecondError` for invalid time values.
@@ -221,7 +227,9 @@ class ISOParser(parser.Parser):
         """
         Parses a compact ISO week (*yyyyWww*), and returns a tuple with year
         and week number. Leading zeroes may be omitted, even though the ISO
-        standard requires them. Raises :exc:`chrono.error.ParseError`
+        standard requires them.
+
+        Raises :exc:`chrono.error.ParseError`
         for invalid input format, :exc:`TypeError` for invalid input type,
         and :exc:`chrono.error.YearError` or :exc:`chrono.error.WeekError`
         for invalid date values.
@@ -240,7 +248,9 @@ class ISOParser(parser.Parser):
     def compactweekdate(cls, date):
         """
         Parses a compact ISO weekdate (*yyyyWwwd*), and returns a tuple with
-        year, week, and weekday. Raises :exc:`chrono.error.ParseError` for
+        year, week, and weekday.
+
+        Raises :exc:`chrono.error.ParseError` for
         invalid input format, :exc:`TypeError` for invalid input type, and
         :exc:`chrono.error.YearError`, :exc:`chrono.error.WeekError`,
         or :exc:`chrono.error.DayError` for invalid date values.
@@ -261,7 +271,9 @@ class ISOParser(parser.Parser):
         """
         Parses a ISO date (*yyyy-mm-dd*), and returns a tuple with year,
         month, and day. Leading zeroes may be omitted, even though the ISO
-        standard requires them. Raises :exc:`chrono.error.ParseError` for
+        standard requires them.
+
+        Raises :exc:`chrono.error.ParseError` for
         invalid input format, :exc:`TypeError` for invalid input type,
         and :exc:`chrono.error.YearError`, :exc:`chrono.error.MonthError`,
         or :exc:`chrono.error.DayError` for invalid date values.
@@ -282,7 +294,9 @@ class ISOParser(parser.Parser):
         """
         Parses an ISO month (*yyyy-mm*), and returns a tuple with year and
         month. Leading zeroes may be omitted, even though the ISO standard
-        requires them. Raises :exc:`chrono.error.ParseError` for
+        requires them.
+
+        Raises :exc:`chrono.error.ParseError` for
         invalid input format, :exc:`TypeError` for invalid input type,
         and :exc:`chrono.error.YearError` or :exc:`chrono.error.MonthError`
         for invalid date values.
@@ -299,7 +313,9 @@ class ISOParser(parser.Parser):
     def ordinal(cls, date):
         """
         Parses an ISO ordinal date (*yyyy-ddd*), and returns a tuple with
-        year and ordinal day. Raises :exc:`chrono.error.ParseError` for
+        year and ordinal day.
+
+        Raises :exc:`chrono.error.ParseError` for
         invalid input format, :exc:`TypeError` for invalid input type,
         and :exc:`chrono.error.YearError` or :exc:`chrono.error.DayError`
         for invalid date values.
@@ -321,6 +337,7 @@ class ISOParser(parser.Parser):
         year, month, and day. For formats which doesn't provide data with day
         precision, the earliest possible day is used - for example,
         *2009-W32* would return (2009, 8, 3), the Monday of week 32 2009.
+
         Raises :exc:`chrono.error.ParseError` for invalid input format,
         :exc:`TypeError` for invalid input type, and an appropriate
         :exc:`chrono.error.DateError` subclass for invalid date values.
@@ -418,7 +435,9 @@ class ISOParser(parser.Parser):
         """
         Parses an ISO datetime in any supported format and returns a tuple
         with year, month, day, hour, minute, and second. Omitted minutes
-        and/or seconds will be interpreted as 0. Raises
+        and/or seconds will be interpreted as 0.
+
+        Raises
         :exc:`chrono.error.ParseError` for invalid input format,
         :exc:`TypeError` for invalid input type, and an appropriate
         :exc:`chrono.error.DateTimeError` subclass for invalid datetime
@@ -437,7 +456,9 @@ class ISOParser(parser.Parser):
         """
         Parses an ISO time in any supported format and returns a tuple with
         hour, minutes, and seconds. Omitted minutes and/or seconds will be
-        interpreted as 0. Raises :exc:`chrono.error.ParseError` for invalid
+        interpreted as 0.
+
+        Raises :exc:`chrono.error.ParseError` for invalid
         input format, :exc:`TypeError` for invalid input type, and an
         appropriate :exc:`chrono.error.TimeError` subclass for invalid time
         values.
@@ -465,7 +486,9 @@ class ISOParser(parser.Parser):
         Parses an ISO time (*hh:mm:ss*), and returns a tuple with hour,
         minute, and second. Minutes and/or seconds may be omitted, which
         will be interpreted as 0. Leading zeroes may be omitted, even though
-        the ISO standard requires them. Raises :exc:`chrono.error.ParseError`
+        the ISO standard requires them.
+
+        Raises :exc:`chrono.error.ParseError`
         for invalid input format, :exc:`TypeError` for invalid input type,
         and :exc:`chrono.error.HourError`, :exc:`chrono.error.MinuteError`,
         or :exc:`chrono.error.SecondError` for invalid time values.
@@ -486,7 +509,9 @@ class ISOParser(parser.Parser):
         """
         Parses an ISO week (*yyyy-Www*), and returns a tuple with year
         and week number. Leading zeroes may be omitted, even though the ISO
-        standard requires them. Raises :exc:`chrono.error.ParseError`
+        standard requires them.
+
+        Raises :exc:`chrono.error.ParseError`
         for invalid input format, :exc:`TypeError` for invalid input type,
         and :exc:`chrono.error.YearError` or :exc:`chrono.error.WeekError`
         for invalid date values.
@@ -506,7 +531,9 @@ class ISOParser(parser.Parser):
         """
         Parses an ISO weekdate (*yyyy-Www-d*), and returns a tuple with
         year, week, and weekday. Leading zeroes may be omitted, even though
-        the ISO standard requires them.  Raises :exc:`chrono.error.ParseError`
+        the ISO standard requires them.
+
+        Raises :exc:`chrono.error.ParseError`
         for invalid input format, :exc:`TypeError` for invalid input type,
         and :exc:`chrono.error.YearError`, :exc:`chrono.error.WeekError`,
         or :exc:`chrono.error.DayError` for invalid date values.
@@ -526,7 +553,9 @@ class ISOParser(parser.Parser):
     def year(cls, date):
         """
         Parses an ISO year (*yyyy*), and returns it. Leading zeroes may be
-        omitted, even though the ISO standard requires them. Raises
+        omitted, even though the ISO standard requires them.
+
+        Raises
         :exc:`chrono.error.ParseError` for invalid input format,
         :exc:`TypeError` for invalid input type, and
         :exc:`chrono.error.YearError` for invalid year value.

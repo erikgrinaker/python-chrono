@@ -92,11 +92,11 @@ class Time(object):
 
         return self.__cmp__(other) == 0
 
-    def __ge__ (self, other):
+    def __ge__(self, other):
 
         return self.__cmp__(other) >= 0
 
-    def __gt__ (self, other):
+    def __gt__(self, other):
 
         return self.__cmp__(other) > 0
 
@@ -134,11 +134,11 @@ class Time(object):
         else:
             raise TypeError("Invalid type for Time parameter")
 
-    def __le__ (self, other):
+    def __le__(self, other):
 
         return self.__cmp__(other) <= 0
 
-    def __lt__ (self, other):
+    def __lt__(self, other):
 
         return self.__cmp__(other) < 0
 
@@ -229,8 +229,9 @@ class Time(object):
         """
         Makes sure the object has a full time set, ie the attributes
         :attr:`chrono.Time.hour`, :attr:`chrono.Time.minute`, and
-        :attr:`chrono.Time.second` are not **None**, and raises
-        :exc:`chrono.error.NoDateTimeError` if not.
+        :attr:`chrono.Time.second` are not **None**.
+
+        Raises :exc:`chrono.error.NoDateTimeError` on missing attributes.
         """
 
         if not self.is_set():

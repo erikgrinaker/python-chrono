@@ -184,8 +184,9 @@ class DateTime(date.Date, time.Time):
         :attr:`chrono.DateTime.year`, :attr:`chrono.DateTime.month`,
         :attr:`chrono.DateTime.day`, :attr:`chrono.DateTime.hour`,
         :attr:`chrono.DateTime.minute`, and :attr:`chrono.DateTime.second`
-        are not **None**, and raises :exc:`chrono.error.NoDateTimeError`
-        if not.
+        are not **None**
+
+        Raises :exc:`chrono.error.NoDateTimeError` on missing attributes.
         """
 
         date.Date.assert_set(self)

@@ -8,7 +8,7 @@ Requirements
 ------------
 
 python-chrono only needs a recent version of Python installed. It has been
-tested on Python versions 2.6 and 3.1, but it is believed to work on all
+tested on Python versions 2.6 and 3.1, but is believed to work on all
 versions from Python 2.3 and upwards.
 
 Installing from source
@@ -22,4 +22,3 @@ script as root::
 For more informations on available options, run::
 
    ./setup.py --help
-

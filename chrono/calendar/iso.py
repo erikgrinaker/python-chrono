@@ -40,9 +40,10 @@ class ISOCalendar(Calendar):
     def validate_week(cls, year, week):
         """
         Validates a week: *year* must be in range 1-9999, and *week* must be
-        in range 1-53, depending on *year*. If *year* or *week* is invalid,
-        :exc:`chrono.error.YearError` or :exc:`chrono.error.WeekError` will
-        be raised.
+        in range 1-53, depending on *year*.
+
+        Raises :exc:`chrono.error.YearError` or :exc:`chrono.error.WeekError`
+        if *year* or *week* is invalid.
         """
 
         cls.validate_year(year)
@@ -60,9 +61,11 @@ class ISOCalendar(Calendar):
         """
         Validates a weekdate: *year* must be in range 1-9999, *week* must be
         in range 1-53, depending on *year*, and *weekday* must be in range
-        1-7. If *year*, *week*, or *weekday* is invalid,
-        :exc:`chrono.error.YearError`, :exc:`chrono.error.WeekError`, or
-        :exc:`chrono.error.DayError` will be raised.
+        1-7.
+
+        Raises :exc:`chrono.error.YearError`, :exc:`chrono.error.WeekError`, or
+        :exc:`chrono.error.DayError` if *year*, *week*, or *weekday* is
+        invalid.
         """
 
         cls.validate_week(year, week)
@@ -72,9 +75,11 @@ class ISOCalendar(Calendar):
     def week(cls, year, month, day):
         """
         Returns the week containing the given date as a tuple of year and
-        week. If *year*, *month*, or *day* is invalid
-        :exc:`chrono.error.YearError`, :exc:`chrono.error.MonthError`,
-        or :exc:`chrono.error.DayError` will be raised.
+        week.
+
+        Raises :exc:`chrono.error.YearError`, :exc:`chrono.error.MonthError`,
+        or :exc:`chrono.error.DayError` if *year*, *month*, or *day* is
+        invalid.
         """
 
         cls.validate(year, month, day)
@@ -89,9 +94,10 @@ class ISOCalendar(Calendar):
     def week_to_date(cls, year, week):
         """
         Returns the date of the first day in the given week as a tuple of
-        year, month, and day. If *year* or *week* is invalid,
-        :exc:`chrono.error.YearError` or :exc:`chrono.error.WeekError` will
-        be raised.
+        year, month, and day.
+
+        Raises :exc:`chrono.error.YearError` or :exc:`chrono.error.WeekError`
+        if *year* or *month* is invalid.
         """
 
         cls.validate_week(year, week)
@@ -112,9 +118,11 @@ class ISOCalendar(Calendar):
     def weekdate(cls, year, month, day):
         """
         Returns the weekdate for the given date as a tuple with year, week,
-        and weekday. If *year*, *month*, or *day* is invalid
-        :exc:`chrono.error.YearError`, :exc:`chrono.error.MonthError`,
-        or :exc:`chrono.error.DayError` will be raised.
+        and weekday.
+
+        Raises :exc:`chrono.error.YearError`, :exc:`chrono.error.MonthError`,
+        or :exc:`chrono.error.DayError` if *year*, *month*, or *day* is
+        invalid.
         """
 
         cls.validate(year, month, day)
@@ -129,9 +137,11 @@ class ISOCalendar(Calendar):
     def weekdate_to_date(cls, year, week, day):
         """
         Returns the date of the given weekdate as a tuple with year, month,
-        and day. If *year*, *week*, or *day* is invalid
-        :exc:`chrono.error.YearError`, :exc:`chrono.error.WeekError`,
-        or :exc:`chrono.error.DayError` will be raised.
+        and day.
+
+        Raises :exc:`chrono.error.YearError`, :exc:`chrono.error.WeekError`,
+        or :exc:`chrono.error.DayError` if *year*, *week*, or *day* is
+        invalid.
         """
 
         cls.validate_weekdate(year, week, day)
@@ -151,10 +161,11 @@ class ISOCalendar(Calendar):
     @classmethod
     def weekday(cls, year, month, day):
         """
-        Returns the weekday of the given date. If *year*, *month*, or *day*
-        is invalid :exc:`chrono.error.YearError`,
-        :exc:`chrono.error.MonthError`, or :exc:`chrono.error.DayError`
-        will be raised.
+        Returns the weekday of the given date.
+
+        Raises :exc:`chrono.error.YearError`, :exc:`chrono.error.MonthError`,
+        or :exc:`chrono.error.DayError` if *year*, *month*, or *day* is
+        invalid.
         """
 
         cls.validate(year, month, day)
@@ -169,8 +180,9 @@ class ISOCalendar(Calendar):
     def weekdayname(cls, weekday, short=False):
         """
         Returns the weekday name of the given weekday. If *short*
-        is **True**, returns the abbreviated weekday name. If *weekday*
-        is invalid, :exc:`chrono.error.DayError` will be raised.
+        is **True**, returns the abbreviated weekday name.
+
+        Raises :exc:`chrono.error.DayError` if *weekday* is invalid.
         """
 
         weekday = utility.int_day(weekday)
@@ -184,8 +196,9 @@ class ISOCalendar(Calendar):
     @classmethod
     def weeks(cls, year):
         """
-        Returns the number of weeks in *year*. If *year* is invalid,
-        :exc:`chrono.error.YearError` will be raised.
+        Returns the number of weeks in *year*.
+
+        Raises :exc:`chrono.error.YearError` if *year* is invalid.
         """
 
         if cls.leapyear(year) and cls.weekday(year, 1, 1) == 3:

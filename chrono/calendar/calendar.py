@@ -33,8 +33,9 @@ class Calendar(object):
     @classmethod
     def leapyear(cls, year):
         """
-        Returns **True** if *year* is a leap year, otherwise **False**. Raises
-        :exc:`chrono.error.YearError` if *year* is invalid.
+        Returns **True** if *year* is a leap year, otherwise **False**.
+
+        Raises :exc:`chrono.error.YearError` if *year* is invalid.
         """
 
         cls.validate_year(year)
@@ -45,9 +46,10 @@ class Calendar(object):
     def monthdays(cls, year, month):
         """
         Returns the number of days in *month*. *year* is needed to handle
-        leap years. If *year* or *month* is invalid,
-        :exc:`chrono.error.YearError` or :exc:`chrono.error.MonthError`
-        will be raised.
+        leap years.
+
+        Raises :exc:`chrono.error.YearError` or :exc:`chrono.error.MonthError`
+        if *year* or *month* is invalid.
         """
 
         year = utility.int_year(year)
@@ -65,8 +67,9 @@ class Calendar(object):
     def monthname(cls, month, short=False):
         """
         Returns the name of *month*, according to the current system locale.
-        If *short* is **True**, returns the abbreviated month name. If *month*
-        is invalid, :exc:`chrono.error.MonthError` will be raised.
+        If *short* is **True**, returns the abbreviated month name.
+
+        Raises :exc:`chrono.error.MonthError` if *month* is invalid.
         """
 
         month = utility.int_month(month)
@@ -80,10 +83,10 @@ class Calendar(object):
     @classmethod
     def ordinal(cls, year, month, day):
         """
-        Returns the ordinal day for the given date. If *year*, *month*, or
-        *day* is invalid, :exc:`chrono.error.YearError`,
-        :exc:`chrono.error.MonthError` or :exc:`chrono.error.DayError` will be
-        raised.
+        Returns the ordinal day for the given date.
+
+        Raises :exc:`chrono.error.YearError`, :exc:`chrono.error.MonthError` or
+        :exc:`chrono.error.DayError` if *year*, *month* or *day* is invalid.
         """
 
         cls.validate(year, month, day)
@@ -101,9 +104,10 @@ class Calendar(object):
     def ordinal_to_date(cls, year, day):
         """
         Converts an ordinal day to a date, returned as a tuple of year,
-        month, and day. If *year* or *day* is invalid,
-        :exc:`chrono.error.YearError` or :exc:`chrono.error.MonthError`
-        will be raised.
+        month, and day.
+
+        Raises :exc:`chrono.error.YearError` or :exc:`chrono.error.DayError`
+        if *year* or *day* is invalid.
         """
 
         cls.validate_ordinal(year, day)
@@ -123,8 +127,9 @@ class Calendar(object):
     def validate(cls, year, month, day):
         """
         Validates a date: *year* must be in range 1-9999, *month* in range
-        1-12, and *day* in range 1-31, depending on *year* and *month*. Raises
-        :exc:`chrono.error.YearError`, :exc:`chrono.error.MonthError`
+        1-12, and *day* in range 1-31, depending on *year* and *month*.
+
+        Raises :exc:`chrono.error.YearError`, :exc:`chrono.error.MonthError`
         or :exc:`chrono.error.DayError` on invalid input.
         """
 
@@ -142,8 +147,9 @@ class Calendar(object):
     @classmethod
     def validate_month(cls, month):
         """
-        Validates *month*: must be in range 1-12. Raises
-        :exc:`chrono.error.MonthError` on invalid input.
+        Validates *month*: must be in range 1-12.
+
+        Raises :exc:`chrono.error.MonthError` on invalid input.
         """
 
         if not 1 <= utility.int_month(month) <= 12:
@@ -155,8 +161,9 @@ class Calendar(object):
     def validate_ordinal(cls, year, day):
         """
         Validates an ordinal date: *year* must be in range 1-9999, *day* must
-        be in range 1-365, or 366 if *year* is a leap year. Raises
-        :exc:`chrono.error.YearError` or :exc:`chrono.error.DayError` on
+        be in range 1-365, or 366 if *year* is a leap year.
+
+        Raises :exc:`chrono.error.YearError` or :exc:`chrono.error.DayError` on
         invalid input.
         """
 
@@ -174,9 +181,10 @@ class Calendar(object):
     def validate_week(cls, year, week):
         """
         Validates a week: *year* must be in range 1-9999, and *week* must be
-        in range 1-53, depending on *year*. If *year* or *week* is invalid,
-        :exc:`chrono.error.YearError` or :exc:`chrono.error.WeekError` will
-        be raised.
+        in range 1-53, depending on *year*.
+
+        Raises :exc:`chrono.error.YearError` or :exc:`chrono.error.WeekError`
+        if *year* or *week* is invalid.
 
         .. note:: This is a placeholder method which just raises
            :exc:`NotImplementedError`, it is implemented in
@@ -192,9 +200,11 @@ class Calendar(object):
         """
         Validates a weekdate: *year* must be in range 1-9999, *week* must be
         in range 1-53, depending on *year*, and *weekday* must be in range
-        1-7. If *year*, *week*, or *weekday* is invalid,
-        :exc:`chrono.error.YearError`, :exc:`chrono.error.WeekError`, or
-        :exc:`chrono.error.DayError` will be raised.
+        1-7.
+
+        Raises :exc:`chrono.error.YearError`, :exc:`chrono.error.WeekError`, or
+        :exc:`chrono.error.DayError` if *year*, *week*, or *weekday* is
+        invalid.
 
         .. note:: This is a placeholder method which just raises
            :exc:`NotImplementedError`, it is implemented in
@@ -208,8 +218,9 @@ class Calendar(object):
     @classmethod
     def validate_weekday(cls, day):
         """
-        Validates a week day: *day* must be in range 1-7. If *day* is
-        invalid, :exc:`chrono.error.DayError` will be raised.
+        Validates a week day: *day* must be in range 1-7.
+
+        Raises :exc:`chrono.error.DayError` if *day* is invalid.
         """
 
         if not 1 <= utility.int_day(day) <= 7:
@@ -218,8 +229,9 @@ class Calendar(object):
     @classmethod
     def validate_year(cls, year):
         """
-        Validates *year*: must be in range 1-9999. If *year* is invalid,
-        :exc:`chrono.error.YearError` will be raised.
+        Validates *year*: must be in range 1-9999.
+
+        Raises :exc:`chrono.error.YearError` if *year* is invalid.
         """
 
         if not 1 <= utility.int_year(year) <= 9999:
@@ -231,9 +243,11 @@ class Calendar(object):
     def week(cls, year, month, day):
         """
         Returns the week containing the given date as a tuple of year and
-        week. If *year*, *month*, or *day* is invalid
-        :exc:`chrono.error.YearError`, :exc:`chrono.error.MonthError`,
-        or :exc:`chrono.error.DayError` will be raised.
+        week.
+
+        Raises :exc:`chrono.error.YearError`, :exc:`chrono.error.MonthError`,
+        or :exc:`chrono.error.DayError` if *year*, *month*, or *day* is
+        invalid.
 
         .. note:: This is a placeholder method which just raises
            :exc:`NotImplementedError`, it is implemented in
@@ -248,9 +262,10 @@ class Calendar(object):
     def week_to_date(cls, year, week):
         """
         Returns the date of the first day in the given week as a tuple of
-        year, month, and day. If *year* or *week* is invalid,
-        :exc:`chrono.error.YearError` or :exc:`chrono.error.WeekError` will
-        be raised.
+        year, month, and day.
+
+        Raises :exc:`chrono.error.YearError` or :exc:`chrono.error.WeekError`
+        if *year* or *week* is invalid.
 
         .. note:: This is a placeholder method which just raises
            :exc:`NotImplementedError`, it is implemented in
@@ -265,9 +280,11 @@ class Calendar(object):
     def weekdate(cls, year, month, day):
         """
         Returns the weekdate for the given date as a tuple with year, week,
-        and weekday. If *year*, *month*, or *day* is invalid
-        :exc:`chrono.error.YearError`, :exc:`chrono.error.MonthError`,
-        or :exc:`chrono.error.DayError` will be raised.
+        and weekday.
+
+        Raises :exc:`chrono.error.YearError`, :exc:`chrono.error.MonthError`,
+        or :exc:`chrono.error.DayError` if *year*, *month* or *day* is
+        invalid.
 
         .. note:: This is a placeholder method which just raises
            :exc:`NotImplementedError`, it is implemented in
@@ -282,9 +299,10 @@ class Calendar(object):
     def weekdate_to_date(cls, year, week, day):
         """
         Returns the date of the given weekdate as a tuple with year, month,
-        and day. If *year*, *week*, or *day* is invalid
-        :exc:`chrono.error.YearError`, :exc:`chrono.error.WeekError`,
-        or :exc:`chrono.error.DayError` will be raised.
+        and day.
+
+        Raises :exc:`chrono.error.YearError`, :exc:`chrono.error.WeekError`,
+        or :exc:`chrono.error.DayError` if *year*, *week* or *day* is invalid.
 
         .. note:: This is a placeholder method which just raises
            :exc:`NotImplementedError`, it is implemented in
@@ -298,10 +316,11 @@ class Calendar(object):
     @classmethod
     def weekday(cls, year, month, day):
         """
-        Returns the weekday of the given date. If *year*, *month*, or *day*
-        is invalid :exc:`chrono.error.YearError`,
-        :exc:`chrono.error.MonthError`, or :exc:`chrono.error.DayError`
-        will be raised.
+        Returns the weekday of the given date.
+
+        Raises :exc:`chrono.error.YearError`, :exc:`chrono.error.MonthError`,
+        or :exc:`chrono.error.DayError` if *year*, *month*, or *day* is
+        invalid.
 
         .. note:: This is a placeholder method which just raises
            :exc:`NotImplementedError`, it is implemented in
@@ -316,8 +335,9 @@ class Calendar(object):
     def weekdayname(cls, weekday, short=False):
         """
         Returns the weekday name of the given weekday. If *short*
-        is **True**, returns the abbreviated weekday name. If *weekday*
-        is invalid, :exc:`chrono.error.DayError` will be raised.
+        is **True**, returns the abbreviated weekday name.
+
+        Raises :exc:`chrono.error.DayError` if *weekday* is invalid.
 
         .. note:: This is a placeholder method which just raises
            :exc:`NotImplementedError`, it is implemented in
@@ -331,8 +351,9 @@ class Calendar(object):
     @classmethod
     def weeks(cls, year):
         """
-        Returns the number of weeks in *year*. If *year* is invalid,
-        :exc:`chrono.error.YearError` will be raised.
+        Returns the number of weeks in *year*.
+
+        Raises :exc:`chrono.error.YearError` if *year* is invalid.
 
         .. note:: This is a placeholder method which just raises
            :exc:`NotImplementedError`, it is implemented in
@@ -346,8 +367,9 @@ class Calendar(object):
     @classmethod
     def yeardays(cls, year):
         """
-        Returns the number of days in *year*. If *year* is invalid,
-        :exc:`chrono.error.YearError` will be raised.
+        Returns the number of days in *year*.
+
+        Raises :exc:`chrono.error.YearError` if *year* is invalid.
         """
 
         return cls.leapyear(year) and 366 or 365

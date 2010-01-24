@@ -93,11 +93,11 @@ class Date(object):
 
         return self.__cmp__(other) == 0
 
-    def __ge__ (self, other):
+    def __ge__(self, other):
 
         return self.__cmp__(other) >= 0
 
-    def __gt__ (self, other):
+    def __gt__(self, other):
 
         return self.__cmp__(other) > 0
 
@@ -135,11 +135,11 @@ class Date(object):
         else:
             raise TypeError("Invalid type for Date parameter")
 
-    def __le__ (self, other):
+    def __le__(self, other):
 
         return self.__cmp__(other) <= 0
 
-    def __lt__ (self, other):
+    def __lt__(self, other):
 
         return self.__cmp__(other) < 0
 
@@ -231,8 +231,9 @@ class Date(object):
         """
         Makes sure the object has a full date set, ie the attributes
         :attr:`chrono.Date.year`, :attr:`chrono.Date.month`, and
-        :attr:`chrono.Date.day` are not **None**, and raises
-        :exc:`chrono.error.NoDateTimeError` if not.
+        :attr:`chrono.Date.day` are not **None**.
+
+        Raises :exc:`chrono.error.NoDateTimeError` on missing attributes.
         """
 
         if not self.is_set():

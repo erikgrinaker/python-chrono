@@ -1,4 +1,4 @@
-:class:`chrono.DateTime` - main class for datetime handling
+:class:`chrono.DateTime` - Main class for datetime handling
 ===========================================================
 
 .. autoclass:: chrono.DateTime

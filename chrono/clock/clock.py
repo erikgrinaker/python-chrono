@@ -34,10 +34,11 @@ class Clock(object):
     def validate(cls, hour, minute, second):
         """
         Validates a time: *hour* must be in range 0-23, *minute* in range
-        0-59, and *second* in range 0-59. If *hour*, *minute*, or *second*
-        is invalid, :exc:`chrono.error.HourError`,
-        :exc:`chrono.error.MinuteError`, or :exc:`chrono.error.SecondError`
-        will be raised.
+        0-59, and *second* in range 0-59.
+
+        Raises :exc:`chrono.error.HourError`, :exc:`chrono.error.MinuteError`,
+        or :exc:`chrono.error.SecondError` if *hour*, *minute*, or *second*
+        is invalid.
         """
 
         cls.validate_hour(hour)
@@ -47,8 +48,9 @@ class Clock(object):
     @classmethod
     def validate_hour(cls, hour):
         """
-        Validates an hour: must be in range 0-23, otherwise raises
-        :exc:`chrono.error.HourError`.
+        Validates an hour: must be in range 0-23.
+
+        Raises :exc:`chrono.error.HourError` if *hour* is invalid.
         """
 
         if not 0 <= utility.int_hour(hour) <= 23:
@@ -57,8 +59,9 @@ class Clock(object):
     @classmethod
     def validate_minute(cls, minute):
         """
-        Validates a minute: must be in range 0-59, otherwise raises
-        :exc:`chrono.error.MinuteError`.
+        Validates a minute: must be in range 0-59.
+
+        Raises :exc:`chrono.error.MinuteError` is *minute* is invalid.
         """
 
         if not 0 <= utility.int_minute(minute) <= 59:
@@ -69,8 +72,9 @@ class Clock(object):
     @classmethod
     def validate_second(cls, second):
         """
-        Validates a second: must be in range 0-59, otherwise raises
-        :exc:`chrono.error.SecondError`.
+        Validates a second: must be in range 0-59.
+
+        Raises :exc:`chrono.error.SecondError` is *second* is invalid.
         """
 
         if not 0 <= utility.int_second(second) <= 59:
