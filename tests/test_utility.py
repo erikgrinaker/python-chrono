@@ -4,6 +4,24 @@ import chrono
 import unittest
 
 
+class cmpTest(unittest.TestCase):
+
+    def test_eq(self):
+        "cmp() handles equality"
+
+        self.assertEqual(chrono.utility.cmp(1, 0), 1)
+
+    def test_gt(self):
+        "cmp() handles greates than"
+
+        self.assertEqual(chrono.utility.cmp(1, 1), 0)
+
+    def test_gt(self):
+        "cmp() handles lesser than"
+
+        self.assertEqual(chrono.utility.cmp(0, 1), -1)
+
+
 class int_dayTest(unittest.TestCase):
 
     def test_int(self):
