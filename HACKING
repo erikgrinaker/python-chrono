@@ -1,8 +1,17 @@
 Making a Release
 ================
 
+* pull any changes from central repo
 * update the version number in chrono/__init__.py
 * update the NEWS file
+* run unit-tests (install first)
+* commit new version
+* tag new version (hg tag x.y.z)
+* if new major/minor version, create branch [hg branch x.y; hg commit]
+* remove any old documentation [rm -rf doc/doctrees/ doc/html/]
+* generate source distribution [./setup.py sdist]
+* upload new distribution to http://oss.codepoet.no/
+* update the documentation on the wiki (python-chrono-wiki repo)
 
 Unit Tests
 ==========
