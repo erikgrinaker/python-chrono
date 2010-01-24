@@ -71,14 +71,35 @@ class Date(object):
         if not isinstance(other, Date):
             other = Date(other)
 
+        if not self.is_set() and not other.is_set():
+            return 0
+
+        elif not other.is_set():
+            return 1
+
+        elif not self.is_set():
+            return -1
+
         if self.year != other.year:
-            return cmp(self.year, other.year)
+            return utility.cmp(self.year, other.year)
 
         elif self.month != other.month:
-            return cmp(self.month, other.month)
+            return utility.cmp(self.month, other.month)
 
         else:
-            return cmp(self.day, other.day)
+            return utility.cmp(self.day, other.day)
+
+    def __eq__(self, other):
+
+        return self.__cmp__(other) == 0
+
+    def __ge__ (self, other):
+
+        return self.__cmp__(other) >= 0
+
+    def __gt__ (self, other):
+
+        return self.__cmp__(other) > 0
 
     def __init__(self, date=None, **kwargs):
 
@@ -113,6 +134,18 @@ class Date(object):
 
         else:
             raise TypeError("Invalid type for Date parameter")
+
+    def __le__ (self, other):
+
+        return self.__cmp__(other) <= 0
+
+    def __lt__ (self, other):
+
+        return self.__cmp__(other) < 0
+
+    def __ne__(self, other):
+
+        return self.__cmp__(other) != 0
 
     def __repr__(self):
 

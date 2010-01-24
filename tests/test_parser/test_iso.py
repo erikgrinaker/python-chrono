@@ -69,7 +69,7 @@ class ISOParser_compactordinalTest(unittest.TestCase):
         )
 
     def test_parse(self):
-        "ISOParser.compactordinal() parses proper ISO compactordinal dates (yyyyddd)"
+        "ISOParser.compactordinal() parses proper ISO compactord (yyyyddd)"
 
         self.assertEquals(
             chrono.parser.ISOParser.compactordinal("2009202"),
@@ -128,7 +128,9 @@ class ISOParser_compactweekTest(unittest.TestCase):
     def test_invalid_date(self):
         "ISOParser.compactweek() raises error on invalid date"
 
-        self.assertRaises(chrono.WeekError, chrono.parser.ISOParser.compactweek, "2008W53")
+        self.assertRaises(
+            chrono.WeekError, chrono.parser.ISOParser.compactweek, "2008W53"
+        )
 
     def test_invalid_format(self):
         "ISOParser.compactweek() raises ParseError on invalid format"
@@ -159,7 +161,7 @@ class ISOParser_compactweekTest(unittest.TestCase):
         )
 
     def test_parse(self):
-        "ISOParser.compactweek() parses proper compact ISO week dates (yyyyWww)"
+        "ISOParser.compactweek() parses proper compact ISO weeks (yyyyWww)"
 
         self.assertEquals(
             chrono.parser.ISOParser.compactweek("2009W12"),
@@ -201,7 +203,7 @@ class ISOParser_compactweekdateTest(unittest.TestCase):
         )
 
     def test_parse(self):
-        "ISOParser.compactweekdate() parses proper ISO weekdate dates (yyyyWwwd)"
+        "ISOParser.compactweekdate() parses proper ISO weekdates (yyyyWwwd)"
 
         self.assertEquals(
             chrono.parser.ISOParser.compactweekdate("2009W123"),
@@ -255,7 +257,7 @@ class ISOParser_monthTest(unittest.TestCase):
         self.assertRaises(
             chrono.MonthError, chrono.parser.ISOParser.month, "2009-13"
         )
- 
+
     def test_invalid_format(self):
         "ISOParser.month() raises ParseError on invalid format"
 

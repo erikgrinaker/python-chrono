@@ -65,23 +65,15 @@ class DateTime(date.Date, time.Time):
         if not isinstance(other, DateTime):
             other = DateTime(other)
 
-        if self.year != other.year:
-            return cmp(self.year, other.year)
+        c = date.Date.__cmp__(self, other)
 
-        elif self.month != other.month:
-            return cmp(self.month, other.month)
+        if c > 0:
+            return 1
 
-        elif self.day != other.day:
-            return cmp(self.day, other.day)
+        elif c < 0:
+            return -1
 
-        elif self.hour != other.hour:
-            return cmp(self.hour, other.hour)
-
-        elif self.minute != other.minute:
-            return cmp(self.minute, other.minute)
-
-        else:
-            return cmp(self.second, other.second)
+        return time.Time.__cmp__(self, other)
 
     def __init__(self, datetime=None, **kwargs):
 

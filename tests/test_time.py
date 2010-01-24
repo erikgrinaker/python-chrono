@@ -6,52 +6,71 @@ import time
 import unittest
 
 
-class Time__cmpTest(unittest.TestCase):
+class Time__eqTest(unittest.TestCase):
 
-    def test_equal(self):
-        "Time.__cmp__() handles equality"
+    def test_time(self):
+        "Time.__eq__() handles Time objects"
 
         self.assertTrue(chrono.Time("16:27:43") == chrono.Time("16:27:43"))
+        self.assertFalse(chrono.Time("16:27:43") == chrono.Time("16:27:44"))
 
-    def test_gt(self):
-        "Time.__cmp__() handles > comparison"
-
-        self.assertTrue(chrono.Time("16:27:43") > chrono.Time("16:27:42"))
-
-    def test_lt(self):
-        "Time.__cmp__() handles < comparison"
-
-        self.assertTrue(chrono.Time("16:27:43") < chrono.Time("16:28:12"))
-
-    def test_none_equal(self):
-        "Time.__cmp__() handles equality with None"
+    def test_none(self):
+        "Time.__eq__() handles None"
 
         self.assertTrue(chrono.Time() == None)
+        self.assertFalse(chrono.Time("16:27:43") == None)
 
-    def test_none_gt(self):
-        "Time.__cmp__() handles > comparison with None"
-
-        self.assertTrue(chrono.Time("16:27:43") > None)
-
-    def test_none_lt(self):
-        "Time.__cmp__() handles < comparison with None"
-
-        self.assertFalse(chrono.Time() < None)
-
-    def test_string_equal(self):
-        "Time.__cmp__() handles equality with strings"
+    def test_string(self):
+        "Time.__eq__() handles strings"
 
         self.assertTrue(chrono.Time("16:27:43") == "16:27:43")
+        self.assertFalse(chrono.Time("16:27:43") == "16:27:42")
 
-    def test_string_gt(self):
-        "Time.__cmp__() handles > comparison with strings"
+
+class Time__geTest(unittest.TestCase):
+
+    def test_time(self):
+        "Time.__ge__() handles Time objects"
+
+        self.assertTrue(chrono.Time("16:27:43") >= chrono.Time("16:27:42"))
+        self.assertTrue(chrono.Time("16:27:43") >= chrono.Time("16:27:43"))
+        self.assertFalse(chrono.Time("16:27:43") >= chrono.Time("16:27:44"))
+
+    def test_none(self):
+        "Time.__ge__() handles None"
+
+        self.assertTrue(chrono.Time() >= None)
+        self.assertTrue(chrono.Time("16:27:43") >= None)
+
+    def test_string(self):
+        "Time.__ge__() handles strings"
+
+        self.assertTrue(chrono.Time("16:27:43") >= "16:27:42")
+        self.assertTrue(chrono.Time("16:27:43") >= "16:27:43")
+        self.assertFalse(chrono.Time("16:27:43") >= "16:27:44")
+
+
+class Time__gtTest(unittest.TestCase):
+
+    def test_time(self):
+        "Time.__gt__() handles Time objects"
+
+        self.assertTrue(chrono.Time("16:27:43") > chrono.Time("16:27:42"))
+        self.assertFalse(chrono.Time("16:27:43") > chrono.Time("16:27:43"))
+        self.assertFalse(chrono.Time("16:27:43") > chrono.Time("16:27:44"))
+
+    def test_none(self):
+        "Time.__gt__() handles None"
+
+        self.assertTrue(chrono.Time("16:27:43") > None)
+        self.assertFalse(chrono.Time() > None)
+
+    def test_string(self):
+        "Time.__gt__() handles strings"
 
         self.assertTrue(chrono.Time("16:27:43") > "16:27:42")
-
-    def test_string_lt(self):
-        "Time.__cmp__() handles < comparison with strings"
-
-        self.assertTrue(chrono.Time("16:27:43") < "16:28:12")
+        self.assertFalse(chrono.Time("16:27:43") > "16:27:43")
+        self.assertFalse(chrono.Time("16:27:43") > "16:27:44")
 
 
 class Time__initTest(unittest.TestCase):
@@ -146,6 +165,73 @@ class Time__initTest(unittest.TestCase):
         "Time.__init__() raises TypeError on unknown type"
 
         self.assertRaises(TypeError, chrono.Time, [])
+
+
+class Time__leTest(unittest.TestCase):
+
+    def test_time(self):
+        "Time.__le__() handles Time objects"
+
+        self.assertTrue(chrono.Time("16:27:43") <= chrono.Time("16:27:44"))
+        self.assertTrue(chrono.Time("16:27:43") <= chrono.Time("16:27:43"))
+        self.assertFalse(chrono.Time("16:27:43") <= chrono.Time("16:27:42"))
+
+    def test_none(self):
+        "Time.__le__() handles None"
+
+        self.assertTrue(chrono.Time() <= None)
+        self.assertFalse(chrono.Time("16:27:43") <= None)
+
+    def test_string(self):
+        "Time.__le__() handles strings"
+
+        self.assertTrue(chrono.Time("16:27:43") <= "16:27:44")
+        self.assertTrue(chrono.Time("16:27:43") <= "16:27:43")
+        self.assertFalse(chrono.Time("16:27:43") <= "16:27:42")
+
+
+class Time__ltTest(unittest.TestCase):
+
+    def test_time(self):
+        "Time.__lt__() handles Time objects"
+
+        self.assertTrue(chrono.Time("16:27:43") < chrono.Time("16:27:44"))
+        self.assertFalse(chrono.Time("16:27:43") < chrono.Time("16:27:43"))
+        self.assertFalse(chrono.Time("16:27:43") < chrono.Time("16:27:42"))
+
+    def test_none(self):
+        "Time.__lt__() handles None"
+
+        self.assertFalse(chrono.Time("16:27:43") < None)
+        self.assertFalse(chrono.Time() < None)
+
+    def test_string(self):
+        "Time.__lt__() handles strings"
+
+        self.assertTrue(chrono.Time("16:27:43") < "16:27:44")
+        self.assertFalse(chrono.Time("16:27:43") < "16:27:43")
+        self.assertFalse(chrono.Time("16:27:43") < "16:27:42")
+
+
+class Time__neTest(unittest.TestCase):
+
+    def test_time(self):
+        "Time.__ne__() handles Time objects"
+
+        self.assertTrue(chrono.Time("16:27:43") != chrono.Time("16:27:42"))
+        self.assertFalse(chrono.Time("16:27:43") != chrono.Time("16:27:43"))
+
+    def test_none(self):
+        "Time.__ne__() handles None"
+
+        self.assertTrue(chrono.Time("16:27:43") != None)
+        self.assertFalse(chrono.Time() != None)
+
+    def test_string(self):
+        "Time.__ne__() handles strings"
+
+        self.assertTrue(chrono.Time("16:27:43") != "16:27:42")
+        self.assertFalse(chrono.Time("16:27:43") != "16:27:43")
 
 
 class Time__reprTest(unittest.TestCase):

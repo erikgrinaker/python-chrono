@@ -26,6 +26,21 @@ from __future__ import absolute_import
 from . import error
 
 
+def cmp(a, b):
+    """
+    Compares a to b, returns -1 if smaller, 0 if equal, and 1 if greater.
+    """
+
+    if a > b:
+        return 1
+
+    elif a == b:
+        return 0
+
+    else:
+        return -1
+
+
 def int_day(value):
     """
     Converts a day value to an integer. If *value* is invalid

@@ -6,66 +6,110 @@ import unittest
 import time
 
 
-class DateTime__cmpTest(unittest.TestCase):
+class DateTime__eqTest(unittest.TestCase):
 
-    def test_equal(self):
-        "DateTime.__cmp__() handles equality"
-
-        self.assertTrue(
-                chrono.DateTime("2009-12-27 16:27:43") == \
-                chrono.DateTime("2009-12-27 16:27:43")
-        )
-
-    def test_gt(self):
-        "DateTime.__cmp__() handles > comparison"
+    def test_datetime(self):
+        "DateTime.__eq__() handles DateTime objects"
 
         self.assertTrue(
-                chrono.DateTime("2009-12-28 16:27:43") > \
-                chrono.DateTime("2009-12-27 16:27:43")
+            chrono.DateTime("2009-12-27 16:27:43") == \
+            chrono.DateTime("2009-12-27 16:27:43")
+        )
+        self.assertFalse(
+            chrono.DateTime("2009-12-27 16:27:43") == \
+            chrono.DateTime("2009-12-28 16:27:43")
         )
 
-    def test_lt(self):
-        "DateTime.__cmp__() handles < comparison"
-
-        self.assertTrue(
-            chrono.DateTime("2009-12-27 16:27:43") < \
-            chrono.DateTime("2009-12-27 17:27:43")
-        )
-
-    def test_none_equal(self):
-        "DateTime.__cmp__() handles equality with None"
+    def test_none(self):
+        "DateTime.__eq__() handles None"
 
         self.assertTrue(chrono.DateTime() == None)
+        self.assertFalse(chrono.DateTime("2010-07-23 16:27:43") == None)
 
-    def test_none_gt(self):
-        "DateTime.__cmp__() handles > comparison with None"
-
-        self.assertTrue(chrono.DateTime("2009-12-28 16:26:47") > None)
-
-    def test_none_lt(self):
-        "DateTime.__cmp__() handles < comparison with None"
-
-        self.assertFalse(chrono.DateTime() < None)
-
-    def test_string_equal(self):
-        "DateTime.__cmp__() handles equality with strings"
+    def test_string(self):
+        "DateTime.__eq__() handles strings"
 
         self.assertTrue(
             chrono.DateTime("2009-12-27 16:27:43") == "2009-12-27 16:27:43"
         )
-
-    def test_string_gt(self):
-        "DateTime.__cmp__() handles > comparison with strings"
-
-        self.assertTrue(
-            chrono.DateTime("2009-12-28 16:27:43") > "2009-12-27 16:26:43"
+        self.assertFalse(
+            chrono.DateTime("2010-07-23 16:27:43") == "2010-07-22 16:27:43"
         )
 
-    def test_string_lt(self):
-        "DateTime.__cmp__() handles < comparison with strings"
+
+class DateTime__geTest(unittest.TestCase):
+
+    def test_datetime(self):
+        "DateTime.__ge__() handles DateTime objects"
 
         self.assertTrue(
-            chrono.DateTime("2009-12-26 16:27:43") < "2009-12-27 16:27:44"
+            chrono.DateTime("2009-12-28 16:27:43") >= \
+            chrono.DateTime("2009-12-27 16:27:43")
+        )
+        self.assertTrue(
+            chrono.DateTime("2009-12-28 16:27:43") >= \
+            chrono.DateTime("2009-12-28 16:27:43")
+        )
+        self.assertFalse(
+            chrono.DateTime("2009-12-28 16:27:43") >= \
+            chrono.DateTime("2009-12-29 16:27:43")
+        )
+
+    def test_none(self):
+        "DateTime.__ge__() handles None"
+
+        self.assertTrue(chrono.DateTime("2009-12-28 16:27:43") >= None)
+        self.assertTrue(chrono.DateTime() >= None)
+
+    def test_string(self):
+        "DateTime.__ge__() handles strings"
+
+        self.assertTrue(
+            chrono.DateTime("2009-12-29 16:27:43") >= "2009-12-28 16:27:43"
+        )
+        self.assertTrue(
+            chrono.DateTime("2009-12-28 16:27:43") >= "2009-12-28 16:27:43"
+        )
+        self.assertFalse(
+            chrono.DateTime("2009-12-27 16:27:43") >= "2009-12-28 16:27:43"
+        )
+
+
+class DateTime__gtTest(unittest.TestCase):
+
+    def test_datetime(self):
+        "DateTime.__gt__() handles DateTime objects"
+
+        self.assertTrue(
+            chrono.DateTime("2009-12-28 16:27:43") > \
+            chrono.DateTime("2009-12-27 16:27:43")
+        )
+        self.assertFalse(
+            chrono.DateTime("2009-12-28 16:27:43") > \
+            chrono.DateTime("2009-12-28 16:27:43")
+        )
+        self.assertFalse(
+            chrono.DateTime("2009-12-28 16:27:43") > \
+            chrono.DateTime("2009-12-29 16:27:43")
+        )
+
+    def test_none(self):
+        "DateTime.__gt__() handles None"
+
+        self.assertFalse(chrono.DateTime() > None)
+        self.assertTrue(chrono.DateTime("2009-12-27 16:27:43") > None)
+
+    def test_string(self):
+        "DateTime.__gt__() handles strings"
+
+        self.assertTrue(
+            chrono.DateTime("2009-12-28 16:27:43") > "2009-12-27 16:27:43"
+        )
+        self.assertFalse(
+            chrono.DateTime("2009-12-28 16:27:43") > "2009-12-28 16:27:43"
+        )
+        self.assertFalse(
+            chrono.DateTime("2009-12-28 16:27:43") > "2009-12-29 16:27:43"
         )
 
 
@@ -191,6 +235,113 @@ class DateTime__initTest(unittest.TestCase):
         "DateTime.__init__() raises TypeError on unknown type"
 
         self.assertRaises(TypeError, chrono.DateTime, [])
+
+
+class DateTime__leTest(unittest.TestCase):
+
+    def test_datetime(self):
+        "DateTime.__le__() handles DateTime objects"
+
+        self.assertTrue(
+            chrono.DateTime("2009-12-26 16:27:43") <= \
+            chrono.DateTime("2009-12-27 16:27:43")
+        )
+        self.assertTrue(
+            chrono.DateTime("2009-12-27 16:27:43") <= \
+            chrono.DateTime("2009-12-27 16:27:43")
+        )
+        self.assertFalse(
+            chrono.DateTime("2009-12-28 16:27:43") <= \
+            chrono.DateTime("2009-12-27 16:27:43")
+        )
+
+    def test_none(self):
+        "DateTime.__le__() handles None"
+
+        self.assertTrue(chrono.DateTime() <= None)
+        self.assertFalse(chrono.DateTime("2009-12-27 16:27:43") <= None)
+
+    def test_string(self):
+        "DateTime.__le__() handles strings"
+
+        self.assertTrue(
+            chrono.DateTime("2009-12-27 16:27:43") <= "2009-12-27 16:27:43"
+        )
+        self.assertTrue(
+            chrono.DateTime("2009-12-27 16:27:43") <= "2009-12-28 16:27:43"
+        )
+        self.assertFalse(
+            chrono.DateTime("2009-12-27 16:27:43") <= "2009-12-26 16:27:43"
+        )
+
+
+class DateTime__ltTest(unittest.TestCase):
+
+    def test_datetime(self):
+        "DateTime.__lt__() handles DateTime objects"
+
+        self.assertTrue(
+            chrono.DateTime("2009-12-26 16:27:43") < \
+            chrono.DateTime("2009-12-27 16:27:43")
+        )
+        self.assertFalse(
+            chrono.DateTime("2009-12-27 16:27:43") < \
+            chrono.DateTime("2009-12-27 16:27:43")
+        )
+        self.assertFalse(
+            chrono.DateTime("2009-12-28 16:27:43") < \
+            chrono.DateTime("2009-12-27 16:27:43")
+        )
+
+    def test_none(self):
+        "DateTime.__lt__() handles None"
+
+        self.assertFalse(chrono.DateTime("2009-12-27 16:27:43") < None)
+        self.assertFalse(chrono.DateTime() < None)
+
+    def test_string(self):
+        "DateTime.__lt__() handles strings"
+
+        self.assertTrue(
+            chrono.DateTime("2009-12-26 16:27:43") < "2009-12-27 16:27:43"
+        )
+        self.assertFalse(
+            chrono.DateTime("2009-12-27 16:27:43") < "2009-12-27 16:27:43"
+        )
+        self.assertFalse(
+            chrono.DateTime("2009-12-28 16:27:43") < "2009-12-27 16:27:43"
+        )
+
+
+class DateTime__neTest(unittest.TestCase):
+
+    def test_datetime(self):
+        "DateTime.__ne__() handles DateTime objects"
+
+        self.assertTrue(
+            chrono.DateTime("2009-12-27 16:27:43") != \
+            chrono.DateTime("2009-12-26 16:27:43")
+        )
+        self.assertFalse(
+            chrono.DateTime("2009-12-27 16:27:43") != \
+            chrono.DateTime("2009-12-27 16:27:43")
+        )
+
+    def test_none(self):
+        "DateTime.__ne__() handles None"
+
+        self.assertTrue(chrono.DateTime("2009-12-27 16:27:43") != None)
+        self.assertFalse(chrono.DateTime() != None)
+
+    def test_string(self):
+        "DateTime.__ne__() handles strings"
+
+        self.assertTrue(
+            chrono.DateTime("2009-12-27 16:27:43") != "2009-12-26 16:27:43"
+        )
+        self.assertFalse(
+            chrono.DateTime("2009-12-27 16:27:43") != "2009-12-27 16:27:43"
+        )
 
 
 class DateTime__reprTest(unittest.TestCase):

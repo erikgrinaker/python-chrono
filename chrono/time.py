@@ -70,14 +70,35 @@ class Time(object):
         if not isinstance(other, Time):
             other = Time(other)
 
+        if not self.is_set() and not other.is_set():
+            return 0
+
+        elif not other.is_set():
+            return 1
+
+        elif not self.is_set():
+            return -1
+
         if self.hour != other.hour:
-            return cmp(self.hour, other.hour)
+            return utility.cmp(self.hour, other.hour)
 
         elif self.minute != other.minute:
-            return cmp(self.minute, other.minute)
+            return utility.cmp(self.minute, other.minute)
 
         else:
-            return cmp(self.second, other.second)
+            return utility.cmp(self.second, other.second)
+
+    def __eq__(self, other):
+
+        return self.__cmp__(other) == 0
+
+    def __ge__ (self, other):
+
+        return self.__cmp__(other) >= 0
+
+    def __gt__ (self, other):
+
+        return self.__cmp__(other) > 0
 
     def __init__(self, time=None, **kwargs):
 
@@ -112,6 +133,18 @@ class Time(object):
 
         else:
             raise TypeError("Invalid type for Time parameter")
+
+    def __le__ (self, other):
+
+        return self.__cmp__(other) <= 0
+
+    def __lt__ (self, other):
+
+        return self.__cmp__(other) < 0
+
+    def __ne__(self, other):
+
+        return self.__cmp__(other) != 0
 
     def __repr__(self):
 

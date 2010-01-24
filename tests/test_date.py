@@ -6,52 +6,75 @@ import unittest
 import time
 
 
-class Date__cmpTest(unittest.TestCase):
+class Date__eqTest(unittest.TestCase):
 
-    def test_equal(self):
-        "Date.__cmp__() handles equality"
+    def test_date(self):
+        "Date.__eq__() handles Date objects"
 
         self.assertTrue(chrono.Date("2009-12-27") == chrono.Date("2009-12-27"))
+        self.assertFalse(
+            chrono.Date("2009-12-27") == chrono.Date("2009-12-28")
+        )
 
-    def test_gt(self):
-        "Date.__cmp__() handles > comparison"
-
-        self.assertTrue(chrono.Date("2009-12-28") > chrono.Date("2009-12-27"))
-
-    def test_lt(self):
-        "Date.__cmp__() handles < comparison"
-
-        self.assertTrue(chrono.Date("2009-12-26") < chrono.Date("2009-12-27"))
-
-    def test_none_equal(self):
-        "Date.__cmp__() handles equality with None"
+    def test_none(self):
+        "Date.__eq__() handles None"
 
         self.assertTrue(chrono.Date() == None)
+        self.assertFalse(chrono.Date("2010-07-23") == None)
 
-    def test_none_gt(self):
-        "Date.__cmp__() handles > comparison with None"
-
-        self.assertTrue(chrono.Date("2009-12-28") > None)
-
-    def test_none_lt(self):
-        "Date.__cmp__() handles < comparison with None"
-
-        self.assertFalse(chrono.Date() < None)
-
-    def test_string_equal(self):
-        "Date.__cmp__() handles equality with strings"
+    def test_string(self):
+        "Date.__eq__() handles strings"
 
         self.assertTrue(chrono.Date("2009-12-27") == "2009-12-27")
+        self.assertFalse(chrono.Date("2010-07-23") == "2010-07-22")
 
-    def test_string_gt(self):
-        "Date.__cmp__() handles > comparison with strings"
+
+class Date__geTest(unittest.TestCase):
+
+    def test_date(self):
+        "Date.__ge__() handles Date objects"
+
+        self.assertTrue(chrono.Date("2009-12-28") >= chrono.Date("2009-12-27"))
+        self.assertTrue(chrono.Date("2009-12-28") >= chrono.Date("2009-12-28"))
+        self.assertFalse(
+            chrono.Date("2009-12-28") >= chrono.Date("2009-12-29")
+        )
+
+    def test_none(self):
+        "Date.__ge__() handles None"
+
+        self.assertTrue(chrono.Date("2009-12-28") >= None)
+        self.assertTrue(chrono.Date() >= None)
+
+    def test_string(self):
+        "Date.__ge__() handles strings"
+
+        self.assertTrue(chrono.Date("2009-12-29") >= "2009-12-28")
+        self.assertTrue(chrono.Date("2009-12-28") >= "2009-12-28")
+        self.assertFalse(chrono.Date("2009-12-27") >= "2009-12-28")
+
+
+class Date__gtTest(unittest.TestCase):
+
+    def test_date(self):
+        "Date.__gt__() handles Date objects"
+
+        self.assertTrue(chrono.Date("2009-12-28") > chrono.Date("2009-12-27"))
+        self.assertFalse(chrono.Date("2009-12-28") > chrono.Date("2009-12-28"))
+        self.assertFalse(chrono.Date("2009-12-28") > chrono.Date("2009-12-29"))
+
+    def test_none(self):
+        "Date.__gt__() handles None"
+
+        self.assertFalse(chrono.Date() > None)
+        self.assertTrue(chrono.Date("2009-12-27") > None)
+
+    def test_string(self):
+        "Date.__gt__() handles strings"
 
         self.assertTrue(chrono.Date("2009-12-28") > "2009-12-27")
-
-    def test_string_lt(self):
-        "Date.__cmp__() handles < comparison with strings"
-
-        self.assertTrue(chrono.Date("2009-12-26") < "2009-12-27")
+        self.assertFalse(chrono.Date("2009-12-28") > "2009-12-28")
+        self.assertFalse(chrono.Date("2009-12-28") > "2009-12-29")
 
 
 class Date__initTest(unittest.TestCase):
@@ -148,6 +171,77 @@ class Date__initTest(unittest.TestCase):
         "Date.__init__() raises TypeError on unknown type"
 
         self.assertRaises(TypeError, chrono.Date, [])
+
+
+class Date__leTest(unittest.TestCase):
+
+    def test_date(self):
+        "Date.__le__() handles Date objects"
+
+        self.assertTrue(chrono.Date("2009-12-26") <= chrono.Date("2009-12-27"))
+        self.assertTrue(chrono.Date("2009-12-27") <= chrono.Date("2009-12-27"))
+        self.assertFalse(
+            chrono.Date("2009-12-28") <= chrono.Date("2009-12-27")
+        )
+
+    def test_none(self):
+        "Date.__le__() handles None"
+
+        self.assertTrue(chrono.Date() <= None)
+        self.assertFalse(chrono.Date("2009-12-27") <= None)
+
+    def test_string(self):
+        "Date.__le__() handles strings"
+
+        self.assertTrue(chrono.Date("2009-12-27") <= "2009-12-27")
+        self.assertTrue(chrono.Date("2009-12-27") <= "2009-12-28")
+        self.assertFalse(chrono.Date("2009-12-27") <= "2009-12-26")
+
+
+class Date__ltTest(unittest.TestCase):
+
+    def test_date(self):
+        "Date.__lt__() handles Date objects"
+
+        self.assertTrue(chrono.Date("2009-12-26") < chrono.Date("2009-12-27"))
+        self.assertFalse(chrono.Date("2009-12-27") < chrono.Date("2009-12-27"))
+        self.assertFalse(chrono.Date("2009-12-28") < chrono.Date("2009-12-27"))
+
+    def test_none(self):
+        "Date.__lt__() handles None"
+
+        self.assertFalse(chrono.Date("2009-12-27") < None)
+        self.assertFalse(chrono.Date() < None)
+
+    def test_string(self):
+        "Date.__lt__() handles strings"
+
+        self.assertTrue(chrono.Date("2009-12-26") < "2009-12-27")
+        self.assertFalse(chrono.Date("2009-12-27") < "2009-12-27")
+        self.assertFalse(chrono.Date("2009-12-28") < "2009-12-27")
+
+
+class Date__neTest(unittest.TestCase):
+
+    def test_date(self):
+        "Date.__ne__() handles Date objects"
+
+        self.assertTrue(chrono.Date("2009-12-27") != chrono.Date("2009-12-26"))
+        self.assertFalse(
+            chrono.Date("2009-12-27") != chrono.Date("2009-12-27")
+        )
+
+    def test_none(self):
+        "Date.__ne__() handles None"
+
+        self.assertTrue(chrono.Date("2009-12-27") != None)
+        self.assertFalse(chrono.Date() != None)
+
+    def test_string(self):
+        "Date.__ne__() handles strings"
+
+        self.assertTrue(chrono.Date("2009-12-27") != "2009-12-26")
+        self.assertFalse(chrono.Date("2009-12-27") != "2009-12-27")
 
 
 class Date__reprTest(unittest.TestCase):
