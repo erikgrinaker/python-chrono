@@ -38,7 +38,7 @@ if "build_sphinx" in sys.argv:
 setup(
     name="python-chrono",
     version=chrono.__version__,
-    description="A Python module for easy and convenient date/time handling",
+    description="A Python module for simple and convenient date/time handling",
     long_description=open("README").read(),
     license="GNU General Public License 3",
     author="Erik Grinaker",
