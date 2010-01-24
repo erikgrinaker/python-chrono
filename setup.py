@@ -29,7 +29,7 @@ import chrono
 cmdclass = {}
 
 if "sdist" in sys.argv and not "build_sphinx" in sys.argv:
-        sys.argv.insert(1, "build_sphinx")
+    sys.argv.insert(1, "build_sphinx")
 
 if "build_sphinx" in sys.argv:
     from sphinx.setup_command import BuildDoc
