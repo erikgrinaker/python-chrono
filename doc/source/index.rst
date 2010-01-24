@@ -10,6 +10,7 @@ Contents:
 .. toctree::
    :maxdepth: 3
 
+   install.rst
    usage.rst
    date.rst
    datetime.rst

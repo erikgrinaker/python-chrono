@@ -1,5 +1,6 @@
 include AUTHORS
 include HACKING
+include INSTALL
 include LICENSE
 include NEWS
 recursive-include doc *
