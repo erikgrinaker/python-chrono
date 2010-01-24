@@ -9,7 +9,7 @@ Making a Release
 * tag new version (hg tag x.y.z)
 * if new major/minor version, create branch [hg branch x.y; hg commit]
 * remove any old documentation [rm -rf doc/doctrees/ doc/html/]
-* generate source distribution [./setup.py sdist]
+* generate source distribution, and upload to pypi [./setup.py sdist upload]
 * upload new distribution to http://oss.codepoet.no/
 * update the documentation on the wiki (python-chrono-wiki repo)
 
