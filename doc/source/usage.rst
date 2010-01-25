@@ -105,7 +105,7 @@ can use the underlying :class:`chrono.parser.ISOParser` class directly::
    (2009, 32)
 
    >>> # only parses ordinal dates
-   >>> chrono.parser.ISOParser.month("2009-314")
+   >>> chrono.parser.ISOParser.ordinal("2009-314")
    (2009, 314)
 
 See the :class:`chrono.parser.ISOParser` documentation for more
