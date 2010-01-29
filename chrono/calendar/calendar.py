@@ -185,15 +185,17 @@ class Calendar(object):
 
         Raises :exc:`chrono.error.YearError` or :exc:`chrono.error.WeekError`
         if *year* or *week* is invalid.
-
-        .. note:: This is a placeholder method which just raises
-           :exc:`NotImplementedError`, it is implemented in
-           calendar-specific subclasses.
         """
 
-        raise NotImplementedError(
-            "This is a calendar-specific method to be handled in subclasses"
-        )
+        cls.validate_year(year)
+
+        weeks = cls.weeks(year)
+
+        if not 1 <= utility.int_week(week) <= weeks:
+            raise error.WeekError(
+                "Week '{0}' not in range 1-{1} for year '{2}'"
+                .format(week, weeks, year)
+            )
 
     @classmethod
     def validate_weekdate(cls, year, week, weekday):
@@ -205,15 +207,10 @@ class Calendar(object):
         Raises :exc:`chrono.error.YearError`, :exc:`chrono.error.WeekError`, or
         :exc:`chrono.error.DayError` if *year*, *week*, or *weekday* is
         invalid.
-
-        .. note:: This is a placeholder method which just raises
-           :exc:`NotImplementedError`, it is implemented in
-           calendar-specific subclasses.
         """
 
-        raise NotImplementedError(
-            "This is a calendar-specific method to be handled in subclasses"
-        )
+        cls.validate_week(year, week)
+        cls.validate_weekday(weekday)
 
     @classmethod
     def validate_weekday(cls, day):
@@ -248,15 +245,9 @@ class Calendar(object):
         Raises :exc:`chrono.error.YearError`, :exc:`chrono.error.MonthError`,
         or :exc:`chrono.error.DayError` if *year*, *month*, or *day* is
         invalid.
-
-        .. note:: This is a placeholder method which just raises
-           :exc:`NotImplementedError`, it is implemented in
-           calendar-specific subclasses.
         """
 
-        raise NotImplementedError(
-            "This is a calendar-specific method to be handled in subclasses"
-        )
+        return cls.weekdate(year, month, day)[:2]
 
     @classmethod
     def week_to_date(cls, year, week):
@@ -266,15 +257,9 @@ class Calendar(object):
 
         Raises :exc:`chrono.error.YearError` or :exc:`chrono.error.WeekError`
         if *year* or *week* is invalid.
-
-        .. note:: This is a placeholder method which just raises
-           :exc:`NotImplementedError`, it is implemented in
-           calendar-specific subclasses.
         """
 
-        raise NotImplementedError(
-            "This is a calendar-specific method to be handled in subclasses"
-        )
+        return cls.weekdate_to_date(year, week, 1)
 
     @classmethod
     def weekdate(cls, year, month, day):
@@ -321,15 +306,9 @@ class Calendar(object):
         Raises :exc:`chrono.error.YearError`, :exc:`chrono.error.MonthError`,
         or :exc:`chrono.error.DayError` if *year*, *month*, or *day* is
         invalid.
-
-        .. note:: This is a placeholder method which just raises
-           :exc:`NotImplementedError`, it is implemented in
-           calendar-specific subclasses.
         """
 
-        raise NotImplementedError(
-            "This is a calendar-specific method to be handled in subclasses"
-        )
+        return cls.weekdate(year, month, day)[2]
 
     @classmethod
     def weekdayname(cls, weekday, short=False):

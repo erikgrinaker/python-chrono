@@ -37,84 +37,6 @@ class ISOCalendar(Calendar):
     """
 
     @classmethod
-    def validate_week(cls, year, week):
-        """
-        Validates a week: *year* must be in range 1-9999, and *week* must be
-        in range 1-53, depending on *year*.
-
-        Raises :exc:`chrono.error.YearError` or :exc:`chrono.error.WeekError`
-        if *year* or *week* is invalid.
-        """
-
-        cls.validate_year(year)
-
-        weeks = cls.weeks(year)
-
-        if not 1 <= utility.int_week(week) <= weeks:
-            raise error.WeekError(
-                "Week '{0}' not in range 1-{1} for year '{2}'"
-                .format(week, weeks, year)
-            )
-
-    @classmethod
-    def validate_weekdate(cls, year, week, weekday):
-        """
-        Validates a weekdate: *year* must be in range 1-9999, *week* must be
-        in range 1-53, depending on *year*, and *weekday* must be in range
-        1-7.
-
-        Raises :exc:`chrono.error.YearError`, :exc:`chrono.error.WeekError`, or
-        :exc:`chrono.error.DayError` if *year*, *week*, or *weekday* is
-        invalid.
-        """
-
-        cls.validate_week(year, week)
-        cls.validate_weekday(weekday)
-
-    @classmethod
-    def week(cls, year, month, day):
-        """
-        Returns the week containing the given date as a tuple of year and
-        week.
-
-        Raises :exc:`chrono.error.YearError`, :exc:`chrono.error.MonthError`,
-        or :exc:`chrono.error.DayError` if *year*, *month*, or *day* is
-        invalid.
-        """
-
-        cls.validate(year, month, day)
-
-        return datetime.date(
-            utility.int_year(year),
-            utility.int_month(month),
-            utility.int_day(day)
-        ).isocalendar()[0:2]
-
-    @classmethod
-    def week_to_date(cls, year, week):
-        """
-        Returns the date of the first day in the given week as a tuple of
-        year, month, and day.
-
-        Raises :exc:`chrono.error.YearError` or :exc:`chrono.error.WeekError`
-        if *year* or *month* is invalid.
-        """
-
-        cls.validate_week(year, week)
-
-        week = int(week)
-
-        d = datetime.date(utility.int_year(year), 1, 4)
-
-        if d.isoweekday() > 1:
-            d -= datetime.timedelta(d.isoweekday() - 1)
-
-        if week > 1:
-            d += datetime.timedelta((week - 1) * 7)
-
-        return (d.year, d.month, d.day)
-
-    @classmethod
     def weekdate(cls, year, month, day):
         """
         Returns the weekdate for the given date as a tuple with year, week,
@@ -146,35 +68,22 @@ class ISOCalendar(Calendar):
 
         cls.validate_weekdate(year, week, day)
 
-        y, m, d = cls.week_to_date(year, week)
+        year = utility.int_year(year)
+        week = utility.int_week(week)
+        day = utility.int_day(day)
+
+        d = datetime.date(year, 1, 4)
+
+        if d.isoweekday() > 1:
+            d -= datetime.timedelta(d.isoweekday() - 1)
+
+        if week > 1:
+            d += datetime.timedelta((week - 1) * 7)
 
         if day > 1:
-            dt = datetime.date(y, m, d)
-            dt += datetime.timedelta(utility.int_day(day) - 1)
+            d += datetime.timedelta(day - 1)
 
-            y = dt.year
-            m = dt.month
-            d = dt.day
-
-        return (y, m, d)
-
-    @classmethod
-    def weekday(cls, year, month, day):
-        """
-        Returns the weekday of the given date.
-
-        Raises :exc:`chrono.error.YearError`, :exc:`chrono.error.MonthError`,
-        or :exc:`chrono.error.DayError` if *year*, *month*, or *day* is
-        invalid.
-        """
-
-        cls.validate(year, month, day)
-
-        return calendar.weekday(
-            utility.int_year(year),
-            utility.int_month(month),
-            utility.int_day(day)
-        ) + 1
+        return (d.year, d.month, d.day)
 
     @classmethod
     def weekdayname(cls, weekday, short=False):
@@ -185,11 +94,9 @@ class ISOCalendar(Calendar):
         Raises :exc:`chrono.error.DayError` if *weekday* is invalid.
         """
 
-        weekday = utility.int_day(weekday)
-
         cls.validate_weekday(weekday)
 
-        d = datetime.date(2000, 1, 2 + weekday)
+        d = datetime.date(2000, 1, 2 + utility.int_day(weekday))
 
         return d.strftime(short and "%a" or "%A")
 

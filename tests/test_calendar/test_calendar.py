@@ -245,24 +245,74 @@ class Calendar_validate_ordinalTest(unittest.TestCase):
 
 class Calendar_validate_weekTest(unittest.TestCase):
 
-    def test_notimplemented(self):
-        "Calendar.validate_week() raises NotImplementedError"
+    def setUp(self):
+        unittest.TestCase.setUp(self)
+
+        class c(chrono.calendar.Calendar):
+            weeks = chrono.calendar.ISOCalendar.weeks
+
+        self.c = c
+
+    def test_invalid(self):
+        "Calendar.validate_week() raises proper error on invalid input"
 
         self.assertRaises(
-            NotImplementedError,
-            chrono.calendar.Calendar.validate_week, 2009, 32
+            chrono.YearError,
+            self.c.validate_week, 10000, 52
         )
+        self.assertRaises(
+            chrono.WeekError,
+            self.c.validate_week, 2010, 53
+        )
+
+    def test_valid(self):
+        "Calendar.validate_week() returns None on valid input"
+
+        self.assertEqual(self.c.validate_week(2009, 32), None)
+
+    def test_string(self):
+        "Calendar.validate_week() accepts string inputs"
+
+        self.c.validate_week("2009", "32")
 
 
 class Calendar_validate_weekdateTest(unittest.TestCase):
 
-    def test_notimplemented(self):
-        "Calendar.validate_weekdate() raises NotImplementedError"
+    def setUp(self):
+        unittest.TestCase.setUp(self)
+
+        class c(chrono.calendar.Calendar):
+            weeks = chrono.calendar.ISOCalendar.weeks
+
+        self.c = c
+
+    def test_invalid(self):
+        "Calendar.validate_weekdate() raises proper error on invalid input"
 
         self.assertRaises(
-            NotImplementedError,
-            chrono.calendar.Calendar.validate_weekdate, 2009, 32, 4
+            chrono.YearError,
+            self.c.validate_weekdate, 10000, 32, 4
         )
+        self.assertRaises(
+            chrono.WeekError,
+            self.c.validate_weekdate, 2008, 53, 3
+        )
+        self.assertRaises(
+            chrono.DayError,
+            self.c.validate_weekdate, 2009, 32, 8
+        )
+
+    def test_valid(self):
+        "Calendar.validate_weekdate() returns None for valid input"
+
+        self.assertEqual(
+            self.c.validate_weekdate(2009, 32, 4), None
+        )
+
+    def test_string(self):
+        "Calendar.validate_weekdate() accepts string inputs"
+
+        self.c.validate_weekdate("2009", "32", "4")
 
 
 class Calendar_validate_weekdayTest(unittest.TestCase):
@@ -307,22 +357,81 @@ class Calendar_validate_yearTest(unittest.TestCase):
 
 class Calendar_weekTest(unittest.TestCase):
 
-    def test_notimplemented(self):
-        "Calendar.week() raises NotImplementedError"
+    def setUp(self):
+        unittest.TestCase.setUp(self)
+
+        class c(chrono.calendar.Calendar):
+            weekdate = chrono.calendar.ISOCalendar.weekdate
+
+        self.c = c
+
+    def test_invalid(self):
+        "Calendar.week() raises proper error on invalid input"
 
         self.assertRaises(
-            NotImplementedError, chrono.calendar.Calendar.week, 2009, 12, 28
+            chrono.YearError,
+            self.c.week, 10000, 7, 23
+        )
+        self.assertRaises(
+            chrono.MonthError,
+            self.c.week, 2010, 13, 23
+        )
+        self.assertRaises(
+            chrono.DayError,
+            self.c.week, 2010, 7, 32
+        )
+
+    def test_string(self):
+        "Calendar.week() accepts string input"
+
+        self.assertEquals(
+            self.c.week("2009", "7", "15"), (2009, 29)
+        )
+
+    def test_valid(self):
+        "Calendar.week() returns 2009-W29 for 2009-07-15"
+
+        self.assertEquals(
+            self.c.week(2009, 7, 15), (2009, 29)
         )
 
 
 class Calendar_week_to_dateTest(unittest.TestCase):
 
-    def test_notimplemented(self):
-        "Calendar.week_to_date() raises NotImplementedError"
+    def setUp(self):
+        unittest.TestCase.setUp(self)
+
+        class c(chrono.calendar.Calendar):
+            weekdate_to_date = chrono.calendar.ISOCalendar.weekdate_to_date
+
+        self.c = c
+
+    def test_invalid(self):
+        "Calendar.week_to_date() raises proper error for invalid input"
 
         self.assertRaises(
-            NotImplementedError,
-            chrono.calendar.Calendar.week_to_date, 2009, 32
+            chrono.YearError,
+            self.c.week_to_date, 10000, 32
+        )
+        self.assertRaises(
+            chrono.WeekError,
+            self.c.week_to_date, 2008, 53
+        )
+
+    def test_string(self):
+        "Calendar.week_to_date() accepts string inputs"
+
+        self.assertEquals(
+            self.c.week_to_date("2009", "32"),
+            (2009, 8, 3)
+        )
+
+    def test_valid(self):
+        "Calendar.week_to_date() returns 2009-08-03 for 2009-W32"
+
+        self.assertEquals(
+            self.c.week_to_date(2009, 32),
+            (2009, 8, 3)
         )
 
 
@@ -350,13 +459,41 @@ class Calendar_weekdate_to_dateTest(unittest.TestCase):
 
 class Calendar_weekdayTest(unittest.TestCase):
 
-    def test_notimplemented(self):
-        "Calendar.weekday() raises NotImplementedError"
+    def setUp(self):
+        unittest.TestCase.setUp(self)
+
+        class c(chrono.calendar.Calendar):
+            weekdate = chrono.calendar.ISOCalendar.weekdate
+
+        self.c = c
+
+    def test_invalid(self):
+        "Calendar.weekday() raises proper error on invalid input"
 
         self.assertRaises(
-            NotImplementedError,
-            chrono.calendar.Calendar.weekday, 2009, 12, 28
+            chrono.YearError,
+            self.c.weekday, 10000, 7, 23
         )
+        self.assertRaises(
+            chrono.MonthError,
+            self.c.weekday, 2010, 13, 23
+        )
+        self.assertRaises(
+            chrono.DayError,
+            self.c.weekday, 2010, 7, 32
+        )
+
+    def test_string(self):
+        "Calendar.weekday() accepts string input"
+
+        self.assertEquals(
+            self.c.weekday("2009", "12", "27"), 7
+        )
+
+    def test_valid(self):
+        "Calendar.weekday() returns 4 for 2009-12-24"
+
+        self.assertEquals(self.c.weekday(2009, 12, 24), 4)
 
 
 class Calendar_weekdaynameTest(unittest.TestCase):
