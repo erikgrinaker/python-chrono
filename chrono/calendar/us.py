@@ -18,15 +18,14 @@
 
 from __future__ import absolute_import
 
+from . import calendar
 from .. import error
 from .. import utility
-from .calendar import Calendar
 
-import calendar
 import datetime
 
 
-class USCalendar(Calendar):
+class USCalendar(calendar.Calendar):
     """
     A US calendar, also used by Australia, Canada, New Zealand, and the UK
 

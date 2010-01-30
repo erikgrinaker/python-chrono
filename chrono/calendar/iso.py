@@ -18,15 +18,14 @@
 
 from __future__ import absolute_import
 
+from . import calendar
 from .. import error
 from .. import utility
-from .calendar import Calendar
 
-import calendar
 import datetime
 
 
-class ISOCalendar(Calendar):
+class ISOCalendar(calendar.Calendar):
     """
     An ISO calendar, with functionality conforming to the ISO 8601 standard.
 
