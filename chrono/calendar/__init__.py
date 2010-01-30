@@ -29,3 +29,4 @@ from __future__ import absolute_import
 
 from .calendar import Calendar
 from .iso import ISOCalendar
+from .us import USCalendar
