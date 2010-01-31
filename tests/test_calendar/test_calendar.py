@@ -4,6 +4,44 @@ import chrono
 import unittest
 
 
+class Calendar_fullyearTest(unittest.TestCase):
+
+    def test_0(self):
+        "Calendar.fullyear() returns 2000 for 0"
+
+        self.assertEqual(chrono.calendar.Calendar.fullyear(0), 2000)
+
+    def test_29(self):
+        "Calendar.fullyear() returns 2029 for 29"
+
+        self.assertEqual(chrono.calendar.Calendar.fullyear(29), 2029)
+
+    def test_30(self):
+        "Calendar.fullyear() returns 1930 for 30"
+
+        self.assertEqual(chrono.calendar.Calendar.fullyear(30), 1930)
+
+    def test_100(self):
+        "Calendar.fullyear() return 100 for 100"
+
+        self.assertEqual(chrono.calendar.Calendar.fullyear(100), 100)
+
+    def test_full(self):
+        "Calendar.fullyear() returns 2010 for 2010"
+
+        self.assertEqual(chrono.calendar.Calendar.fullyear(2010), 2010)
+
+    def test_negative(self):
+        "Calendar.fullyear() returns -1 for -1"
+
+        self.assertEqual(chrono.calendar.Calendar.fullyear(-1), -1)
+
+    def test_string(self):
+        "Calendar.fullyear() handles strings"
+
+        self.assertEqual(chrono.calendar.Calendar.fullyear("29"), 2029)
+
+
 class Calendar_leapyearTest(unittest.TestCase):
 
     def test_invalid(self):

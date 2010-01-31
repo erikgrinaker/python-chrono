@@ -31,6 +31,27 @@ class Calendar(object):
     """
 
     @classmethod
+    def fullyear(cls, year):
+        """
+        Converts a short 2-digit year to a full 4-digit year.
+        Years will be interpreted to be in range 1930-2029.
+        """
+
+        year = int(year)
+
+        if year > 99:
+            return year
+
+        elif year >= 30:
+            return 1900 + year
+
+        elif year >= 0:
+            return 2000 + year
+
+        else:
+            return year
+
+    @classmethod
     def leapyear(cls, year):
         """
         Returns **True** if *year* is a leap year, otherwise **False**.
