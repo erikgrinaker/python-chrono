@@ -31,10 +31,21 @@ class Calendar_fullyearTest(unittest.TestCase):
 
         self.assertEqual(chrono.calendar.Calendar.fullyear(2010), 2010)
 
-    def test_negative(self):
-        "Calendar.fullyear() returns -1 for -1"
+    def test_invalid(self):
+        "Calendar.fullyear() raises YearError on invalid year"
 
-        self.assertEqual(chrono.calendar.Calendar.fullyear(-1), -1)
+        self.assertRaises(
+            chrono.YearError,
+            chrono.calendar.Calendar.fullyear, 10000
+        )
+
+    def test_negative(self):
+        "Calendar.fullyear() raises YearError on negative year"
+
+        self.assertRaises(
+            chrono.YearError,
+            chrono.calendar.Calendar.fullyear, -1
+        )
 
     def test_string(self):
         "Calendar.fullyear() handles strings"

@@ -34,10 +34,15 @@ class Calendar(object):
     def fullyear(cls, year):
         """
         Converts a short 2-digit year to a full 4-digit year.
-        Years will be interpreted to be in range 1930-2029.
+        *year* will be interpreted to be in range 1930-2029.
+
+        Raises :exc:`chrono.error.YearError` if *year* is invalid.
         """
 
-        year = int(year)
+        year = utility.int_year(year)
+
+        if year != 0:
+            cls.validate_year(year)
 
         if year > 99:
             return year
