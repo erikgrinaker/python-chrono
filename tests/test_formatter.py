@@ -10,6 +10,10 @@ class Formatter_formatTest(unittest.TestCase):
         "Formatter.format() handles $012hour"
 
         self.assertEqual(chrono.formatter.Formatter.format(
+            "$012hour", 2010, 8, 4, 0, 2, 3
+        ), "12")
+
+        self.assertEqual(chrono.formatter.Formatter.format(
             "$012hour", 2010, 8, 4, 15, 2, 3
         ), "03")
 
@@ -64,6 +68,10 @@ class Formatter_formatTest(unittest.TestCase):
 
     def test_12hour(self):
         "Formatter.format() handles $12hour"
+
+        self.assertEqual(chrono.formatter.Formatter.format(
+            "$12hour", 2010, 8, 4, 0, 2, 3
+        ), "12")
 
         self.assertEqual(chrono.formatter.Formatter.format(
             "$12hour", 2010, 8, 4, 15, 2, 3

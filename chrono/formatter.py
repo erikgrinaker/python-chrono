@@ -19,6 +19,7 @@
 from __future__ import absolute_import
 
 from . import calendar
+from . import clock
 
 import re
 import string
@@ -119,12 +120,12 @@ class Formatter(object):
             return hour is not None and str(hour).zfill(2) or ""
 
         elif name == "012hour":
-            return hour is not None and str(hour > 12 and \
-                str(hour - 12).zfill(2) or hour) or ""
+            return hour is not None and \
+                str(clock.USClock.from_24(hour)[0]).zfill(2) or ""
 
         elif name == "12hour":
-            return hour is not None and str(hour > 12 and \
-                str(hour - 12) or hour) or ""
+            return hour is not None and \
+                str(clock.USClock.from_24(hour)[0]) or ""
 
         elif name == "ampm":
             return hour is not None and hour >= 12 and "PM" or "AM"

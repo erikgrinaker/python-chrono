@@ -1,6 +1,7 @@
 xxxx-xx-xx: 0.2.0
 =================
 
+* Fixed handling of 0 hour in Formatter for $12hour and $012hour
 * Added Calendar.fullyear(), converts 2-digit years to 4 digits
 
 2010-01-24: 0.1.0
