@@ -25,3 +25,4 @@ subclasses.
 
 from .iso import ISOParser
 from .parser import Parser
+from .us import USParser
