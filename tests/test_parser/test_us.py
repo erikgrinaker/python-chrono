@@ -14,48 +14,48 @@ class USParserTest(unittest.TestCase):
         ))
 
 
-class USParser_dasheddateTest(unittest.TestCase):
+class USParser_dashdateTest(unittest.TestCase):
 
     def test_invalid_date(self):
-        "USParser.dasheddate() raises error on invalid date"
+        "USParser.dashdate() raises error on invalid date"
 
         self.assertRaises(
-            chrono.DayError, chrono.parser.USParser.dasheddate, "02-29-2009"
+            chrono.DayError, chrono.parser.USParser.dashdate, "02-29-2009"
         )
 
     def test_invalid_format(self):
-        "USParser.dasheddate() raises ParseError on invalid format"
+        "USParser.dashdate() raises ParseError on invalid format"
 
         self.assertRaises(
-            chrono.ParseError, chrono.parser.USParser.dasheddate, "yy-xx-zzzz"
+            chrono.ParseError, chrono.parser.USParser.dashdate, "yy-xx-zzzz"
         )
 
     def test_none(self):
-        "USParser.dasheddate() raises TypeError on None"
+        "USParser.dashdate() raises TypeError on None"
 
-        self.assertRaises(TypeError, chrono.parser.USParser.dasheddate, None)
+        self.assertRaises(TypeError, chrono.parser.USParser.dashdate, None)
 
     def test_nozero(self):
-        "USParser.dasheddate() parses dates without leading zeroes (7-3-2009)"
+        "USParser.dashdate() parses dates without leading zeroes (7-3-2009)"
 
         self.assertEquals(
-            chrono.parser.USParser.dasheddate("7-3-2009"),
+            chrono.parser.USParser.dashdate("7-3-2009"),
             (2009, 7, 3)
         )
 
     def test_parse(self):
-        "USParser.dasheddate() parses proper dates (mm-dd-yyyy)"
+        "USParser.dashdate() parses proper dates (mm-dd-yyyy)"
 
         self.assertEquals(
-            chrono.parser.USParser.dasheddate("12-27-2009"),
+            chrono.parser.USParser.dashdate("12-27-2009"),
             (2009, 12, 27)
         )
 
     def test_shortyear(self):
-        "USParser.dasheddate() handles two-digit years"
+        "USParser.dashdate() handles two-digit years"
 
         self.assertEquals(
-            chrono.parser.USParser.dasheddate("12-27-09"),
+            chrono.parser.USParser.dashdate("12-27-09"),
             (2009, 12, 27)
         )
 
@@ -106,48 +106,48 @@ class USParser_dateTest(unittest.TestCase):
         )
 
 
-class USParser_dotteddateTest(unittest.TestCase):
+class USParser_dotdateTest(unittest.TestCase):
 
     def test_invalid_date(self):
-        "USParser.dotteddate() raises error on invalid date"
+        "USParser.dotdate() raises error on invalid date"
 
         self.assertRaises(
-            chrono.DayError, chrono.parser.USParser.dotteddate, "02.29.2009"
+            chrono.DayError, chrono.parser.USParser.dotdate, "02.29.2009"
         )
 
     def test_invalid_format(self):
-        "USParser.dotteddate() raises ParseError on invalid format"
+        "USParser.dotdate() raises ParseError on invalid format"
 
         self.assertRaises(
-            chrono.ParseError, chrono.parser.USParser.dotteddate, "yy.xx.zzzz"
+            chrono.ParseError, chrono.parser.USParser.dotdate, "yy.xx.zzzz"
         )
 
     def test_none(self):
-        "USParser.dotteddate() raises TypeError on None"
+        "USParser.dotdate() raises TypeError on None"
 
-        self.assertRaises(TypeError, chrono.parser.USParser.dotteddate, None)
+        self.assertRaises(TypeError, chrono.parser.USParser.dotdate, None)
 
     def test_nozero(self):
-        "USParser.dotteddate() parses dates without leading zeroes (7.3.2009)"
+        "USParser.dotdate() parses dates without leading zeroes (7.3.2009)"
 
         self.assertEquals(
-            chrono.parser.USParser.dotteddate("7.3.2009"),
+            chrono.parser.USParser.dotdate("7.3.2009"),
             (2009, 7, 3)
         )
 
     def test_parse(self):
-        "USParser.dotteddate() parses proper dates (mm.dd.yyyy)"
+        "USParser.dotdate() parses proper dates (mm.dd.yyyy)"
 
         self.assertEquals(
-            chrono.parser.USParser.dotteddate("12.27.2009"),
+            chrono.parser.USParser.dotdate("12.27.2009"),
             (2009, 12, 27)
         )
 
     def test_shortyear(self):
-        "USParser.dotteddate() handles two.digit years"
+        "USParser.dotdate() handles two.digit years"
 
         self.assertEquals(
-            chrono.parser.USParser.dotteddate("12.27.09"),
+            chrono.parser.USParser.dotdate("12.27.09"),
             (2009, 12, 27)
         )
 
@@ -222,8 +222,8 @@ class USParser_namedateTest(unittest.TestCase):
 
 class USParser_parse_dateTest(unittest.TestCase):
 
-    def test_dasheddate(self):
-        "USParser.parse_date() handles dashed dates (mm-dd-yyyy)"
+    def test_dashdate(self):
+        "USParser.parse_date() handles dash dates (mm-dd-yyyy)"
 
         self.assertEquals(
             chrono.parser.USParser.parse_date("08-27-2010"),
@@ -238,8 +238,8 @@ class USParser_parse_dateTest(unittest.TestCase):
             (2010, 8, 27)
         )
 
-    def test_dotteddate(self):
-        "USParser.parse_date() handles dotted dates (mm.dd.yyyy)"
+    def test_dotdate(self):
+        "USParser.parse_date() handles dot dates (mm.dd.yyyy)"
 
         self.assertEquals(
             chrono.parser.USParser.parse_date("08.27.2010"),

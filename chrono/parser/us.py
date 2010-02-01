@@ -32,7 +32,7 @@ class USParser(parser.Parser):
     A parser for US date formats, such as mm/dd/yyyy. Valid formats::
     """
 
-    re_dasheddate = re.compile('''
+    re_dashdate = re.compile('''
         ^\s*                    # strip whitespace
         (?P<month>\d{1,2})      # month
         -(?P<day>\d{1,2})       # day
@@ -56,7 +56,7 @@ class USParser(parser.Parser):
         \s*$                    # ignore whitespace at end
     ''', re.VERBOSE | re.IGNORECASE)
 
-    re_dotteddate = re.compile('''
+    re_dotdate = re.compile('''
         ^\s*                    # strip whitespace
         (?P<month>\d{1,2})      # month
         \.(?P<day>\d{1,2})      # day
@@ -83,7 +83,7 @@ class USParser(parser.Parser):
     ''', re.VERBOSE | re.IGNORECASE)
 
     @classmethod
-    def dasheddate(cls, date):
+    def dashdate(cls, date):
         """
         Parses a dash-separated US date (*mm/dd/yyyy*), and returns a tuple
         with year, month, and day. Two-digit years will be interpreted in range
@@ -95,7 +95,7 @@ class USParser(parser.Parser):
         or :exc:`chrono.error.DayError` for invalid date values.
         """
 
-        match = cls.regexp(cls.re_dasheddate, date)
+        match = cls.regexp(cls.re_dashdate, date)
 
         if len(match["year"]) == 2:
             match["year"] = calendar.Calendar.fullyear(match["year"])
@@ -139,7 +139,7 @@ class USParser(parser.Parser):
         return (match["year"], match["month"], match["day"])
 
     @classmethod
-    def dotteddate(cls, date):
+    def dotdate(cls, date):
         """
         Parses a dot-separated US date (*mm.dd.yyyy*), and returns a tuple
         with year, month, and day. Two-digit years will be interpreted in range
@@ -151,7 +151,7 @@ class USParser(parser.Parser):
         or :exc:`chrono.error.DayError` for invalid date values.
         """
 
-        match = cls.regexp(cls.re_dotteddate, date)
+        match = cls.regexp(cls.re_dotdate, date)
 
         if len(match["year"]) == 2:
             match["year"] = calendar.Calendar.fullyear(match["year"])
@@ -237,16 +237,16 @@ class USParser(parser.Parser):
         except error.ParseError:
             pass
 
-        # dashed date (mm-dd-yyyy)
+        # dash date (mm-dd-yyyy)
         try:
-            return cls.dasheddate(date)
+            return cls.dashdate(date)
 
         except error.ParseError:
             pass
 
-        # dotted date
+        # dot date
         try:
-            return cls.dotteddate(date)
+            return cls.dotdate(date)
 
         except error.ParseError:
             pass
