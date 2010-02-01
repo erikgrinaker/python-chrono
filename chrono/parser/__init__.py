@@ -23,6 +23,7 @@ This module contains classes for parsing various date/time formats.
 subclasses.
 """
 
+from .euro import EuroParser
 from .iso import ISOParser
 from .parser import Parser
 from .us import USParser
