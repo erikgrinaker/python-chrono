@@ -25,16 +25,16 @@ from .. import utility
 
 class USClock(clock.Clock):
     """
-    US clock, 12-hour with am/pm
+    US 12-hour clock.
     """
 
     @classmethod
     def from_24(cls, hour):
         """
-        Converts a 24-hour clock hour to 12-hour.
+        Converts a 24-hour clock hour to 12-hour. Returns a tuple of hour and
+        a boolean, which if **True** indicates PM, otherwise AM.
 
-        Returns a tuple of hour and a boolean, which if **True** indicated
-        PM, otherwise AM.
+        Raises :exc:`chrono.error.HourError` if *hour* is invalid.
         """
 
         hour = utility.int_hour(hour)
@@ -58,6 +58,8 @@ class USClock(clock.Clock):
         Converts a 12-hour clock hour to 24-hour. *pm* is a boolean, which if
         **True** indicates time is PM, otherwise AM. Returns the 24-hour clock
         hour.
+
+        Raises :exc:`chrono.error.HourError` if *hour* is invalid.
         """
 
         hour = utility.int_hour(hour)
@@ -71,6 +73,19 @@ class USClock(clock.Clock):
             hour += 12
 
         return hour
+
+    @classmethod
+    def validate(cls, hour, minute, second):
+        """
+        Validates a time: *hour* must be in range 1-12, *minute* in range
+        0-59, and *second* in range 0-59.
+
+        Raises :exc:`chrono.error.HourError`, :exc:`chrono.error.MinuteError`,
+        or :exc:`chrono.error.SecondError` if *hour*, *minute*, or *second*
+        is invalid.
+        """
+
+        return clock.Clock.validate(cls, hour, minute, second)
 
     @classmethod
     def validate_hour(cls, hour):

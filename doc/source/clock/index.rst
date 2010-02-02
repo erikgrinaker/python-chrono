@@ -6,4 +6,5 @@
 .. toctree::
    :maxdepth: 2
 
-   clock/clock.rst
+   clock.rst
+   us.rst

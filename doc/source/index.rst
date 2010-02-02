@@ -22,7 +22,7 @@ Contents:
    datetime.rst
    time.rst
    calendar/index.rst
-   clock.rst
+   clock/index.rst
    error.rst
    formatter.rst
    parser/index.rst
