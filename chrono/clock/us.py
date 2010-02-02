@@ -85,7 +85,7 @@ class USClock(clock.Clock):
         is invalid.
         """
 
-        return clock.Clock.validate(cls, hour, minute, second)
+        return clock.Clock.validate(hour, minute, second)
 
     @classmethod
     def validate_hour(cls, hour):
