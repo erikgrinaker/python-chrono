@@ -27,7 +27,7 @@ import datetime
 
 class USCalendar(calendar.Calendar):
     """
-    A US calendar, also used by Australia, Canada, New Zealand, and the UK
+    A US calendar, also used by Australia, Canada, New Zealand, and the UK.
 
     Characteristics of the US calendar:
 
@@ -103,7 +103,7 @@ class USCalendar(calendar.Calendar):
         if wd_jan1 > 7:
             wd_jan1 = 1
 
-        ordinal = -wd_jan1 + 1
+        ordinal = - wd_jan1 + 1
 
         # find ordinal day from offset
         ordinal = ordinal + (week - 1) * 7 + day

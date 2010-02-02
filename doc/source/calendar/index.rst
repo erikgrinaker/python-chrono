@@ -8,3 +8,4 @@
 
    calendar.rst
    iso.rst
+   us.rst
