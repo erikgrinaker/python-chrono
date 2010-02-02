@@ -29,8 +29,45 @@ import re
 
 class USParser(parser.Parser):
     """
-    A parser for US date formats, such as mm/dd/yyyy. Valid formats::
+    A parser for US date formats, such as mm/dd/yyyy. Valid formats:
+
+    =================== =================== ======================== ===============================================
+    Format              Example             Description              Method
+    =================== =================== ======================== ===============================================
+    mm/dd/yyyy          07/23/2010          Date                     :meth:`chrono.parser.USParser.date`
+    mm-dd-yyyy          07-23-2010          Dashed date              :meth:`chrono.parser.USParser.dashdate`
+    mm.dd.yyyy          07.23.2010          Dotted date              :meth:`chrono.parser.USParser.dotdate`
+    mmddyyyy            07232010            Compact date             :meth:`chrono.parser.USParser.compactdate`
+    dd-mmm-yyyy         23-JUL-2010         Date with month name     :meth:`chrono.parser.USParser.namedate`
+    hh:mm:ss am/pm      04:27:43 PM         Time, 12-hour            :meth:`chrono.parser.USParser.time`
+    hhmmss am/pm        042743 PM           Compact time, 12-hour    :meth:`chrono.parser.USParser.compacttime`
+    =================== =================== ======================== ===============================================
+
+    Leading zeroes may be omitted in days and months, and years may be
+    specified with 2 digits, which will be interpreted in the range
+    1930-2029.
+
+    Seconds and minutes may be omitted in times, which will be interpreted
+    as 0.
     """
+
+    re_compactdate = re.compile('''
+        ^\s*                    # strip whitespace
+        (?P<month>\d{2})        # month
+        (?P<day>\d{2})          # day
+        (?P<year>\d{2}|\d{4})   # year
+        \s*$                    # strip whitespace
+    ''', re.VERBOSE)
+
+    re_compacttime = re.compile('''
+        ^\s*                    # ignore whitespace at start
+        (?P<hour>\d{2})         # hour
+        (?:(?P<minute>\d{2}))?  # minute
+        (?:(?P<second>\d{2}))?  # second
+        \s*                     # separator
+        (?P<ampm>[ap]\.?\s*m\.?) # am/pm
+        \s*$                    # ignore whitespace at end
+    ''', re.VERBOSE | re.IGNORECASE)
 
     re_dashdate = re.compile('''
         ^\s*                    # strip whitespace
@@ -81,6 +118,60 @@ class USParser(parser.Parser):
         (?P<ampm>[ap]\.?\s*m\.?)  # am/pm
         \s*$                    # strip whitespace
     ''', re.VERBOSE | re.IGNORECASE)
+
+    @classmethod
+    def compactdate(cls, date):
+        """
+        Parses a compact US date (*mmddyyyy*), and returns a tuple with year,
+        month, and day. Two-digit years will be interpreted in range
+        1930-2029.
+
+        Raises :exc:`chrono.error.ParseError` for invalid input format,
+        :exc:`TypeError` for invalid input type, and
+        :exc:`chrono.error.YearError`, :exc:`chrono.error.MonthError`,
+        or :exc:`chrono.error.DayError` for invalid date values.
+        """
+
+        match = cls.regexp(cls.re_compactdate, date)
+
+        if len(match["year"]) == 2:
+            match["year"] = calendar.Calendar.fullyear(match["year"])
+
+        match = utility.integer(match)
+
+        calendar.USCalendar.validate(
+                match["year"],
+                match["month"],
+                match["day"]
+        )
+
+        return (match["year"], match["month"], match["day"])
+
+    @classmethod
+    def compacttime(cls, time):
+        """
+        Parses a compact US time (*hhmmss am/pm*), and returns a tuple with
+        hour, minute, and second, using 24-hour clock. Minutes and/or seconds
+        may be omitted, which will be interpreted as 0.
+
+        Raises :exc:`chrono.error.ParseError` for invalid input format,
+        :exc:`TypeError` for invalid input type, and
+        :exc:`chrono.error.HourError`, :exc:`chrono.error.MinuteError`,
+        or :exc:`chrono.error.SecondError` for invalid time values.
+        """
+
+        match = cls.regexp(cls.re_compacttime, time)
+
+        h = utility.integer(match["hour"])
+        m = utility.integer(match["minute"]) or 0
+        s = utility.integer(match["second"]) or 0
+        ampm = match["ampm"].replace(".", "").replace(" ", "").lower()
+
+        clock.USClock.validate(h, m, s)
+
+        h = clock.USClock.to_24(h, ampm == "pm")
+
+        return (h, m, s)
 
     @classmethod
     def dashdate(cls, date):
@@ -251,6 +342,13 @@ class USParser(parser.Parser):
         except error.ParseError:
             pass
 
+        # compactdate (mmddyyyy)
+        try:
+            return cls.compactdate(date)
+
+        except error.ParseError:
+            pass
+
         # handle unknown formats
         raise error.ParseError("Invalid US date value '{0}'".format(date))
 
@@ -289,6 +387,13 @@ class USParser(parser.Parser):
         # time (hh:mm:ss am/pm)
         try:
             return cls.time(time)
+
+        except error.ParseError:
+            pass
+
+        # compacttime (hh:mm:ss am/pm)
+        try:
+            return cls.compacttime(time)
 
         except error.ParseError:
             pass

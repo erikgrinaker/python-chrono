@@ -14,6 +14,99 @@ class USParserTest(unittest.TestCase):
         ))
 
 
+class USParser_compactdateTest(unittest.TestCase):
+
+    def test_invalid_date(self):
+        "USParser.compactdate() raises error on invalid date"
+
+        self.assertRaises(
+            chrono.DayError, chrono.parser.USParser.compactdate, "02292009"
+        )
+
+    def test_invalid_format(self):
+        "USParser.compactdate() raises ParseError on invalid format"
+
+        self.assertRaises(
+            chrono.ParseError, chrono.parser.USParser.compactdate, "yyxxzzzz"
+        )
+
+    def test_none(self):
+        "USParser.compactdate() raises TypeError on None"
+
+        self.assertRaises(TypeError, chrono.parser.USParser.compactdate, None)
+
+    def test_parse(self):
+        "USParser.compactdate() parses proper dates (mmddyyyy)"
+
+        self.assertEquals(
+            chrono.parser.USParser.compactdate("12272009"),
+            (2009, 12, 27)
+        )
+
+    def test_shortyear(self):
+        "USParser.compactdate() handles two-digit years"
+
+        self.assertEquals(
+            chrono.parser.USParser.compactdate("122709"),
+            (2009, 12, 27)
+        )
+
+
+class USParser_compacttimeTest(unittest.TestCase):
+
+    def test_invalid_ampm(self):
+        "USParser.compacttime() raises ParseError on invalid AM/PM"
+
+        self.assertRaises(
+             chrono.ParseError,
+             chrono.parser.USParser.compacttime, "042743 PAM"
+        )
+
+    def test_invalid_format(self):
+        "USParser.compacttime() raises ParseError on invalid format"
+
+        self.assertRaises(
+            chrono.ParseError, chrono.parser.USParser.compacttime, "xxyyzz PM"
+        )
+
+    def test_invalid_time(self):
+        "USParser.compacttime() raises error on invalid time"
+
+        self.assertRaises(
+                chrono.HourError,
+                chrono.parser.USParser.compacttime, "002743 AM"
+        )
+
+    def test_full(self):
+        "USParser.compacttime() accepts full time"
+
+        self.assertEquals(
+            chrono.parser.USParser.compacttime("042743 PM"),
+            (16, 27, 43)
+        )
+
+    def test_nominutes(self):
+        "USParser.compacttime() accepts missing minutes"
+
+        self.assertEquals(
+            chrono.parser.USParser.compacttime("04 PM"),
+            (16, 0, 0)
+        )
+
+    def test_none(self):
+        "USParser.compacttime() raises TypeError on None"
+
+        self.assertRaises(TypeError, chrono.parser.USParser.compacttime, None)
+
+    def test_noseconds(self):
+        "USParser.compacttime() accepts missing seconds"
+
+        self.assertEquals(
+            chrono.parser.USParser.compacttime("0427 PM"),
+            (16, 27, 0)
+        )
+
+
 class USParser_dashdateTest(unittest.TestCase):
 
     def test_invalid_date(self):
@@ -222,6 +315,14 @@ class USParser_namedateTest(unittest.TestCase):
 
 class USParser_parse_dateTest(unittest.TestCase):
 
+    def test_compactdate(self):
+        "USParser.parse_date() handles compact dates (mmddyyyy)"
+
+        self.assertEquals(
+            chrono.parser.USParser.parse_date("08272010"),
+            (2010, 8, 27)
+        )
+
     def test_dashdate(self):
         "USParser.parse_date() handles dash dates (mm-dd-yyyy)"
 
@@ -263,7 +364,7 @@ class USParser_parse_dateTest(unittest.TestCase):
         )
 
 
-class USParser_parse_dateTest(unittest.TestCase):
+class USParser_parse_datetimeTest(unittest.TestCase):
 
     def test_datetime(self):
         "USParser.parse_datetime() handles normal dates (mm/dd/yyyy)"
@@ -284,8 +385,16 @@ class USParser_parse_dateTest(unittest.TestCase):
 
 class USParser_parse_timeTest(unittest.TestCase):
 
+    def test_compacttime(self):
+        "USParser.parse_time() handles compact times (hhmmss ampm"
+
+        self.assertEquals(
+            chrono.parser.USParser.parse_time("042743 PM"),
+            (16, 27, 43)
+        )
+
     def test_time(self):
-        "USParser.parse_time() handles normal times (hh:mm:ss ampm"
+        "USParser.parse_time() handles normal times (hh:mm:ss ampm)"
 
         self.assertEquals(
             chrono.parser.USParser.parse_time("04:27:43 PM"),
