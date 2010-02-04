@@ -14,6 +14,46 @@ class EuroParserTest(unittest.TestCase):
         ))
 
 
+class EuroParser_compactdateTest(unittest.TestCase):
+
+    def test_invalid_date(self):
+        "EuroParser.compactdate() raises error on invalid date"
+
+        self.assertRaises(
+            chrono.DayError, chrono.parser.EuroParser.compactdate, "29022009"
+        )
+
+    def test_invalid_format(self):
+        "EuroParser.compactdate() raises ParseError on invalid format"
+
+        self.assertRaises(
+            chrono.ParseError, chrono.parser.EuroParser.compactdate, "xxyyzzzz"
+        )
+
+    def test_none(self):
+        "EuroParser.compactdate() raises TypeError on None"
+
+        self.assertRaises(
+            TypeError, chrono.parser.EuroParser.compactdate, None
+        )
+
+    def test_parse(self):
+        "EuroParser.compactdate() parses proper dates (ddmmyyyy)"
+
+        self.assertEquals(
+            chrono.parser.EuroParser.compactdate("27122009"),
+            (2009, 12, 27)
+        )
+
+    def test_shortyear(self):
+        "EuroParser.compactdate() handles two-digit years"
+
+        self.assertEquals(
+            chrono.parser.EuroParser.compactdate("271209"),
+            (2009, 12, 27)
+        )
+
+
 class EuroParser_compacttimeTest(unittest.TestCase):
 
     def test_invalid_format(self):
@@ -155,6 +195,14 @@ class EuroParser_dateTest(unittest.TestCase):
 
 
 class EuroParser_parse_dateTest(unittest.TestCase):
+
+    def test_compactdate(self):
+        "EuroParser.parse_date() handles compact dates (ddmmyyyy)"
+
+        self.assertEquals(
+            chrono.parser.EuroParser.parse_date("27082010"),
+            (2010, 8, 27)
+        )
 
     def test_dashdate(self):
         "EuroParser.parse_date() handles dash dates (dd-mm-yyyy)"

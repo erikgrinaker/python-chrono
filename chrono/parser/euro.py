@@ -31,7 +31,27 @@ import re
 class EuroParser(parser.Parser):
     """
     A parser for european/western date formats, such as *dd.mm.yyyy*.
+    Valid formats:
+
+    =================== =================== ======================= ===============================================
+    Format              Example             Description             Method
+    =================== =================== ======================= ===============================================
+    dd.mm.yyyy          23.07.2010          Date                    :meth:`chrono.parser.EuroParser.date`
+    dd-mm-yyyy          23-07-2010          Dashed date             :meth:`chrono.parser.EuroParser.dashdate`
+    dd/mm/yyyy          23/07/2010          Slashed date            :meth:`chrono.parser.EuroParser.slashdate`
+    ddmmyyyy            23072010            Compact date            :meth:`chrono.parser.EuroParser.compactdate`
+    hh:mm:ss            15:27:43            Time                    :meth:`chrono.parser.EuroParser.time`
+    hhmmss              152743              Compact time            :meth:`chrono.parser.EuroParser.compacttime`
+    =================== =================== ======================= ===============================================
     """
+
+    re_compactdate = re.compile('''
+        ^\s*                    # ignore whitespace at start
+        (?P<day>\d{2})          # day
+        (?P<month>\d{2})        # month
+        (?P<year>\d{2}|\d{4})   # year
+        \s*$                    # ignore whitespace at end
+    ''', re.VERBOSE)
 
     re_dashdate = re.compile('''
         ^\s*                    # strip whitespace
@@ -64,6 +84,34 @@ class EuroParser(parser.Parser):
         /(?P<year>\d{1,4})      # year
         \s*$                    # strip whitespace
     ''', re.VERBOSE)
+
+    @classmethod
+    def compactdate(cls, date):
+        """
+        Parses a compact european date (*ddmmyyyy*), and returns a tuple
+        with year, month, and day. Two-digit years will be interpreted in range
+        1930-2029.
+
+        Raises :exc:`chrono.error.ParseError` for invalid input format,
+        :exc:`TypeError` for invalid input type, and
+        :exc:`chrono.error.YearError`, :exc:`chrono.error.MonthError`,
+        or :exc:`chrono.error.DayError` for invalid date values.
+        """
+
+        match = cls.regexp(cls.re_compactdate, date)
+
+        if len(match["year"]) == 2:
+            match["year"] = calendar.Calendar.fullyear(match["year"])
+
+        match = utility.integer(match)
+
+        calendar.ISOCalendar.validate(
+                match["year"],
+                match["month"],
+                match["day"]
+        )
+
+        return (match["year"], match["month"], match["day"])
 
     @classmethod
     def compacttime(cls, time):
@@ -154,6 +202,13 @@ class EuroParser(parser.Parser):
         except error.ParseError:
             pass
 
+        # compact date
+        try:
+            return cls.compactdate(date)
+
+        except error.ParseError:
+            pass
+
         # dash date (mm-dd-yyyy)
         try:
             return cls.dashdate(date)
@@ -169,7 +224,9 @@ class EuroParser(parser.Parser):
             pass
 
         # handle unknown formats
-        raise error.ParseError("Invalid european date value '{0}'".format(date))
+        raise error.ParseError(
+            "Invalid european date value '{0}'".format(date)
+        )
 
     @classmethod
     def parse_datetime(cls, datetime):
@@ -219,7 +276,9 @@ class EuroParser(parser.Parser):
         except error.ParseError:
             pass
 
-        raise error.ParseError("Invalid european time value '{0}'".format(time))
+        raise error.ParseError(
+            "Invalid european time value '{0}'".format(time)
+        )
 
 
     @classmethod
