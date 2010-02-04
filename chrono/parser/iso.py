@@ -182,7 +182,7 @@ class ISOParser(parser.Parser):
     def compactordinal(cls, date):
         """
         Parses a compact ISO ordinal date (*yyyyddd*), and returns a tuple
-        with year and ordinal day.
+        with year, month, and day.
 
         Raises :exc:`chrono.error.ParseError` for
         invalid input format, :exc:`TypeError` for invalid input type,
@@ -197,7 +197,9 @@ class ISOParser(parser.Parser):
             match["day"]
         )
 
-        return (match["year"], match["day"])
+        return calendar.ISOCalendar.ordinal_to_date(
+            match["year"], match["day"]
+        )
 
     @classmethod
     def compacttime(cls, time):
@@ -225,9 +227,9 @@ class ISOParser(parser.Parser):
     @classmethod
     def compactweek(cls, date):
         """
-        Parses a compact ISO week (*yyyyWww*), and returns a tuple with year
-        and week number. Leading zeroes may be omitted, even though the ISO
-        standard requires them.
+        Parses a compact ISO week (*yyyyWww*), and returns a tuple with year,
+        month, and day (the first Monday of the week). Leading zeroes may be
+        omitted, even though the ISO standard requires them.
 
         Raises :exc:`chrono.error.ParseError`
         for invalid input format, :exc:`TypeError` for invalid input type,
@@ -242,13 +244,13 @@ class ISOParser(parser.Parser):
             match["week"]
         )
 
-        return (match["year"], match["week"])
+        return calendar.ISOCalendar.week_to_date(match["year"], match["week"])
 
     @classmethod
     def compactweekdate(cls, date):
         """
         Parses a compact ISO weekdate (*yyyyWwwd*), and returns a tuple with
-        year, week, and weekday.
+        year, month, and day.
 
         Raises :exc:`chrono.error.ParseError` for
         invalid input format, :exc:`TypeError` for invalid input type, and
@@ -264,7 +266,9 @@ class ISOParser(parser.Parser):
             match["day"]
         )
 
-        return (match["year"], match["week"], match["day"])
+        return calendar.ISOCalendar.weekdate_to_date(
+            match["year"], match["week"], match["day"]
+        )
 
     @classmethod
     def date(cls, date):
@@ -292,9 +296,9 @@ class ISOParser(parser.Parser):
     @classmethod
     def month(cls, date):
         """
-        Parses an ISO month (*yyyy-mm*), and returns a tuple with year and
-        month. Leading zeroes may be omitted, even though the ISO standard
-        requires them.
+        Parses an ISO month (*yyyy-mm*), and returns a tuple with year, month,
+        and day (the first day of the month). Leading zeroes may be omitted,
+        even though the ISO standard requires them.
 
         Raises :exc:`chrono.error.ParseError` for
         invalid input format, :exc:`TypeError` for invalid input type,
@@ -307,13 +311,13 @@ class ISOParser(parser.Parser):
         calendar.ISOCalendar.validate_year(match["year"])
         calendar.ISOCalendar.validate_month(match["month"])
 
-        return (match["year"], match["month"])
+        return (match["year"], match["month"], 1)
 
     @classmethod
     def ordinal(cls, date):
         """
         Parses an ISO ordinal date (*yyyy-ddd*), and returns a tuple with
-        year and ordinal day.
+        year, month, and day.
 
         Raises :exc:`chrono.error.ParseError` for
         invalid input format, :exc:`TypeError` for invalid input type,
@@ -328,7 +332,9 @@ class ISOParser(parser.Parser):
             match["day"]
         )
 
-        return (match["year"], match["day"])
+        return calendar.ISOCalendar.ordinal_to_date(
+            match["year"], match["day"]
+        )
 
     @classmethod
     def parse_date(cls, date):
@@ -359,70 +365,56 @@ class ISOParser(parser.Parser):
 
         # month (yyyy-mm)
         try:
-            y, m = cls.month(date)
-
-            return (y, m, 1)
+            return cls.month(date)
 
         except error.ParseError:
             pass
 
         # year (yyyy)
         try:
-            return (cls.year(date), 1, 1)
+            return cls.year(date)
 
         except error.ParseError:
             pass
 
         # week (yyyy-Www)
         try:
-            y, w = cls.week(date)
-
-            return calendar.ISOCalendar.week_to_date(y, w)
+            return cls.week(date)
 
         except error.ParseError:
             pass
 
         # compact week (yyyyWww)
         try:
-            y, w = cls.compactweek(date)
-
-            return calendar.ISOCalendar.week_to_date(y, w)
+            return cls.compactweek(date)
 
         except error.ParseError:
             pass
 
         # weekdate (yyyy-Www-d)
         try:
-            y, w, d = cls.weekdate(date)
-
-            return calendar.ISOCalendar.weekdate_to_date(y, w, d)
+            return cls.weekdate(date)
 
         except error.ParseError:
             pass
 
         # compact weekdate (yyyyWwwd)
         try:
-            y, w, d = cls.compactweekdate(date)
-
-            return calendar.ISOCalendar.weekdate_to_date(y, w, d)
+            return cls.compactweekdate(date)
 
         except error.ParseError:
             pass
 
         # ordinal (yyyy-ddd)
         try:
-            y, d = cls.ordinal(date)
-
-            return calendar.ISOCalendar.ordinal_to_date(y, d)
+            return cls.ordinal(date)
 
         except error.ParseError:
             pass
 
         # compact ordinal (yyyy-ddd)
         try:
-            y, d = cls.compactordinal(date)
-
-            return calendar.ISOCalendar.ordinal_to_date(y, d)
+            return cls.compactordinal(date)
 
         except error.ParseError:
             pass
@@ -507,9 +499,9 @@ class ISOParser(parser.Parser):
     @classmethod
     def week(cls, date):
         """
-        Parses an ISO week (*yyyy-Www*), and returns a tuple with year
-        and week number. Leading zeroes may be omitted, even though the ISO
-        standard requires them.
+        Parses an ISO week (*yyyy-Www*), and returns a tuple with year,
+        month, and day (the first Monday of the week). Leading zeroes may
+        be omitted, even though the ISO standard requires them.
 
         Raises :exc:`chrono.error.ParseError`
         for invalid input format, :exc:`TypeError` for invalid input type,
@@ -524,13 +516,13 @@ class ISOParser(parser.Parser):
             match["week"]
         )
 
-        return (match["year"], match["week"])
+        return calendar.ISOCalendar.week_to_date(match["year"], match["week"])
 
     @classmethod
     def weekdate(cls, date):
         """
         Parses an ISO weekdate (*yyyy-Www-d*), and returns a tuple with
-        year, week, and weekday. Leading zeroes may be omitted, even though
+        year, month, and day. Leading zeroes may be omitted, even though
         the ISO standard requires them.
 
         Raises :exc:`chrono.error.ParseError`
@@ -547,16 +539,18 @@ class ISOParser(parser.Parser):
             match["day"]
         )
 
-        return (match["year"], match["week"], match["day"])
+        return calendar.ISOCalendar.weekdate_to_date(
+            match["year"], match["week"], match["day"]
+        )
 
     @classmethod
     def year(cls, date):
         """
-        Parses an ISO year (*yyyy*), and returns it. Leading zeroes may be
+        Parses an ISO year (*yyyy*), and returns a tuple with year,
+        month, and day (the first day of the year). Leading zeroes may be
         omitted, even though the ISO standard requires them.
 
-        Raises
-        :exc:`chrono.error.ParseError` for invalid input format,
+        Raises :exc:`chrono.error.ParseError` for invalid input format,
         :exc:`TypeError` for invalid input type, and
         :exc:`chrono.error.YearError` for invalid year value.
         """
@@ -565,4 +559,4 @@ class ISOParser(parser.Parser):
 
         calendar.ISOCalendar.validate_year(match["year"])
 
-        return match["year"]
+        return (match["year"], 1, 1)

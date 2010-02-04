@@ -73,7 +73,7 @@ class ISOParser_compactordinalTest(unittest.TestCase):
 
         self.assertEquals(
             chrono.parser.ISOParser.compactordinal("2009202"),
-            (2009, 202)
+            (2009, 7, 21)
         )
 
 
@@ -144,7 +144,7 @@ class ISOParser_compactweekTest(unittest.TestCase):
 
         self.assertEquals(
             chrono.parser.ISOParser.compactweek("2009w12"),
-            (2009, 12)
+            (2009, 3, 16)
         )
 
     def test_none(self):
@@ -157,7 +157,7 @@ class ISOParser_compactweekTest(unittest.TestCase):
 
         self.assertEquals(
             chrono.parser.ISOParser.compactweek("2009W7"),
-            (2009, 7)
+            (2009, 2, 9)
         )
 
     def test_parse(self):
@@ -165,7 +165,7 @@ class ISOParser_compactweekTest(unittest.TestCase):
 
         self.assertEquals(
             chrono.parser.ISOParser.compactweek("2009W12"),
-            (2009, 12)
+            (2009, 3, 16)
         )
 
 
@@ -192,7 +192,7 @@ class ISOParser_compactweekdateTest(unittest.TestCase):
 
         self.assertEquals(
             chrono.parser.ISOParser.compactweekdate("2009w124"),
-            (2009, 12, 4)
+            (2009, 3, 19)
         )
 
     def test_none(self):
@@ -207,7 +207,7 @@ class ISOParser_compactweekdateTest(unittest.TestCase):
 
         self.assertEquals(
             chrono.parser.ISOParser.compactweekdate("2009W123"),
-            (2009, 12, 3)
+            (2009, 3, 18)
         )
 
 
@@ -275,7 +275,7 @@ class ISOParser_monthTest(unittest.TestCase):
 
         self.assertEquals(
             chrono.parser.ISOParser.month("2009-12"),
-            (2009, 12)
+            (2009, 12, 1)
         )
 
 
@@ -305,7 +305,7 @@ class ISOParser_ordinalTest(unittest.TestCase):
 
         self.assertEquals(
             chrono.parser.ISOParser.ordinal("2009-202"),
-            (2009, 202)
+            (2009, 7, 21)
         )
 
 
@@ -606,7 +606,7 @@ class ISOParser_weekTest(unittest.TestCase):
 
         self.assertEquals(
             chrono.parser.ISOParser.week("2009-w12"),
-            (2009, 12)
+            (2009, 3, 16)
         )
 
     def test_none(self):
@@ -619,7 +619,7 @@ class ISOParser_weekTest(unittest.TestCase):
 
         self.assertEquals(
             chrono.parser.ISOParser.week("2009-W7"),
-            (2009, 7)
+            (2009, 2, 9)
         )
 
     def test_parse(self):
@@ -627,7 +627,7 @@ class ISOParser_weekTest(unittest.TestCase):
 
         self.assertEquals(
             chrono.parser.ISOParser.week("2009-W12"),
-            (2009, 12)
+            (2009, 3, 16)
         )
 
 
@@ -652,7 +652,7 @@ class ISOParser_weekdateTest(unittest.TestCase):
 
         self.assertEquals(
             chrono.parser.ISOParser.weekdate("2009-w12-4"),
-            (2009, 12, 4)
+            (2009, 3, 19)
         )
 
     def test_none(self):
@@ -665,7 +665,7 @@ class ISOParser_weekdateTest(unittest.TestCase):
 
         self.assertEquals(
             chrono.parser.ISOParser.weekdate("2009-W7-3"),
-            (2009, 7, 3)
+            (2009, 2, 11)
         )
 
     def test_parse(self):
@@ -673,7 +673,7 @@ class ISOParser_weekdateTest(unittest.TestCase):
 
         self.assertEquals(
             chrono.parser.ISOParser.weekdate("2009-W12-3"),
-            (2009, 12, 3)
+            (2009, 3, 18)
         )
 
 
@@ -701,7 +701,7 @@ class ISOParser_yearTest(unittest.TestCase):
     def test_parse(self):
         "ISOParser.year() parses proper ISO compact dates (yyyymmdd)"
 
-        self.assertEquals(chrono.parser.ISOParser.year("2009"), 2009)
+        self.assertEquals(chrono.parser.ISOParser.year("2009"), (2009, 1, 1))
 
 
 if __name__ == "__main__":
