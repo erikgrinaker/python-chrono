@@ -349,77 +349,26 @@ class ISOParser(parser.Parser):
         :exc:`chrono.error.DateError` subclass for invalid date values.
         """
 
-        # date (yyyy-mm-dd)
-        try:
-            return cls.date(date)
+        parsers = (
+            cls.date,
+            cls.compactdate,
+            cls.month,
+            cls.year,
+            cls.week,
+            cls.compactweek,
+            cls.weekdate,
+            cls.compactweekdate,
+            cls.ordinal,
+            cls.compactordinal
+        )
 
-        except error.ParseError:
-            pass
+        for parser in parsers:
+            try:
+                return parser(date)
 
-        # compact date (yyyymmdd)
-        try:
-            return cls.compactdate(date)
+            except error.ParseError:
+                pass
 
-        except error.ParseError:
-            pass
-
-        # month (yyyy-mm)
-        try:
-            return cls.month(date)
-
-        except error.ParseError:
-            pass
-
-        # year (yyyy)
-        try:
-            return cls.year(date)
-
-        except error.ParseError:
-            pass
-
-        # week (yyyy-Www)
-        try:
-            return cls.week(date)
-
-        except error.ParseError:
-            pass
-
-        # compact week (yyyyWww)
-        try:
-            return cls.compactweek(date)
-
-        except error.ParseError:
-            pass
-
-        # weekdate (yyyy-Www-d)
-        try:
-            return cls.weekdate(date)
-
-        except error.ParseError:
-            pass
-
-        # compact weekdate (yyyyWwwd)
-        try:
-            return cls.compactweekdate(date)
-
-        except error.ParseError:
-            pass
-
-        # ordinal (yyyy-ddd)
-        try:
-            return cls.ordinal(date)
-
-        except error.ParseError:
-            pass
-
-        # compact ordinal (yyyy-ddd)
-        try:
-            return cls.compactordinal(date)
-
-        except error.ParseError:
-            pass
-
-        # handle unknown formats
         raise error.ParseError("Invalid ISO date value '{0}'".format(date))
 
     @classmethod
@@ -456,19 +405,17 @@ class ISOParser(parser.Parser):
         values.
         """
 
-        # full time
-        try:
-            return cls.time(time)
+        parsers = (
+            cls.time,
+            cls.compacttime
+        )
 
-        except error.ParseError:
-            pass
+        for parser in parsers:
+            try:
+                return parser(time)
 
-        # compact time
-        try:
-            return cls.compacttime(time)
-
-        except error.ParseError:
-            pass
+            except error.ParseError:
+                pass
 
         raise error.ParseError("Invalid ISO time value '{0}'".format(time))
 

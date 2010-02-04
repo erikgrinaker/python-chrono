@@ -314,42 +314,21 @@ class USParser(parser.Parser):
         :exc:`chrono.error.DateError` subclass for invalid date values.
         """
 
-        # date (mm/dd/yyyy)
-        try:
-            return cls.date(date)
+        parsers = (
+            cls.date,
+            cls.namedate,
+            cls.dashdate,
+            cls.dotdate,
+            cls.compactdate
+        )
 
-        except error.ParseError:
-            pass
+        for parser in parsers:
+            try:
+                return parser(date)
 
-        # named date (dd-mmm-yyyy)
-        try:
-            return cls.namedate(date)
+            except error.ParseError:
+                pass
 
-        except error.ParseError:
-            pass
-
-        # dash date (mm-dd-yyyy)
-        try:
-            return cls.dashdate(date)
-
-        except error.ParseError:
-            pass
-
-        # dot date
-        try:
-            return cls.dotdate(date)
-
-        except error.ParseError:
-            pass
-
-        # compactdate (mmddyyyy)
-        try:
-            return cls.compactdate(date)
-
-        except error.ParseError:
-            pass
-
-        # handle unknown formats
         raise error.ParseError("Invalid US date value '{0}'".format(date))
 
     @classmethod
@@ -384,21 +363,18 @@ class USParser(parser.Parser):
         :exc:`chrono.error.TimeError` subclass for invalid time values.
         """
 
-        # time (hh:mm:ss am/pm)
-        try:
-            return cls.time(time)
+        parsers = (
+            cls.time,
+            cls.compacttime
+        )
 
-        except error.ParseError:
-            pass
+        for parser in parsers:
+            try:
+                return parser(time)
 
-        # compacttime (hh:mm:ss am/pm)
-        try:
-            return cls.compacttime(time)
+            except error.ParseError:
+                pass
 
-        except error.ParseError:
-            pass
-
-        # handle unknown formats
         raise error.ParseError("Invalid US time value '{0}'".format(time))
 
     @classmethod

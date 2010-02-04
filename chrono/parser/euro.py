@@ -195,35 +195,20 @@ class EuroParser(parser.Parser):
         :exc:`chrono.error.DateError` subclass for invalid date values.
         """
 
-        # date (mm/dd/yyyy)
-        try:
-            return cls.date(date)
+        parsers = (
+            cls.date,
+            cls.compactdate,
+            cls.dashdate,
+            cls.slashdate,
+        )
 
-        except error.ParseError:
-            pass
+        for parser in parsers:
+            try:
+                return parser(date)
 
-        # compact date
-        try:
-            return cls.compactdate(date)
+            except error.ParseError:
+                pass
 
-        except error.ParseError:
-            pass
-
-        # dash date (mm-dd-yyyy)
-        try:
-            return cls.dashdate(date)
-
-        except error.ParseError:
-            pass
-
-        # slash date
-        try:
-            return cls.slashdate(date)
-
-        except error.ParseError:
-            pass
-
-        # handle unknown formats
         raise error.ParseError(
             "Invalid european date value '{0}'".format(date)
         )
@@ -262,24 +247,23 @@ class EuroParser(parser.Parser):
         values.
         """
 
-        # full time
-        try:
-            return cls.time(time)
+        parsers = (
+            cls.time,
+            cls.compacttime,
+            cls.dashdate,
+            cls.slashdate,
+        )
 
-        except error.ParseError:
-            pass
+        for parser in parsers:
+            try:
+                return parser(time)
 
-        # compact time
-        try:
-            return cls.compacttime(time)
-
-        except error.ParseError:
-            pass
+            except error.ParseError:
+                pass
 
         raise error.ParseError(
             "Invalid european time value '{0}'".format(time)
         )
-
 
     @classmethod
     def slashdate(cls, date):
