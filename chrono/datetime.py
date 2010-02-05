@@ -39,8 +39,8 @@ class DateTime(date.Date, time.Time):
 
     Valid values for *datetime* can be:
 
-    * string: parses date/time from a string, see
-      :class:`chrono.parser.ISOParser` for valid formats
+    * string: parses date/time from a string using the set parser,
+      :class:`chrono.parser.CommonParser` by default
     * **True**: sets the date/time to the current date
     * integer: assumes input is a UNIX timestamp, sets date/time accordingly
     * :class:`chrono.DateTime`: sets date/time from another DateTime object
@@ -58,6 +58,15 @@ class DateTime(date.Date, time.Time):
 
     If both *datetime* and keywords are specified, *datetime* takes
     precedence.
+
+    *parser* determines which parser to use for parsing dates and times
+    from strings. By default :class:`chrono.parser.CommonParser` is used,
+    which supports the most common date and time formats. See
+    :mod:`chrono.parser` for available parsers.
+
+    *calendar* determines which calendar to use for calendar operations.
+    By default :class:`chrono.calendar.ISOCalendar` is used, see
+    :mod:`chrono.calendar` for available calendars.
     """
 
     def __cmp__(self, other):
@@ -75,7 +84,13 @@ class DateTime(date.Date, time.Time):
 
         return time.Time.__cmp__(self, other)
 
-    def __init__(self, datetime=None, **kwargs):
+    def __init__(self, datetime=None, parser=None, calendar=None, **kwargs):
+
+        if parser:
+            self.parser = parser
+
+        if calendar:
+            self.calendar = calendar
 
         if isinstance(datetime, str):
             self.set_string(datetime)
@@ -283,7 +298,7 @@ class DateTime(date.Date, time.Time):
         minute = utility.int_minute(minute)
         second = utility.int_second(second)
 
-        calendar.ISOCalendar.validate(year, month, day)
+        self.calendar.validate(year, month, day)
         clock.Clock.validate(hour, minute, second)
 
         self.clear()
@@ -324,7 +339,7 @@ class DateTime(date.Date, time.Time):
         """
 
         year, month, date, hour, minute, second = \
-            parser.ISOParser.parse_datetime(string)
+            self.parser.parse_datetime(string)
 
         self.set(year, month, date, hour, minute, second)
 

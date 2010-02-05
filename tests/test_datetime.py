@@ -151,6 +151,18 @@ class DateTime__gtTest(unittest.TestCase):
 
 class DateTime__initTest(unittest.TestCase):
 
+    def test_calendar(self):
+        "DateTime.__init__() takes calendar as input"
+
+        c = chrono.calendar.USCalendar
+
+        self.assertEqual(chrono.DateTime(None, None, c).calendar, c)
+
+    def test_calendar_default(self):
+        "DateTime.__init__() defaults to ISOCalendar"
+
+        self.assertEqual(chrono.DateTime().calendar, chrono.calendar.ISOCalendar)
+
     def test_date(self):
         "DateTime.__init__() with Date parameter copies attributes"
 
@@ -248,6 +260,23 @@ class DateTime__initTest(unittest.TestCase):
         self.assertRaises(
             chrono.error.NoDateTimeError, chrono.DateTime(None).get
         )
+
+    def test_parser(self):
+        "DateTime.__init__() takes parser as input"
+
+        p = chrono.parser.ISOParser
+        d = chrono.DateTime("2009-07-23 16:27:43", p)
+
+        self.assertEqual(d.get(), (2009, 7, 23, 16, 27, 43))
+        self.assertEqual(d.parser, p)
+
+    def test_parser_default(self):
+        "DateTime.__init__() defaults to CommonParser"
+
+        d = chrono.DateTime("2009-07-23 16:27:43")
+
+        self.assertEqual(d.get(), (2009, 7, 23, 16, 27, 43))
+        self.assertEqual(d.parser, chrono.parser.CommonParser)
 
     def test_string(self):
         "DateTime.__init__() parses strings"
