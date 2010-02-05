@@ -133,7 +133,6 @@ class Date__initTest(unittest.TestCase):
             (2009, 12, 27)
         )
 
-
     def test_datetime_datetime(self):
         "Date.__init__() with datetime.datetime instance copies attrs"
 
@@ -181,6 +180,24 @@ class Date__initTest(unittest.TestCase):
         self.assertRaises(
             chrono.error.NoDateTimeError, chrono.Date(None).get
         )
+
+    def test_parser(self):
+        "Date.__init__() takes parser as input"
+
+        p = chrono.parser.ISOParser
+
+        d = chrono.Date("2009-07-23", p)
+
+        self.assertEqual(d.get(), (2009, 7, 23))
+        self.assertEqual(d.parser, p)
+
+    def test_parser_default(self):
+        "Date.__init__() defaults to CommonParser"
+
+        d = chrono.Date("2009-07-23")
+
+        self.assertEqual(d.get(), (2009, 7, 23))
+        self.assertEqual(d.parser, chrono.parser.CommonParser)
 
     def test_string(self):
         "Date.__init__() parses strings"

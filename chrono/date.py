@@ -52,6 +52,11 @@ class Date(object):
         Date(year=2000, month=10, day=16)
 
     If both *date* and keywords are specified, *date* takes precedence.
+
+    *parser* determines which parser to use for parsing dates and times
+    from strings. By default :class:`chrono.parser.CommonParser` is used,
+    which supports the most common date and time formats. See
+    :mod:`chrono.parser` for available parsers.
     """
 
     day = None
@@ -62,6 +67,12 @@ class Date(object):
 
     month = None
     "Month number, range 1-12."
+
+    parser = parser.CommonParser
+    """
+    Parser to use for parsing dates and times from strings. See
+    :mod:`chrono.parser` for available parsers.
+    """
 
     year = None
     "Year number, range 1-9999."
@@ -101,7 +112,10 @@ class Date(object):
 
         return self.__cmp__(other) > 0
 
-    def __init__(self, date=None, **kwargs):
+    def __init__(self, date=None, parser=None, **kwargs):
+
+        if parser:
+            self.parser = parser
 
         if isinstance(date, str):
             self.set_string(date)
@@ -400,14 +414,16 @@ class Date(object):
 
     def set_string(self, string):
         """
-        Sets the date from a string.
+        Sets the date from a string, parsed with the parser set in
+        :attr:`chrono.Date.parser`, by default
+        :class:`chrono.parser.CommonParser`.
 
         Raises :exc:`chrono.error.ParseError` for invalid input format,
         :exc:`TypeError` for invalid input type, and an appropriate
         :exc:`chrono.error.DateError` subclass for invalid date values.
         """
 
-        y, m, d = parser.ISOParser.parse_date(string)
+        y, m, d = self.parser.parse_date(string)
 
         self.set(y, m, d)
 
