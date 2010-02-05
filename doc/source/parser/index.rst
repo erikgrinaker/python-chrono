@@ -7,6 +7,7 @@
    :maxdepth: 2
 
    parser.rst
+   common.rst
    euro.rst
    iso.rst
    us.rst
