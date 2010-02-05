@@ -59,6 +59,13 @@ class Date(object):
     :mod:`chrono.parser` for available parsers.
     """
 
+    calendar = calendar.ISOCalendar
+    """
+    Calendar to use for calendar operations, defaults to
+    :class:`chrono.calendar.ISOCalendar`. See :mod:`chrono.calendar`
+    for available calendars.
+    """
+
     day = None
     """
     Day number, range 1-31 depending on :attr:`chrono.Date.month` and
@@ -112,10 +119,13 @@ class Date(object):
 
         return self.__cmp__(other) > 0
 
-    def __init__(self, date=None, parser=None, **kwargs):
+    def __init__(self, date=None, parser=None, calendar=None, **kwargs):
 
         if parser:
             self.parser = parser
+
+        if calendar:
+            self.calendar = calendar
 
         if isinstance(date, str):
             self.set_string(date)
@@ -352,7 +362,7 @@ class Date(object):
 
         self.assert_set()
 
-        return calendar.ISOCalendar.leapyear(self.year)
+        return self.calendar.leapyear(self.year)
 
     def monthdays(self):
         """
@@ -363,7 +373,7 @@ class Date(object):
 
         self.assert_set()
 
-        return calendar.ISOCalendar.monthdays(self.year, self.month)
+        return self.calendar.monthdays(self.year, self.month)
 
     def ordinal(self):
         """
@@ -374,7 +384,7 @@ class Date(object):
 
         self.assert_set()
 
-        return calendar.ISOCalendar.ordinal(self.year, self.month, self.day)
+        return self.calendar.ordinal(self.year, self.month, self.day)
 
     def set(self, year, month, day):
         """
@@ -388,7 +398,7 @@ class Date(object):
         month = utility.int_month(month)
         day = utility.int_day(day)
 
-        calendar.ISOCalendar.validate(year, month, day)
+        self.calendar.validate(year, month, day)
 
         self.clear()
 
@@ -458,7 +468,7 @@ class Date(object):
 
         self.assert_set()
 
-        return calendar.ISOCalendar.week(self.year, self.month, self.day)
+        return self.calendar.week(self.year, self.month, self.day)
 
     def weekdate(self):
         """
@@ -470,7 +480,7 @@ class Date(object):
 
         self.assert_set()
 
-        return calendar.ISOCalendar.weekdate(self.year, self.month, self.day)
+        return self.calendar.weekdate(self.year, self.month, self.day)
 
     def weekday(self):
         """
@@ -482,7 +492,7 @@ class Date(object):
 
         self.assert_set()
 
-        return calendar.ISOCalendar.weekday(self.year, self.month, self.day)
+        return self.calendar.weekday(self.year, self.month, self.day)
 
     def weeks(self):
         """
@@ -493,7 +503,7 @@ class Date(object):
 
         self.assert_set()
 
-        return calendar.ISOCalendar.weeks(self.year)
+        return self.calendar.weeks(self.year)
 
     def yeardays(self):
         """
@@ -504,4 +514,4 @@ class Date(object):
 
         self.assert_set()
 
-        return calendar.ISOCalendar.yeardays(self.year)
+        return self.calendar.yeardays(self.year)

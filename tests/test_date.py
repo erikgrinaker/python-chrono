@@ -117,6 +117,18 @@ class Date__gtTest(unittest.TestCase):
 
 class Date__initTest(unittest.TestCase):
 
+    def test_calendar(self):
+        "Date.__init__() takes calendar as input"
+
+        c = chrono.calendar.USCalendar
+
+        self.assertEqual(chrono.Date(None, None, c).calendar, c)
+
+    def test_calendar_default(self):
+        "Date.__init__() defaults to ISOCalendar"
+
+        self.assertEqual(chrono.Date().calendar, chrono.calendar.ISOCalendar)
+
     def test_date(self):
         "Date.__init__() with Date instance parameter copies attributes"
 
