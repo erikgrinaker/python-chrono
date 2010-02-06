@@ -218,9 +218,9 @@ class DateTime(date.Date, time.Time):
     def format(self, template):
         """
         Formats the date using *template*, replacing variables as
-        supported by :class:`chrono.formatter.Formatter`. This value is dependent
-        on the calendar set in :attr:`chrono.Date.calendar`, by default
-        :class:`chrono.calendar.ISOCalendar`.
+        supported by :class:`chrono.formatter.Formatter`. This value is
+        dependent on the calendar set in :attr:`chrono.Date.calendar`, by
+        default :class:`chrono.calendar.ISOCalendar`.
 
         Raises :exc:`chrono.error.NoDateTimeError` on missing date data.
         """

@@ -258,7 +258,8 @@ class Date__leTest(unittest.TestCase):
             chrono.Date("2009-12-26") <= chrono.DateTime("2009-12-26 00:00:00")
         )
         self.assertTrue(
-            chrono.Date("2009-12-26") <= chrono.DateTime("2009-12-26 16:27:43"))
+            chrono.Date("2009-12-26") <= chrono.DateTime("2009-12-26 16:27:43")
+        )
         self.assertFalse(
             chrono.Date("2009-12-27") <= chrono.DateTime("2009-12-26 16:26:43")
         )

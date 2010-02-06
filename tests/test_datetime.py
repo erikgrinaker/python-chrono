@@ -161,7 +161,9 @@ class DateTime__initTest(unittest.TestCase):
     def test_calendar_default(self):
         "DateTime.__init__() defaults to ISOCalendar"
 
-        self.assertEqual(chrono.DateTime().calendar, chrono.calendar.ISOCalendar)
+        self.assertEqual(
+            chrono.DateTime().calendar, chrono.calendar.ISOCalendar
+        )
 
     def test_date(self):
         "DateTime.__init__() with Date parameter copies attributes"

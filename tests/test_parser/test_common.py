@@ -36,7 +36,8 @@ class CommonParser_parse_dateTest(unittest.TestCase):
         "EuroParser.compactdate() raises ParseError on invalid format"
 
         self.assertRaises(
-            chrono.ParseError, chrono.parser.CommonParser.parse_date, "xxyyzzzz"
+            chrono.ParseError,
+            chrono.parser.CommonParser.parse_date, "xxyyzzzz"
         )
 
     def test_iso(self):
@@ -167,7 +168,9 @@ class CommonParser_parse_timeTest(unittest.TestCase):
     def test_none(self):
         "CommonParser.parse_time() raises TypeError on None"
 
-        self.assertRaises(TypeError, chrono.parser.CommonParser.parse_time, None)
+        self.assertRaises(
+            TypeError, chrono.parser.CommonParser.parse_time, None
+        )
 
     def test_unknown(self):
         "CommonParser.parse_time() raises ParseError for unknown time formats"

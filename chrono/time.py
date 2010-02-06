@@ -112,7 +112,7 @@ class Time(object):
 
         return self.__cmp__(other) > 0
 
-    def __init__(self, time=None, parser = None, **kwargs):
+    def __init__(self, time=None, parser=None, **kwargs):
 
         self.parser = parser or parsermod.CommonParser
 

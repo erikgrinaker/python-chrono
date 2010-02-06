@@ -32,7 +32,7 @@ class ISOParser(parser.Parser):
     A parser for ISO 8601 date formats, such as *yyyy-mm-dd*, using the ISO
     calendar for week calculations. For more information on the ISO calendar,
     see the :class:`chrono.calendar.ISOCalendar` documentation.
-    
+
     Valid formats:
 
     =================== =================== ======================= ===============================================

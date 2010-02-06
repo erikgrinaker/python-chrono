@@ -31,7 +31,7 @@ import re
 class EuroParser(parser.Parser):
     """
     A parser for european date formats, such as *dd.mm.yyyy*.
-    
+
     Valid formats:
 
     =================== =================== ======================= ===============================================
