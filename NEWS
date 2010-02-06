@@ -1,19 +1,21 @@
-xxxx-xx-xx: 0.2.0
+2010-02-06: 0.2.0
 =================
+
+New features:
 
 * Added support for european date/time formats
 * Added support for US date/time formats
 * Added support for US calendar
 * Added Calendar.fullyear(), converts 2-digit years to 4 digits
 
-Bugs:
-
-* Fixed handling of 0 hour in Formatter for $12hour and $012hour
-
 Backwards-incompatible changes:
 
 * ISOParser methods for specific formats now returns a full normal
   date with year, month, and day instead of parsed values
+
+Bugfixes:
+
+* Fixed handling of 0 hour in Formatter for $12hour and $012hour
 
 2010-01-24: 0.1.0
 =================
