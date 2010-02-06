@@ -6,9 +6,9 @@ Usage
 The main classes are :class:`chrono.Date`, :class:`chrono.Time`, and
 :class:`chrono.DateTime`, which handles dates, times, and date/times
 respectively. A range of other classes are also available, which provide
-the functionaliy that these classes build upon.
+the functionality that these classes build upon.
 
-python-chrono does not include any functionality for time zones or daylight
+python-chrono does not include any handling of time zones or daylight
 savings time, but this is planned for a future release.
 
 The following sections describe some typical usage of the
