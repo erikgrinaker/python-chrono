@@ -1,5 +1,5 @@
-:class:`chrono.parser.EuroParser` - European parser
-===================================================
+:class:`chrono.parser.EuroParser` - Parser for european formats
+===============================================================
 
 .. autoclass:: chrono.parser.EuroParser
    :members:

@@ -3,13 +3,13 @@ Welcome to python-chrono's documentation!
 
 python-chrono is a Python module for simple and convenient date/time
 handling, including parsing, arithmetic, comparison, formatting,
-and calendar functionality.
+and calendar functionality. It supports both the ISO and US calendars,
+and dates/times in ISO, US, or european formats.
 
 The module is written by Erik Grinaker <erikg@codepoet.no>, and licensed
 under the `GNU General Public License version 3 <http://www.gnu.org/licenses/gpl.html>`_.
-The project website is located at:
 
-http://oss.codepoet.no/python-chrono/
+The project website is located at http://oss.codepoet.no/python-chrono/
 
 Contents:
 

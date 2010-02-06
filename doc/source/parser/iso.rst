@@ -1,5 +1,5 @@
-:class:`chrono.parser.ISOParser` - ISO 8601 parser
-==================================================
+:class:`chrono.parser.ISOParser` - Parser for ISO 8601 formats
+==============================================================
 
 .. autoclass:: chrono.parser.ISOParser
    :members:

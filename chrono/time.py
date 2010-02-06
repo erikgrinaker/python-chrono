@@ -58,7 +58,8 @@ class Time(object):
 
     *parser* determines which parser to use for parsing times from strings.
     By default :class:`chrono.parser.CommonParser` is used, which supports the
-    most common time formats. See :mod:`chrono.parser` for available parsers.
+    most common time formats. See :mod:`chrono.parser` for a list of available
+    parsers.
     """
 
     hour = None

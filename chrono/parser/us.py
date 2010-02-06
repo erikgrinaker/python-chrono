@@ -29,7 +29,9 @@ import re
 
 class USParser(parser.Parser):
     """
-    A parser for US date formats, such as mm/dd/yyyy. Valid formats:
+    A parser for US date formats, such as *mm/dd/yyyy*.
+
+    Valid formats:
 
     =================== =================== ======================== ===============================================
     Format              Example             Description              Method
@@ -43,9 +45,11 @@ class USParser(parser.Parser):
     hhmmss am/pm        042743 PM           Compact time, 12-hour    :meth:`chrono.parser.USParser.compacttime`
     =================== =================== ======================== ===============================================
 
+    Datetime formats can consist of any combination of the date and time
+    formats above, separated by space.
+
     Leading zeroes may be omitted in days and months, and years may be
-    specified with 2 digits, which will be interpreted in the range
-    1930-2029.
+    specified with 2 digits, which will be interpreted in the range 1930-2029.
 
     Seconds and minutes may be omitted in times, which will be interpreted
     as 0.
@@ -123,8 +127,7 @@ class USParser(parser.Parser):
     def compactdate(cls, date):
         """
         Parses a compact US date (*mmddyyyy*), and returns a tuple with year,
-        month, and day. Two-digit years will be interpreted in range
-        1930-2029.
+        month, and day.
 
         Raises :exc:`chrono.error.ParseError` for invalid input format,
         :exc:`TypeError` for invalid input type, and
@@ -151,8 +154,7 @@ class USParser(parser.Parser):
     def compacttime(cls, time):
         """
         Parses a compact US time (*hhmmss am/pm*), and returns a tuple with
-        hour, minute, and second, using 24-hour clock. Minutes and/or seconds
-        may be omitted, which will be interpreted as 0.
+        hour, minute, and second, using 24-hour clock.
 
         Raises :exc:`chrono.error.ParseError` for invalid input format,
         :exc:`TypeError` for invalid input type, and
@@ -177,8 +179,7 @@ class USParser(parser.Parser):
     def dashdate(cls, date):
         """
         Parses a dash-separated US date (*mm/dd/yyyy*), and returns a tuple
-        with year, month, and day. Two-digit years will be interpreted in range
-        1930-2029.
+        with year, month, and day.
 
         Raises :exc:`chrono.error.ParseError` for invalid input format,
         :exc:`TypeError` for invalid input type, and
@@ -205,8 +206,7 @@ class USParser(parser.Parser):
     def date(cls, date):
         """
         Parses a US date (*mm/dd/yyyy*), and returns a tuple with year,
-        month, and day. Two-digit years will be interpreted in range
-        1930-2029.
+        month, and day.
 
         Raises :exc:`chrono.error.ParseError` for invalid input format,
         :exc:`TypeError` for invalid input type, and
@@ -233,8 +233,7 @@ class USParser(parser.Parser):
     def dotdate(cls, date):
         """
         Parses a dot-separated US date (*mm.dd.yyyy*), and returns a tuple
-        with year, month, and day. Two-digit years will be interpreted in range
-        1930-2029.
+        with year, month, and day.
 
         Raises :exc:`chrono.error.ParseError` for invalid input format,
         :exc:`TypeError` for invalid input type, and
@@ -261,8 +260,7 @@ class USParser(parser.Parser):
     def namedate(cls, date):
         """
         Parses a US date with short month name (*dd-mmm-yyyy*), and returns a
-        tuple with year, month, and day. Two-digit years will be interpreted in
-        range 1930-2029.
+        tuple with year, month, and day.
 
         Raises :exc:`chrono.error.ParseError` for invalid input format,
         :exc:`TypeError` for invalid input type, and
@@ -335,8 +333,7 @@ class USParser(parser.Parser):
     def parse_datetime(cls, datetime):
         """
         Parses an ISO datetime in any supported format and returns a tuple
-        with year, month, day, hour, minute, and second. Omitted minutes
-        and/or seconds will be interpreted as 0.
+        with year, month, day, hour, minute, and second.
 
         Raises
         :exc:`chrono.error.ParseError` for invalid input format,
@@ -381,8 +378,7 @@ class USParser(parser.Parser):
     def time(cls, time):
         """
         Parses a US time (*hh:mm:ss am/pm*), and returns a tuple with hour,
-        minute, and second, using 24-hour clock. Minutes and/or seconds may be
-        omitted, which will be interpreted as 0. Leading zeroes may be omitted.
+        minute, and second, using 24-hour clock.
 
         Raises :exc:`chrono.error.ParseError` for invalid input format,
         :exc:`TypeError` for invalid input type, and

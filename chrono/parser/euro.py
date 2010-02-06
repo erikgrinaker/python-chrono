@@ -30,19 +30,29 @@ import re
 
 class EuroParser(parser.Parser):
     """
-    A parser for european/western date formats, such as *dd.mm.yyyy*.
+    A parser for european date formats, such as *dd.mm.yyyy*.
+    
     Valid formats:
 
     =================== =================== ======================= ===============================================
     Format              Example             Description             Method
     =================== =================== ======================= ===============================================
     dd.mm.yyyy          23.07.2010          Date                    :meth:`chrono.parser.EuroParser.date`
-    dd-mm-yyyy          23-07-2010          Dashed date             :meth:`chrono.parser.EuroParser.dashdate`
-    dd/mm/yyyy          23/07/2010          Slashed date            :meth:`chrono.parser.EuroParser.slashdate`
+    dd-mm-yyyy          23-07-2010          Dash-separated date     :meth:`chrono.parser.EuroParser.dashdate`
+    dd/mm/yyyy          23/07/2010          Slash-separated date    :meth:`chrono.parser.EuroParser.slashdate`
     ddmmyyyy            23072010            Compact date            :meth:`chrono.parser.EuroParser.compactdate`
     hh:mm:ss            15:27:43            Time                    :meth:`chrono.parser.EuroParser.time`
     hhmmss              152743              Compact time            :meth:`chrono.parser.EuroParser.compacttime`
     =================== =================== ======================= ===============================================
+
+    Datetime formats can consist of any combination of the date and time
+    formats above, separated by space.
+
+    Leading zeroes may be omitted in days and months, and years may be
+    specified with 2 digits, which will be interpreted in the range 1930-2029.
+
+    Seconds and minutes may be omitted in times, which will be interpreted
+    as 0.
     """
 
     re_compactdate = re.compile('''
@@ -89,8 +99,7 @@ class EuroParser(parser.Parser):
     def compactdate(cls, date):
         """
         Parses a compact european date (*ddmmyyyy*), and returns a tuple
-        with year, month, and day. Two-digit years will be interpreted in range
-        1930-2029.
+        with year, month, and day.
 
         Raises :exc:`chrono.error.ParseError` for invalid input format,
         :exc:`TypeError` for invalid input type, and
@@ -117,8 +126,7 @@ class EuroParser(parser.Parser):
     def compacttime(cls, time):
         """
         Parses a compact european time (*hhmmss*), and returns a tuple with
-        hour, minute, and second. Minutes and/or seconds may be omitted,
-        which will be interpreted as 0.
+        hour, minute, and second.
 
         Raises :exc:`chrono.error.ParseError`
         for invalid input format, :exc:`TypeError` for invalid input type,
@@ -132,8 +140,7 @@ class EuroParser(parser.Parser):
     def dashdate(cls, date):
         """
         Parses a dash-separated european date (*dd-mm-yyyy*), and returns a
-        tuple with year, month, and day. Two-digit years will be interpreted
-        in range 1930-2029.
+        tuple with year, month, and day.
 
         Raises :exc:`chrono.error.ParseError` for invalid input format,
         :exc:`TypeError` for invalid input type, and
@@ -160,8 +167,7 @@ class EuroParser(parser.Parser):
     def date(cls, date):
         """
         Parses a european date (*dd.mm.yyyy*), and returns a tuple with year,
-        month, and day. Two-digit years will be interpreted in range
-        1930-2029.
+        month, and day.
 
         Raises :exc:`chrono.error.ParseError` for invalid input format,
         :exc:`TypeError` for invalid input type, and
@@ -216,9 +222,8 @@ class EuroParser(parser.Parser):
     @classmethod
     def parse_datetime(cls, datetime):
         """
-        Parses a US datetime in any supported format and returns a tuple
-        with year, month, day, hour, minute, and second. Omitted minutes
-        and/or seconds will be interpreted as 0.
+        Parses a european datetime in any supported format and returns a tuple
+        with year, month, day, hour, minute, and second.
 
         Raises
         :exc:`chrono.error.ParseError` for invalid input format,
@@ -238,8 +243,7 @@ class EuroParser(parser.Parser):
     def parse_time(cls, time):
         """
         Parses a european time in any supported format and returns a tuple with
-        hour, minutes, and seconds. Omitted minutes and/or seconds will be
-        interpreted as 0.
+        hour, minutes, and seconds.
 
         Raises :exc:`chrono.error.ParseError` for invalid
         input format, :exc:`TypeError` for invalid input type, and an
@@ -269,8 +273,7 @@ class EuroParser(parser.Parser):
     def slashdate(cls, date):
         """
         Parses a slash-separated european date (*mm/dd/yyyy*), and returns a
-        tuple with year, month, and day. Two-digit years will be interpreted
-        in range 1930-2029.
+        tuple with year, month, and day.
 
         Raises :exc:`chrono.error.ParseError` for invalid input format,
         :exc:`TypeError` for invalid input type, and
@@ -297,8 +300,7 @@ class EuroParser(parser.Parser):
     def time(cls, time):
         """
         Parses a european time (*hh:mm:ss*), and returns a tuple with hour,
-        minute, and second. Minutes and/or seconds may be omitted, which
-        will be interpreted as 0. Leading zeroes may be omitted.
+        minute, and second.
 
         Raises :exc:`chrono.error.ParseError`
         for invalid input format, :exc:`TypeError` for invalid input type,

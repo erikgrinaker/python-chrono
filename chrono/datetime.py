@@ -18,12 +18,12 @@
 
 from __future__ import absolute_import
 
-from . import calendar
+from . import calendar as calendarmod
 from . import clock
 from . import date
 from . import error
 from . import formatter
-from . import parser
+from . import parser as parsermod
 from . import time
 from . import utility
 
@@ -62,11 +62,11 @@ class DateTime(date.Date, time.Time):
     *parser* determines which parser to use for parsing dates and times
     from strings. By default :class:`chrono.parser.CommonParser` is used,
     which supports the most common date and time formats. See
-    :mod:`chrono.parser` for available parsers.
+    :mod:`chrono.parser` for a list of available parsers.
 
     *calendar* determines which calendar to use for calendar operations.
     By default :class:`chrono.calendar.ISOCalendar` is used, see
-    :mod:`chrono.calendar` for available calendars.
+    :mod:`chrono.calendar` for a list of available calendars.
     """
 
     def __cmp__(self, other):
@@ -86,11 +86,8 @@ class DateTime(date.Date, time.Time):
 
     def __init__(self, datetime=None, parser=None, calendar=None, **kwargs):
 
-        if parser:
-            self.parser = parser
-
-        if calendar:
-            self.calendar = calendar
+        self.parser = parser or parsermod.CommonParser
+        self.calendar = calendar or calendarmod.ISOCalendar
 
         if isinstance(datetime, str):
             self.set_string(datetime)
@@ -221,7 +218,9 @@ class DateTime(date.Date, time.Time):
     def format(self, template):
         """
         Formats the date using *template*, replacing variables as
-        supported by :class:`chrono.formatter.Formatter`.
+        supported by :class:`chrono.formatter.Formatter`. This value is dependent
+        on the calendar set in :attr:`chrono.Date.calendar`, by default
+        :class:`chrono.calendar.ISOCalendar`.
 
         Raises :exc:`chrono.error.NoDateTimeError` on missing date data.
         """

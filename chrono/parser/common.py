@@ -27,10 +27,10 @@ import re
 
 class CommonParser(parser.Parser):
     """
-    A parser for the most common date formats. Only has the methods
+    A parser for the most common date and time formats. Only the methods
     :meth:`chrono.parser.CommonParser.parse_date`,
     :meth:`chrono.parser.CommonParser.parse_datetime`,
-    and :meth:`chrono.parser.CommonParser.parse_time`, are implmented here,
+    and :meth:`chrono.parser.CommonParser.parse_time`, are implemented here,
     methods for individual formats can be found in the classes
     :class:`chrono.parser.EuroParser`, :class:`chrono.parser.ISOParser`,
     and :class:`chrono.parser.USParser`.
@@ -56,6 +56,13 @@ class CommonParser(parser.Parser):
 
     Datetime formats can consist of any combination of the date and time
     formats above, separated by space, or a T in the case of ISO formats.
+
+    Leading zeroes may be omitted in days and months, and years may be
+    specified with 2 digits in non-ISO formats, which will be interpreted in the
+    range 1930-2029.
+
+    Seconds and minutes may be omitted in times, which will be interpreted
+    as 0.
     """
 
     re_datetime = re.compile('''
@@ -100,9 +107,8 @@ class CommonParser(parser.Parser):
     @classmethod
     def parse_datetime(cls, datetime):
         """
-        Parses a datetime in any supported format and returns a tuple
-        with year, month, day, hour, minute, and second. Omitted minutes
-        and/or seconds will be interpreted as 0.
+        Parses a date and time in any supported format and returns a tuple
+        with year, month, day, hour, minute, and second.
 
         Raises :exc:`chrono.error.ParseError` for invalid input format,
         :exc:`TypeError` for invalid input type, and an appropriate
@@ -124,8 +130,7 @@ class CommonParser(parser.Parser):
     def parse_time(cls, time):
         """
         Parses a time in any supported format and returns a tuple with
-        hour, minutes, and seconds. Omitted minutes and/or seconds will be
-        interpreted as 0.
+        hour, minutes, and seconds.
 
         Raises :exc:`chrono.error.ParseError` for invalid
         input format, :exc:`TypeError` for invalid input type, and an

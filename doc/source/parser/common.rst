@@ -1,5 +1,5 @@
-:class:`chrono.parser.CommonParser` - Common formats parser
-===========================================================
+:class:`chrono.parser.CommonParser` - Parser for most common formats
+====================================================================
 
 .. autoclass:: chrono.parser.CommonParser
    :members:

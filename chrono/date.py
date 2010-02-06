@@ -18,10 +18,10 @@
 
 from __future__ import absolute_import
 
-from . import calendar
+from . import calendar as calendarmod
 from . import error
 from . import formatter
-from . import parser
+from . import parser as parsermod
 from . import utility
 
 import datetime
@@ -35,8 +35,8 @@ class Date(object):
 
     Valid values for *date* can be:
 
-    * string: parses date from a string, see :class:`chrono.parser.ISOParser`
-      for valid formats
+    * string: parses date from a string using the given parser (by default
+      :class:`chrono.parser.CommonParser`)
     * **True**: sets the date to the current date
     * integer: assumes input is a UNIX timestamp, sets date accordingly
     * :class:`chrono.Date`: sets date from another Date object
@@ -53,15 +53,19 @@ class Date(object):
 
     If both *date* and keywords are specified, *date* takes precedence.
 
-    *parser* determines which parser to use for parsing dates and times
-    from strings. By default :class:`chrono.parser.CommonParser` is used,
-    which supports the most common date and time formats. See
-    :mod:`chrono.parser` for available parsers.
+    *parser* determines which parser to use for parsing dates from strings.
+    By default :class:`chrono.parser.CommonParser` is used, which supports
+    the most common date and time formats. See :mod:`chrono.parser` for
+    a list of available parsers.
+
+    *calendar* determines which calendar to use for calendar operations.
+    By default :class:`chrono.calendar.ISOCalendar` is used, see
+    :mod:`chrono.calendar` for a list of available calendars.
     """
 
-    calendar = calendar.ISOCalendar
+    calendar = None
     """
-    Calendar to use for calendar operations, defaults to
+    Calendar to use for calendar operations. Defaults to
     :class:`chrono.calendar.ISOCalendar`. See :mod:`chrono.calendar`
     for available calendars.
     """
@@ -75,7 +79,7 @@ class Date(object):
     month = None
     "Month number, range 1-12."
 
-    parser = parser.CommonParser
+    parser = None
     """
     Parser to use for parsing dates and times from strings. See
     :mod:`chrono.parser` for available parsers.
@@ -121,11 +125,8 @@ class Date(object):
 
     def __init__(self, date=None, parser=None, calendar=None, **kwargs):
 
-        if parser:
-            self.parser = parser
-
-        if calendar:
-            self.calendar = calendar
+        self.parser = parser or parsermod.CommonParser
+        self.calendar = calendar or calendarmod.ISOCalendar
 
         if isinstance(date, str):
             self.set_string(date)
@@ -278,7 +279,9 @@ class Date(object):
     def format(self, template):
         """
         Formats the date using *template*, replacing variables as
-        supported by :class:`chrono.formatter.Formatter`.
+        supported by :class:`chrono.formatter.Formatter`. This value is dependent
+        on the calendar set in :attr:`chrono.Date.calendar`, by default
+        :class:`chrono.calendar.ISOCalendar`.
 
         Raises :exc:`chrono.error.NoDateTimeError` on missing date data.
         """
@@ -461,7 +464,9 @@ class Date(object):
     def week(self):
         """
         Returns the week of the set date as a tuple with year and week
-        number.
+        number. This value is dependent on the calendar set in
+        :attr:`chrono.Date.calendar`, by default
+        :class:`chrono.calendar.ISOCalendar`.
 
         Raises :exc:`chrono.error.NoDateTimeError` on missing date data.
         """
@@ -473,7 +478,9 @@ class Date(object):
     def weekdate(self):
         """
         Returns the week date of the set date as a tuple with year,
-        week, and weekday.
+        week, and weekday. This value is dependent on the calendar set in
+        :attr:`chrono.Date.calendar`, by default
+        :class:`chrono.calendar.ISOCalendar`.
 
         Raises :exc:`chrono.error.NoDateTimeError` on missing date data.
         """
@@ -485,7 +492,9 @@ class Date(object):
     def weekday(self):
         """
         Returns the week day of the set date, or **None** if no
-        date is set.
+        date is set. This value is dependent on the calendar set in
+        :attr:`chrono.Date.calendar`, by default
+        :class:`chrono.calendar.ISOCalendar`.
 
         Raises :exc:`chrono.error.NoDateTimeError` on missing date data.
         """
@@ -496,7 +505,9 @@ class Date(object):
 
     def weeks(self):
         """
-        Returns the number of weeks in the set year.
+        Returns the number of weeks in the set year. This value is
+        dependent on the calendar set in :attr:`chrono.Date.calendar`,
+        by default :class:`chrono.calendar.ISOCalendar`.
 
         Raises :exc:`chrono.error.NoDateTimeError` on missing date data.
         """

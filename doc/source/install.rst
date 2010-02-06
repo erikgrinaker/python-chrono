@@ -1,15 +1,16 @@
 Installation
 ============
 
-It is preferrable to install python-chrono using your operating systems
-package manager, if possible.
+It is recommended to install python-chrono via your operating systems
+package manager, if possible. See your operating system documentation
+for details.
 
 Requirements
 ------------
 
 python-chrono only needs a recent version of Python installed. It has been
-tested on Python versions 2.6 and 3.1, but is believed to work on all
-versions from Python 2.3 and upwards.
+tested on Python versions 2.6 and 3.1, but is believed to work with version
+2.5 as well.
 
 Installing from source
 ----------------------

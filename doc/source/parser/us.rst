@@ -1,5 +1,5 @@
-:class:`chrono.parser.USParser` - US parser
-===========================================
+:class:`chrono.parser.USParser` - Parser for US formats
+=======================================================
 
 .. autoclass:: chrono.parser.USParser
    :members:

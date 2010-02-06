@@ -25,7 +25,7 @@ from .. import utility
 
 class USClock(clock.Clock):
     """
-    US 12-hour clock.
+    US 12-hour clock handling.
     """
 
     @classmethod
