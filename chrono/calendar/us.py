@@ -17,6 +17,7 @@
 #
 
 from __future__ import absolute_import
+from __future__ import division
 
 from . import calendar
 from .. import error
@@ -66,7 +67,7 @@ class USCalendar(calendar.Calendar):
 
         # find number of weeks between sunday of week 1 and given date,
         # add 1 since we start in week 1
-        week = ordinal / 7 + 1
+        week = ordinal // 7 + 1
 
         # calculate weekday
         weekday = ordinal % 7

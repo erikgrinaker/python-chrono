@@ -136,6 +136,8 @@ class Calendar(object):
         if *year* or *day* is invalid.
         """
 
+        day = utility.int_day(day)
+
         cls.validate_ordinal(year, day)
 
         dt = datetime.date(
@@ -145,7 +147,7 @@ class Calendar(object):
         )
 
         if day > 1:
-            dt += datetime.timedelta(days=utility.int_day(day) - 1)
+            dt += datetime.timedelta(days=day - 1)
 
         return (dt.year, dt.month, dt.day)
 
