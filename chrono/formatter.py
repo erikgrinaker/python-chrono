@@ -18,7 +18,6 @@
 
 from __future__ import absolute_import
 
-from . import calendar
 from . import clock
 
 import re
@@ -29,6 +28,9 @@ class Formatter(object):
     """
     Date/time template formatter, main format method is
     :meth:`chrono.formatter.Formatter.format`.
+
+    *calendar* determines which calendar to use for calculations,
+    see :mod:`chrono.calendar` for a list.
     """
 
     __re_replace = re.compile('''
@@ -40,8 +42,7 @@ class Formatter(object):
         )
     ''', re.VERBOSE | re.IGNORECASE)
 
-    @classmethod
-    def __cb_replace(cls, match, year, month, day, hour, minute, second):
+    def __cb_replace(self, match, year, month, day, hour, minute, second):
         "Callback function for replacing variables in a template"
 
         # handle escaped delimiters
@@ -73,19 +74,19 @@ class Formatter(object):
             return month and str(month).zfill(2) or ""
 
         elif name == "monthname":
-            return month and calendar.Calendar.monthname(month) or ""
+            return month and self.calendar.monthname(month) or ""
 
         elif name == "shortmonthname":
-            return month and calendar.Calendar.monthname(month, True) or ""
+            return month and self.calendar.monthname(month, True) or ""
 
         # handle week formatting
         elif name == "week":
             return year and month and day and \
-                str(calendar.ISOCalendar.week(year, month, day)[1]) or ""
+                str(self.calendar.week(year, month, day)[1]) or ""
 
         elif name == "0week":
             return year and month and day and str(
-                calendar.ISOCalendar.week(year, month, day)[1]
+                self.calendar.week(year, month, day)[1]
             ).zfill(2) or ""
 
         # handle day formatting
@@ -98,18 +99,18 @@ class Formatter(object):
         # handle weekday formatting
         elif name == "weekday":
             return year and month and day and \
-                str(calendar.ISOCalendar.weekday(year, month, day)) or ""
+                str(self.calendar.weekday(year, month, day)) or ""
 
         elif name == "weekdayname":
             return year and month and day and \
-                calendar.ISOCalendar.weekdayname(
-                    calendar.ISOCalendar.weekday(year, month, day)
+                self.calendar.weekdayname(
+                    self.calendar.weekday(year, month, day)
                 ) or ""
 
         elif name == "shortweekdayname":
             return year and month and day and \
-                calendar.ISOCalendar.weekdayname(
-                    calendar.ISOCalendar.weekday(year, month, day), True
+                self.calendar.weekdayname(
+                    self.calendar.weekday(year, month, day), True
                 ) or ""
 
         # handle hour formatting
@@ -148,9 +149,12 @@ class Formatter(object):
         else:
             return match.group(0)
 
-    @classmethod
+    def __init__(self, calendar):
+
+        self.calendar = calendar
+
     def format(
-        cls, template,
+        self, template,
         year=None, month=None, day=None,
         hour=None, minute=None, second=None
     ):
@@ -196,8 +200,8 @@ class Formatter(object):
         # wrapper function, needed to get access to date variables, and pass
         # them on to the actual callback function
         def wrapper(match):
-            return cls.__cb_replace(
+            return self.__cb_replace(
                 match, year, month, day, hour, minute, second
             )
 
-        return cls.__re_replace.sub(wrapper, template)
+        return self.__re_replace.sub(wrapper, template)

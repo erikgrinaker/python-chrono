@@ -285,7 +285,7 @@ class Date(object):
 
         self.assert_set()
 
-        return formatter.Formatter.format(
+        return formatter.Formatter(self.calendar).format(
             template, self.year, self.month, self.day
         )
 

@@ -18,6 +18,7 @@
 
 from __future__ import absolute_import
 
+from . import calendar
 from . import clock
 from . import error
 from . import formatter
@@ -260,7 +261,7 @@ class Time(object):
 
         self.assert_set()
 
-        return formatter.Formatter().format(
+        return formatter.Formatter(calendar.ISOCalendar).format(
             template, None, None, None, self.hour, self.minute, self.second
         )
 

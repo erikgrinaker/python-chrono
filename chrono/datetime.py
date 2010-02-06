@@ -228,7 +228,7 @@ class DateTime(date.Date, time.Time):
 
         self.assert_set()
 
-        return formatter.Formatter.format(
+        return formatter.Formatter(self.calendar).format(
             template, self.year, self.month, self.day,
             self.hour, self.minute, self.second
         )
