@@ -12,6 +12,8 @@ Making a Release
 * generate source distribution, and upload to pypi [./setup.py sdist upload]
 * upload new distribution to http://oss.codepoet.no/
 * update the documentation on the wiki (python-chrono-wiki repo)
+* add release to the wiki, and write news item
+* announce release on freshmeat.net
 
 Unit Tests
 ==========
