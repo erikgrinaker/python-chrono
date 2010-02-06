@@ -22,7 +22,7 @@ from . import calendar
 from . import clock
 from . import error
 from . import formatter
-from . import parser
+from . import parser as parsermod
 from . import utility
 
 import datetime
@@ -55,6 +55,10 @@ class Time(object):
         Time(hour=16, minute=27, second=43)
 
     If both *time* and keywords are specified, *time* takes precedence.
+
+    *parser* determines which parser to use for parsing times from strings.
+    By default :class:`chrono.parser.CommonParser` is used, which supports the
+    most common time formats. See :mod:`chrono.parser` for available parsers.
     """
 
     hour = None
@@ -62,6 +66,12 @@ class Time(object):
 
     minute = None
     "Minute, range 0-59"
+
+    parser = None
+    """
+    Parser to use for parsing times from strings. See :mod:`chrono.parser` for
+    available parsers.
+    """
 
     second = None
     "Second, range 0-59"
@@ -101,7 +111,9 @@ class Time(object):
 
         return self.__cmp__(other) > 0
 
-    def __init__(self, time=None, **kwargs):
+    def __init__(self, time=None, parser = None, **kwargs):
+
+        self.parser = parser or parsermod.CommonParser
 
         if isinstance(time, str):
             self.set_string(time)
@@ -346,8 +358,9 @@ class Time(object):
 
     def set_string(self, string):
         """
-        Sets the time from a string. For valid formats, see the
-        :class:`chrono.parser.ISOParser` documentation.
+        Sets the time from a string, parsed with the parser set in
+        :attr:`chrono.Date.parser`, by default
+        :class:`chrono.parser.CommonParser`.
 
         Raises :exc:`chrono.error.ParseError` for invalid input format,
         :exc:`TypeError` for invalid input type, and
@@ -355,7 +368,7 @@ class Time(object):
         or :exc:`chrono.error.SecondError` for invalid time values.
         """
 
-        h, m, s = parser.ISOParser.parse_time(string)
+        h, m, s = self.parser.parse_time(string)
 
         self.set(h, m, s)
 

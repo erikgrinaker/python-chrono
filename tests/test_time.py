@@ -130,6 +130,23 @@ class Time__initTest(unittest.TestCase):
 
         self.assertRaises(chrono.error.NoDateTimeError, chrono.Time(None).get)
 
+    def test_parser(self):
+        "Time.__init__() takes parser as input"
+
+        p = chrono.parser.ISOParser
+        t = chrono.Time("16:27:43", p)
+
+        self.assertEqual(t.get(), (16, 27, 43))
+        self.assertEqual(t.parser, p)
+
+    def test_parser_default(self):
+        "Time.__init__() defaults to CommonParser"
+
+        t = chrono.Time("16:27:43")
+
+        self.assertEqual(t.get(), (16, 27, 43))
+        self.assertEqual(t.parser, chrono.parser.CommonParser)
+
     def test_string(self):
         "Time.__init__() parses strings using the parser"
 
