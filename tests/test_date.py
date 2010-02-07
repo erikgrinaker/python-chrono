@@ -590,6 +590,52 @@ class Date_clearTest(unittest.TestCase):
         self.assertEquals(d.day, None)
 
 
+class Date_deltaTest(unittest.TestCase):
+
+    def test_datetime(self):
+        "Date.delta() handles DateTime objects"
+
+        self.assertEquals(
+            chrono.Date("2010-07-23").delta(
+                chrono.DateTime("2010-09-16 16:27:43")
+            ),
+            4811263
+        )
+
+
+    def test_delta(self):
+        "Date.delta() returns difference"
+
+        self.assertEquals(
+            chrono.Date("2010-07-23").delta(chrono.Date("2010-09-16")),
+            4752000
+        )
+
+    def test_empty(self):
+        "Date.delta() raises NoDateTimeError on missing date"
+
+        self.assertRaises(
+            chrono.NoDateTimeError,
+            chrono.Date().delta, chrono.Date("2010-07-23")
+        )
+
+    def test_empty_other(self):
+        "Date.delta() raises NoDateTimeError on missing date in other object"
+
+        self.assertRaises(
+            chrono.NoDateTimeError,
+            chrono.Date("2010-07-23").delta, chrono.Date()
+        )
+
+    def test_negative(self):
+        "Date.delta() handles negative differences"
+
+        self.assertEquals(
+            chrono.Date("2010-07-23").delta(chrono.Date("2010-05-07")),
+            -6652800
+        )
+
+
 class Date_formatTest(unittest.TestCase):
 
     def test_empty(self):

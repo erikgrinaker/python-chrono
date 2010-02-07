@@ -276,6 +276,19 @@ class Date(object):
         self.month = None
         self.day = None
 
+    def delta(self, date):
+        """
+        Returns the difference between the current object and another date or
+        datetime as seconds.
+
+        Raises :exc:`chrono.error.NoDateTimeError` on missing attributes.
+        """
+
+        self.assert_set()
+        date.assert_set()
+
+        return date.get_unix() - self.get_unix()
+
     def format(self, template):
         """
         Formats the date using *template*, replacing variables as
