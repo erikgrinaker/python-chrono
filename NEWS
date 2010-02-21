@@ -5,6 +5,8 @@ New features:
 
 * Added Date.delta() and DateTime.delta() for difference calculations
 * Added support for julian day numbers
+* Added chrono.DEFAULT_CALENDAR for setting default calendar
+* Added chrono.DEFAULT_PARSER for setting default parser
 
 2010-02-06: 0.2.0
 =================

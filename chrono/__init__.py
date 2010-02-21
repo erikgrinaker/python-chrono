@@ -28,3 +28,6 @@ from .date import Date
 from .datetime import DateTime
 from .error import *
 from .time import Time
+
+DEFAULT_CALENDAR = calendar.ISOCalendar
+DEFAULT_PARSER = parser.CommonParser

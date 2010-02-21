@@ -22,12 +22,14 @@ Parsing
 Dates can be specified using either ISO, US, or european formats. Lists
 of valid formats are available in the :mod:`chrono.parser` documentation.
 
-By default, python-chrono uses the parser :class:`chrono.parser.CommonParser`,
+By default, python-chrono uses the parser set in
+:attr:`chrono.DEFAULT_PARSER` - normally :class:`chrono.parser.CommonParser`,
 which accepts the most commonly used date formats. The notable exceptions
 are formats without separators (which for example can be interpreted as
 either US or european dates), and unusual separators such as . in US dates
 (which is the standard separator in Europe). In order to parse such formats,
-you need to pass the proper parser to :class:`chrono.Date`.
+you need to either set another default in :attr:`chrono.DEFAULT_PARSER`, or
+pass the proper parser to :class:`chrono.Date`.
 
 Date parsing is done simply by instantiating a :class:`chrono.Date` object,
 passing the date string to be parsed as input. Once instantiated, the
@@ -152,7 +154,10 @@ following characteristics:
  * Weeks start on Sunday
  * The first week of a year is the week which contains January 1st
 
-By default, the ISO calendar is used. As can be seen above, this only
+By default the calendar set in :attr:`chrono.DEFAULT_CALENDAR` is used,
+normally :class:`chrono.calendar.ISOCalendar`. To use another calendar,
+either set it as the default in :attr:`chrono.DEFAULT_CALENDAR`, or pass
+the proper calendar to :class:`chrono.Date`. As can be seen above, this only
 affects functionality related to week numbers or week days.
 
 :class:`chrono.Date` has a number of methods for retreiving calendar-related

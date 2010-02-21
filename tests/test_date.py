@@ -117,6 +117,18 @@ class Date__gtTest(unittest.TestCase):
 
 class Date__initTest(unittest.TestCase):
 
+    def setUp(self):
+        unittest.TestCase.setUp(self)
+
+        self.default_calendar = chrono.DEFAULT_CALENDAR
+        self.default_parser = chrono.DEFAULT_PARSER
+
+    def tearDown(self):
+        unittest.TestCase.tearDown(self)
+
+        chrono.DEFAULT_CALENDAR = self.default_calendar
+        chrono.DEFAULT_PARSER = self.default_parser
+
     def test_calendar(self):
         "Date.__init__() takes calendar as input"
 
@@ -128,6 +140,13 @@ class Date__initTest(unittest.TestCase):
         "Date.__init__() defaults to ISOCalendar"
 
         self.assertEqual(chrono.Date().calendar, chrono.calendar.ISOCalendar)
+
+    def test_calendar_default_custom(self):
+        "Date.__init__() uses chrono.DEFAULT_CALENDAR"
+
+        chrono.DEFAULT_CALENDAR = chrono.calendar.USCalendar
+
+        self.assertEqual(chrono.Date().calendar, chrono.calendar.USCalendar)
 
     def test_date(self):
         "Date.__init__() with Date instance parameter copies attributes"
@@ -206,10 +225,14 @@ class Date__initTest(unittest.TestCase):
     def test_parser_default(self):
         "Date.__init__() defaults to CommonParser"
 
-        d = chrono.Date("2009-07-23")
+        self.assertEqual(chrono.Date().parser, chrono.parser.CommonParser)
 
-        self.assertEqual(d.get(), (2009, 7, 23))
-        self.assertEqual(d.parser, chrono.parser.CommonParser)
+    def test_parser_default_custom(self):
+        "Date.__init__() uses chrono.DEFAULT_PARSER"
+
+        chrono.DEFAULT_PARSER = chrono.parser.ISOParser
+
+        self.assertEqual(chrono.Date().parser, chrono.parser.ISOParser)
 
     def test_string(self):
         "Date.__init__() parses strings"

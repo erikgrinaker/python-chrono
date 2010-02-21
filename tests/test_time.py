@@ -75,6 +75,18 @@ class Time__gtTest(unittest.TestCase):
 
 class Time__initTest(unittest.TestCase):
 
+    def setUp(self):
+        unittest.TestCase.setUp(self)
+
+        self.default_calendar = chrono.DEFAULT_CALENDAR
+        self.default_parser = chrono.DEFAULT_PARSER
+
+    def tearDown(self):
+        unittest.TestCase.tearDown(self)
+
+        chrono.DEFAULT_CALENDAR = self.default_calendar
+        chrono.DEFAULT_PARSER = self.default_parser
+
     def test_datetime_datetime(self):
         "Time.__init__() copies time from datetime.datetime objects"
 
@@ -142,10 +154,14 @@ class Time__initTest(unittest.TestCase):
     def test_parser_default(self):
         "Time.__init__() defaults to CommonParser"
 
-        t = chrono.Time("16:27:43")
+        self.assertEqual(chrono.Time().parser, chrono.parser.CommonParser)
 
-        self.assertEqual(t.get(), (16, 27, 43))
-        self.assertEqual(t.parser, chrono.parser.CommonParser)
+    def test_parser_default_custom(self):
+        "Time.__init__() uses chrono.DEFAULT_PARSER"
+
+        chrono.DEFAULT_PARSER = chrono.parser.ISOParser
+
+        self.assertEqual(chrono.Time().parser, chrono.parser.ISOParser)
 
     def test_string(self):
         "Time.__init__() parses strings using the parser"

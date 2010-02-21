@@ -18,15 +18,14 @@
 
 from __future__ import absolute_import
 
-from . import calendar as calendarmod
 from . import clock
 from . import date
 from . import error
 from . import formatter
-from . import parser as parsermod
 from . import time
 from . import utility
 
+import chrono
 import datetime as datetimemod
 import time as timemod
 
@@ -39,8 +38,9 @@ class DateTime(date.Date, time.Time):
 
     Valid values for *datetime* can be:
 
-    * string: parses date/time from a string using the set parser,
-      :class:`chrono.parser.CommonParser` by default
+    * string: parses date/time from a string using the set parser (defaults
+      to the value of :attr:`chrono.DEFAULT_PARSER`, normally
+      :class:`chrono.parser.CommonParser`)
     * **True**: sets the date/time to the current date
     * integer: assumes input is a UNIX timestamp, sets date/time accordingly
     * :class:`chrono.DateTime`: sets date/time from another DateTime object
@@ -60,12 +60,14 @@ class DateTime(date.Date, time.Time):
     precedence.
 
     *parser* determines which parser to use for parsing dates and times
-    from strings. By default :class:`chrono.parser.CommonParser` is used,
-    which supports the most common date and time formats. See
-    :mod:`chrono.parser` for a list of available parsers.
+    from strings. By default the value of :attr:`chrono.DEFAULT_PARSER` is
+    used - normally :class:`chrono.parser.CommonParser`, which supports the
+    most common date and time formats. See :mod:`chrono.parser` for a list of
+    available parsers.
 
     *calendar* determines which calendar to use for calendar operations.
-    By default :class:`chrono.calendar.ISOCalendar` is used, see
+    By default the value of :attr:`chrono.DEFAULT_CALENDAR` is used - normally
+    :class:`chrono.calendar.ISOCalendar`. See
     :mod:`chrono.calendar` for a list of available calendars.
     """
 
@@ -86,8 +88,8 @@ class DateTime(date.Date, time.Time):
 
     def __init__(self, datetime=None, parser=None, calendar=None, **kwargs):
 
-        self.parser = parser or parsermod.CommonParser
-        self.calendar = calendar or calendarmod.ISOCalendar
+        self.parser = parser or chrono.DEFAULT_PARSER
+        self.calendar = calendar or chrono.DEFAULT_CALENDAR
 
         if isinstance(datetime, str):
             self.set_string(datetime)
@@ -355,7 +357,10 @@ class DateTime(date.Date, time.Time):
 
     def set_string(self, string):
         """
-        Sets the datetime from a string.
+        Sets the datetime from a string, parsed with the parser set in
+        :attr:`chrono.DateTime.parser` - by default the parser set in
+        :attr:`chrono.DEFAULT_PARSER`, normally
+        :class:`chrono.parser.CommonParser`.
 
         Raises :exc:`chrono.error.ParseError` for invalid input format,
         :exc:`TypeError` for invalid input type, and an appropriate

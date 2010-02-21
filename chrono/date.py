@@ -18,12 +18,11 @@
 
 from __future__ import absolute_import
 
-from . import calendar as calendarmod
 from . import error
 from . import formatter
-from . import parser as parsermod
 from . import utility
 
+import chrono
 import datetime
 import time
 
@@ -35,7 +34,8 @@ class Date(object):
 
     Valid values for *date* can be:
 
-    * string: parses date from a string using the given parser (by default
+    * string: parses date from a string using the given parser (defaults
+      to the value of :attr:`chrono.DEFAULT_PARSER`, normally
       :class:`chrono.parser.CommonParser`)
     * **True**: sets the date to the current date
     * integer: assumes input is a UNIX timestamp, sets date accordingly
@@ -54,12 +54,13 @@ class Date(object):
     If both *date* and keywords are specified, *date* takes precedence.
 
     *parser* determines which parser to use for parsing dates from strings.
-    By default :class:`chrono.parser.CommonParser` is used, which supports
-    the most common date and time formats. See :mod:`chrono.parser` for
-    a list of available parsers.
+    By default the value of :attr:`chrono.DEFAULT_PARSER` is used - normally
+    :class:`chrono.parser.CommonParser`, which supports the most common date
+    and time formats. See :mod:`chrono.parser` for a list of available parsers.
 
     *calendar* determines which calendar to use for calendar operations.
-    By default :class:`chrono.calendar.ISOCalendar` is used, see
+    By default the value of :attr:`chrono.DEFAULT_CALENDAR` is used - normally
+    :class:`chrono.calendar.ISOCalendar`. See
     :mod:`chrono.calendar` for a list of available calendars.
     """
 
@@ -125,8 +126,8 @@ class Date(object):
 
     def __init__(self, date=None, parser=None, calendar=None, **kwargs):
 
-        self.parser = parser or parsermod.CommonParser
-        self.calendar = calendar or calendarmod.ISOCalendar
+        self.parser = parser or chrono.DEFAULT_PARSER
+        self.calendar = calendar or chrono.DEFAULT_CALENDAR
 
         if isinstance(date, str):
             self.set_string(date)
@@ -463,7 +464,8 @@ class Date(object):
     def set_string(self, string):
         """
         Sets the date from a string, parsed with the parser set in
-        :attr:`chrono.Date.parser`, by default
+        :attr:`chrono.Date.parser` - by default the parser set in
+        :attr:`chrono.DEFAULT_PARSER`, normally
         :class:`chrono.parser.CommonParser`.
 
         Raises :exc:`chrono.error.ParseError` for invalid input format,

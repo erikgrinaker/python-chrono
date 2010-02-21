@@ -22,9 +22,9 @@ from . import calendar
 from . import clock
 from . import error
 from . import formatter
-from . import parser as parsermod
 from . import utility
 
+import chrono
 import datetime
 import time as timemod
 
@@ -37,8 +37,9 @@ class Time(object):
 
     Valid values for *time* can be:
 
-    * string: parses time from a string, see :class:`chrono.parser.ISOParser`
-      for valid formats
+    * string: parses time from a string using the given parser  (defaults
+      to the value of :attr:`chrono.DEFAULT_PARSER`, normally
+      :class:`chrono.parser.CommonParser`)
     * **True**: sets the time to the current time
     * :class:`chrono.Time`: sets time from another Time object
     * :class:`datetime.datetime`: sets time from a :class:`datetime.datetime`
@@ -57,9 +58,9 @@ class Time(object):
     If both *time* and keywords are specified, *time* takes precedence.
 
     *parser* determines which parser to use for parsing times from strings.
-    By default :class:`chrono.parser.CommonParser` is used, which supports the
-    most common time formats. See :mod:`chrono.parser` for a list of available
-    parsers.
+    By default the value of :attr:`chrono.DEFAULT_PARSER` is used - normally
+    :class:`chrono.parser.CommonParser`, which supports the most common date
+    and time formats. See :mod:`chrono.parser` for a list of available parsers.
     """
 
     hour = None
@@ -114,7 +115,7 @@ class Time(object):
 
     def __init__(self, time=None, parser=None, **kwargs):
 
-        self.parser = parser or parsermod.CommonParser
+        self.parser = parser or chrono.DEFAULT_PARSER
 
         if isinstance(time, str):
             self.set_string(time)
@@ -385,7 +386,8 @@ class Time(object):
     def set_string(self, string):
         """
         Sets the time from a string, parsed with the parser set in
-        :attr:`chrono.Date.parser`, by default
+        :attr:`chrono.Date.parser` - by default the parser set in
+        :attr:`chrono.DEFAULT_PARSER`, normally
         :class:`chrono.parser.CommonParser`.
 
         Raises :exc:`chrono.error.ParseError` for invalid input format,
