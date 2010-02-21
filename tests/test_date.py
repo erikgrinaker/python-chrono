@@ -691,6 +691,21 @@ class Date_get_datetimeTest(unittest.TestCase):
         )
 
 
+class Date_get_julianTest(unittest.TestCase):
+
+    def test_empty(self):
+        "Date.get_julian() raises NoDateTimeError if date isn't set"
+
+        self.assertRaises(
+            chrono.error.NoDateTimeError, chrono.Date().get_julian
+        )
+
+    def test_julian(self):
+        "Date.get_julian() returns julian day number"
+
+        self.assertEquals(2455242, chrono.Date("2010-02-14").get_julian())
+
+
 class Date_get_stringTest(unittest.TestCase):
 
     def test_empty(self):
@@ -851,6 +866,17 @@ class Date_set_datetimeTest(unittest.TestCase):
         d.set_datetime(datetime.date(2009, 12, 27))
 
         self.assertEquals(d.get(), (2009, 12, 27))
+
+
+class Date_set_julianTest(unittest.TestCase):
+
+    def test_set(self):
+        "Date.set_julian() sets date from julian day"
+
+        d = chrono.Date()
+        d.set_julian(2455242)
+
+        self.assertEquals(d.get(), (2010, 2, 14))
 
 
 class Date_set_nowTest(unittest.TestCase):

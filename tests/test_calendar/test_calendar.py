@@ -53,6 +53,102 @@ class Calendar_fullyearTest(unittest.TestCase):
         self.assertEqual(chrono.calendar.Calendar.fullyear("29"), 2029)
 
 
+class Calendar_julianTest(unittest.TestCase):
+
+    def test_1858_11_16(self):
+        "Calendar.julian() returns 2400000 for 1858-11-16"
+
+        self.assertEquals(
+            2400000, chrono.calendar.Calendar.julian(1858, 11, 16)
+        )
+
+    def test_2007_01_14(self):
+        "Calendar.julian() returns 2454115 for 2007-01-14"
+
+        self.assertEquals(
+            2454115, chrono.calendar.Calendar.julian(2007, 1, 14)
+        )
+
+    def test_2010_02_14(self):
+        "Calendar.julian() returns 2455242 for 2010-02-14"
+
+        self.assertEquals(
+            2455242, chrono.calendar.Calendar.julian(2010, 2, 14)
+        )
+
+    def test_2132_08_31(self):
+        "Calendar.julian() returns 2500000 for 2132-08-31"
+
+        self.assertEquals(
+            2500000, chrono.calendar.Calendar.julian(2132, 8, 31)
+        )
+
+    def test_invalid(self):
+        "Calendar.julian() raises proper error on invalid input"
+
+        self.assertRaises(
+            chrono.YearError, chrono.calendar.Calendar.julian, 10000, 7, 23
+        )
+        self.assertRaises(
+            chrono.MonthError, chrono.calendar.Calendar.julian, 2010, 13, 23
+        )
+        self.assertRaises(
+            chrono.DayError, chrono.calendar.Calendar.julian, 2010, 7, 32
+        )
+
+    def test_string(self):
+        "Calendar.julian() accepts string input"
+
+        self.assertEquals(
+            2455242, chrono.calendar.Calendar.julian("2010", "2", "14")
+        )
+
+
+class Calendar_julian_to_dateTest(unittest.TestCase):
+
+    def test_1858_11_16(self):
+        "Calendar.julian_to_date() returns 1858-11-16 2400000"
+
+        self.assertEquals(
+            (1858, 11, 16), chrono.calendar.Calendar.julian_to_date(2400000)
+        )
+
+    def test_2007_01_14(self):
+        "Calendar.julian_to_date() returns 2007-01-14 for 2454115"
+
+        self.assertEquals(
+            (2007, 1, 14), chrono.calendar.Calendar.julian_to_date(2454115)
+        )
+
+    def test_2010_02_14(self):
+        "Calendar.julian_to_date() returns 2010-02-14 for 2455242"
+
+        self.assertEquals(
+            (2010, 2, 14), chrono.calendar.Calendar.julian_to_date(2455242)
+        )
+
+    def test_2132_08_31(self):
+        "Calendar.julian_to_date() returns 2132-08-31 for 2500000"
+
+        self.assertEquals(
+            (2132, 8, 31), chrono.calendar.Calendar.julian_to_date(2500000)
+        )
+
+    def test_invalid(self):
+        "Calendar.julian_to_date() raises DayError on invalid input"
+
+        self.assertRaises(
+            chrono.DayError, chrono.calendar.Calendar.julian_to_date, "xyz"
+        )
+
+    def test_string(self):
+        "Calendar.julian_to_date() accepts string input"
+
+        self.assertEquals(
+            (2010, 2, 14), chrono.calendar.Calendar.julian_to_date(2455242)
+        )
+
+
 class Calendar_leapyearTest(unittest.TestCase):
 
     def test_invalid(self):

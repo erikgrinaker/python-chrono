@@ -4,6 +4,7 @@ xxxx-xx-xx: 0.3.0
 New features:
 
 * Added Date.delta() and DateTime.delta() for difference calculations
+* Added support for julian day numbers
 
 2010-02-06: 0.2.0
 =================

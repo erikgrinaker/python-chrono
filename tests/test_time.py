@@ -496,6 +496,23 @@ class Time_get_datetimeTest(unittest.TestCase):
         self.assertEquals(dt.second, 43)
 
 
+class Time_get_julianTest(unittest.TestCase):
+
+    def test_empty(self):
+        "Time.get_julian() raises NoDateTimeError if time is not set"
+
+        self.assertRaises(
+            chrono.error.NoDateTimeError, chrono.Time().get_julian
+        )
+
+    def test_get(self):
+        "Time.get_julian() returns julian time"
+
+        self.assertEquals(
+            chrono.Time("16:27:43").get_julian(), 0.6859143518518519
+        )
+
+
 class Time_get_stringTest(unittest.TestCase):
 
     def test_empty(self):
@@ -592,6 +609,17 @@ class Time_set_datetimeTest(unittest.TestCase):
 
         t = chrono.Time()
         t.set_datetime(datetime.time(16, 27, 43))
+
+        self.assertEquals(t.get(), (16, 27, 43))
+
+
+class Time_set_julianTest(unittest.TestCase):
+
+    def test_julian(self):
+        "Time.set_julian() sets time from julian time"
+
+        t = chrono.Time()
+        t.set_julian(0.6859143518518519),
 
         self.assertEquals(t.get(), (16, 27, 43))
 

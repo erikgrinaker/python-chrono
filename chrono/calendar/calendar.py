@@ -17,6 +17,7 @@
 #
 
 from __future__ import absolute_import
+from __future__ import division
 
 from .. import error
 from .. import utility
@@ -55,6 +56,63 @@ class Calendar(object):
 
         else:
             return year
+
+    @classmethod
+    def julian(cls, year, month, day):
+        """
+        Converts a date to a julian day number.
+
+        Raises :exc:`chrono.error.YearError`, :exc:`chrono.error.MonthError` or
+        :exc:`chrono.error.DayError` if *year*, *month* or *day* is invalid.
+        """
+
+        year = utility.int_year(year)
+        month = utility.int_month(month)
+        day = utility.int_day(day)
+
+        cls.validate(year, month, day)
+
+        a = (14 - month) // 12
+        y = year + 4800 - a
+        m = month + (12 * a) - 3
+        p = day + (((153 * m) + 2) // 5) + (365 * y)
+        q = (y // 4) - (y // 100) + (y // 400) - 32045
+
+        return p + q
+
+    @classmethod
+    def julian_to_date(cls, julian):
+        """
+        Converts a julian day number to a date, returns a tuple of year,
+        month, and day.
+
+        Raises :exc:`chrono.error.DayError` if *julian* is invalid.
+        """
+
+        try:
+            julian = int(julian)
+
+        except ValueError:
+            raise error.DayError("Invalid julian day '{0}'".format(julian))
+
+        j = julian + 32044
+        g = j // 146097
+        dg = j % 146097
+        c = (dg // 36524 + 1) * 3 // 4
+        dc = dg - c * 36524
+        b = dc // 1461
+        db = dc % 1461
+        a = (db // 365 + 1) * 3 // 4
+        da = db - a * 365
+        y = g * 400 + c * 100 + b * 4 + a
+        m = (da * 5 + 308) // 153 - 2
+        d = da - (m + 4) * 153 // 5 + 122
+
+        year = int(y - 4800 + (m + 2) // 12)
+        month = int((m + 2) % 12 + 1)
+        day = int(d + 1)
+
+        return (year, month, day)
 
     @classmethod
     def leapyear(cls, year):

@@ -300,6 +300,18 @@ class Time(object):
 
         return datetime.time(self.hour, self.minute, self.second)
 
+    def get_julian(self):
+        """
+        Returns a julian time for the set time, as a float between
+        0 and 1.
+
+        Raises :exc:`chrono.error.NoDateTimeError` on missing time data.
+        """
+
+        self.assert_set()
+
+        return clock.Clock.julian(self.hour, self.minute, self.second)
+
     def get_string(self):
         """
         Returns a string represenation (*hh:mm:ss*) of the time.
@@ -347,6 +359,19 @@ class Time(object):
         """
 
         self.set(datetime.hour, datetime.minute, datetime.second)
+
+    def set_julian(self, julian):
+        """
+        Sets the time from a julian time, as a float between 0 and 1.
+        If *julian* is greather than 1, only the decimal part will be
+        used.
+
+        Raises :exc:`chrono.error.TimeError` on invalid julian time.
+        """
+
+        h, m, s = clock.Clock.julian_to_time(julian)
+
+        self.set(h, m, s)
 
     def set_now(self):
         """

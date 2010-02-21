@@ -327,6 +327,17 @@ class Date(object):
 
         return datetime.date(self.year, self.month, self.day)
 
+    def get_julian(self):
+        """
+        Returns the julian day number for the date.
+
+        Raises :exc:`chrono.error.NoDateTimeError` on missing date data.
+        """
+
+        self.assert_set()
+
+        return self.calendar.julian(self.year, self.month, self.day)
+
     def get_string(self):
         """
         Returns a string representation (*yyyy-mm-dd*) of the date.
@@ -428,6 +439,17 @@ class Date(object):
         """
 
         self.set(datetime.year, datetime.month, datetime.day)
+
+    def set_julian(self, julian):
+        """
+        Sets the date from a julian day number.
+
+        Raises :exc:`chrono.error.DayError` on invalid julian day.
+        """
+
+        y, m, d = self.calendar.julian_to_date(julian)
+
+        self.set(y, m, d)
 
     def set_now(self):
         """

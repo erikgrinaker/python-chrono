@@ -17,18 +17,66 @@
 #
 
 from __future__ import absolute_import
+from __future__ import division
 
 from .. import error
 from .. import utility
 
 import calendar
 import datetime
+import math
 
 
 class Clock(object):
     """
     Basic 24-hour clock handling.
     """
+
+    @classmethod
+    def julian(cls, hour, minute, second):
+        """
+        Returns the julian time for the given time, as a float between
+        0.0 and 1,0.
+
+        Raises :exc:`chrono.error.HourError`, :exc:`chrono.error.MinuteError`,
+        or :exc:`chrono.error.SecondError` if *hour*, *minute*, or *second*
+        is invalid.
+        """
+
+        hour = utility.int_hour(hour)
+        minute = utility.int_minute(minute)
+        second = utility.int_second(second)
+
+        cls.validate(hour, minute, second)
+
+        seconds = hour * 60 * 60 + minute * 60 + second
+
+        return seconds / 86400
+
+    @classmethod
+    def julian_to_time(cls, julian):
+        """
+        Converts a julian time as a float between 0 and 1 to a tuple of hour,
+        minute, and second. For values > 0, only the decimal part is used.
+
+        Raises :exc:`chrono.error.TimeError` on invalid input.
+        """
+
+        try:
+            julian = float(julian)
+
+        except ValueError:
+            raise error.TimeError("Invalid julian time '{0}'".format(julian))
+
+        julian = julian - math.floor(julian)
+
+        julian *= 86400
+
+        hour = math.floor(julian / 60 / 60)
+        minute = math.floor(julian / 60 % 60)
+        second = math.floor(julian % 60)
+
+        return (hour, minute, second)
 
     @classmethod
     def validate(cls, hour, minute, second):

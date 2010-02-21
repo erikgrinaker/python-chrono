@@ -4,6 +4,76 @@ import chrono
 import unittest
 
 
+class Clock_julianTest(unittest.TestCase):
+
+    def test_0_0_0(self):
+        "Clock.julian() returns 0 for 00:00:00"
+
+        self.assertEquals(chrono.clock.Clock.julian(0, 0, 0), 0)
+
+    def test_12_0_0(self):
+        "Clock.julian() returns 0.5 for 12:00:00"
+
+        self.assertEquals(chrono.clock.Clock.julian(12, 0, 0), 0.5)
+
+    def test_23_59_59(self):
+        "Clock.julian() returns 0.999988 for 23:59:59"
+
+        self.assertEquals(round(chrono.clock.Clock.julian(23, 59, 59), 6), 0.999988)
+
+    def test_invalid(self):
+        "Clock.julian() raises proper error on invalid input"
+
+        self.assertRaises(
+            chrono.HourError, chrono.clock.Clock.julian, 24, 0, 0
+        )
+        self.assertRaises(
+            chrono.MinuteError, chrono.clock.Clock.julian, 0, 60, 0
+        )
+        self.assertRaises(
+            chrono.SecondError, chrono.clock.Clock.julian, 0, 0, 60
+        )
+
+    def test_string(self):
+        "Clock.julian() accepts strings"
+
+        self.assertEquals(chrono.clock.Clock.julian("12", "0", "0"), 0.5)
+
+
+class Clock_julian_to_timeTest(unittest.TestCase):
+
+    def test_0(self):
+        "Clock.julian_to_time() returns 00:00:00 for 0"
+
+        self.assertEquals(chrono.clock.Clock.julian_to_time(0), (0, 0, 0))
+
+    def test_0_5(self):
+        "Clock.julian_to_time() returns 12:00:00 for 0.5"
+
+        self.assertEquals(chrono.clock.Clock.julian_to_time(0.5), (12, 0, 0))
+
+    def test_0_5486(self):
+        "Clock.julian_to_time() returns 13:09:59 for 0.5486"
+
+        self.assertEquals(
+            chrono.clock.Clock.julian_to_time(0.5486), (13, 9, 59)
+        )
+
+    def test_0_999988(self):
+        "Clock.julian_to_time() returns 23:59:59 for 0.999999"
+
+        self.assertEquals(
+            chrono.clock.Clock.julian_to_time(0.999999), (23, 59, 59)
+        )
+
+    def test_invalid(self):
+        "Clock.juian_to_time() returns TimeError on invalid input"
+
+        self.assertRaises(
+            chrono.TimeError, chrono.clock.Clock.julian_to_time, "abc"
+        )
+
+
 class Clock_validateTest(unittest.TestCase):
 
     def test_hour(self):
