@@ -18,8 +18,11 @@
 #
 
 from distutils.core import setup
+from distutils.cmd import Command
 
+import os
 import os.path
+import subprocess
 import sys
 
 sys.path.insert(0, os.path.abspath("."))
@@ -34,6 +37,37 @@ if "sdist" in sys.argv and not "build_sphinx" in sys.argv:
 if "build_sphinx" in sys.argv:
     from sphinx.setup_command import BuildDoc
     cmdclass["build_sphinx"] = BuildDoc
+
+
+class Test(Command):
+    "Command for running unit-tests"
+
+    description = "Run unit-tests"
+    user_options = [
+        ("python=", "p", "Python command to use (defaults to 'python')"),
+    ]
+    boolean_options = ()
+
+    def finalize_options(self):
+        pass
+
+    def initialize_options(self):
+        self.python = "python"
+
+    def run(self):
+
+        for root, dirs, files in os.walk(os.path.dirname(os.path.realpath(__file__)) + "/tests"):
+            for file in files:
+                if file == "__init__.py" or file[-4:] == ".pyc":
+                    continue
+
+                status = subprocess.call([self.python, os.path.join(root, file), "-v"], stdout=sys.stdout)
+
+                if status:
+                    sys.exit(status)
+
+
+cmdclass["test"] = Test
 
 setup(
     name="python-chrono",
