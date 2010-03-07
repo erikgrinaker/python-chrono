@@ -55,16 +55,7 @@ class Test(Command):
         self.python = "python"
 
     def run(self):
-
-        for root, dirs, files in os.walk(os.path.dirname(os.path.realpath(__file__)) + "/tests"):
-            for file in files:
-                if file == "__init__.py" or file[-4:] == ".pyc":
-                    continue
-
-                status = subprocess.call([self.python, os.path.join(root, file), "-v"], stdout=sys.stdout)
-
-                if status:
-                    sys.exit(status)
+        sys.exit(subprocess.call([self.python, os.path.dirname(os.path.abspath(__file__)) + "/tests/test.py"], stdout=sys.stdout))
 
 
 cmdclass["test"] = Test

@@ -26,10 +26,4 @@ Making a Release
 Unit Tests
 ==========
 
-To run unit tests, use the nosetests script:
-
-$ nosetests
-
-To run a specific test suite, use the proper module name:
-
-$ nosetests tests.datetime
+To run all unit-tests, execute tests/test.py.
