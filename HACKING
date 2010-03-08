@@ -5,9 +5,7 @@ Making a Release
   * hg pull -u
   * Update version number in chrono/__init__.py
   * Update NEWS file
-  * sudo ./setup.py install
   * ./setup.py test
-  * sudo python3.1 ./setup.py install
   * ./setup.py test -p python3.1
   * hg commit -m "prepare version x.y.z" && hg push
 
