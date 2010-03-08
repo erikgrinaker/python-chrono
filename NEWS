@@ -8,6 +8,10 @@ New features:
 * Added chrono.DEFAULT_CALENDAR for setting default calendar
 * Added chrono.DEFAULT_PARSER for setting default parser
 
+Bugfixes:
+
+* Fixed some errors in the documentation code examples
+
 2010-02-06: 0.2.0
 =================
 

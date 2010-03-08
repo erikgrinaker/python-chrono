@@ -7,6 +7,7 @@ Making a Release
   * Update NEWS file
   * ./setup.py test
   * ./setup.py test -p python3.1
+  * ./setup.py doctest
   * hg commit -m "prepare version x.y.z" && hg push
 
 * Generate the source distribution

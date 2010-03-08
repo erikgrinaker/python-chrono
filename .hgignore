@@ -1,5 +1,6 @@
 ^build/
 ^dist/
+^doc/doctest/
 ^doc/doctrees/
 ^doc/html/
 ^MANIFEST$

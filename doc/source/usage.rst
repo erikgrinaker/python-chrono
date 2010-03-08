@@ -36,6 +36,8 @@ passing the date string to be parsed as input. Once instantiated, the
 attributes :attr:`chrono.Date.year`, :attr:`chrono.Date.month`, and
 :attr:`chrono.Date.day` will contain the respective date parts::
 
+.. doctest::
+
    >>> date = chrono.Date("2009-07-23")
    >>> date.year
    2009
@@ -46,12 +48,16 @@ attributes :attr:`chrono.Date.year`, :attr:`chrono.Date.month`, and
 
 To retrieve all the attributes at once, use :meth:`chrono.Date.get`::
 
+.. doctest::
+
    >>> date = chrono.Date("2009-07-23")
    >>> date.get()
    (2009, 7, 23)
 
 The default :class:`chrono.parser.CommonParser` parser handles most normal
 date formats, such as::
+
+.. doctest::
 
    >>> # ISO dates
    >>> chrono.Date("2009-07-23").get()
@@ -63,6 +69,7 @@ date formats, such as::
 
    >>> # european dates
    >>> chrono.Date("23.07.2009").get()
+   (2009, 7, 23)
 
    >>> # ISO week dates
    >>> chrono.Date("2009-W32").get()
@@ -79,6 +86,8 @@ date formats, such as::
 In order to parse all valid date formats for a region, you can pass the
 proper parser class to :class:`chrono.Date`::
 
+.. doctest::
+
    >>> # US dates with two-digit year and no separator
    >>> chrono.Date("072309", chrono.parser.USParser).get()
    (2009, 7, 23)
@@ -92,17 +101,23 @@ If :class:`chrono.Date` is passed an invalid date it will raise either
 of :exc:`chrono.error.DateError` (such as :exc:`chrono.error.MonthError`)
 if the date was parsed properly but contained an invalid date value::
 
+.. doctest::
+
    >>> date = chrono.Date("xyz")
-   chrono.error.ParseError: Invalid ISO date value 'xyz'
+   Traceback (most recent call last):
+   ParseError: Invalid ISO date value 'xyz'
 
    >>> date = chrono.Date("2009-13-27")
-   chrono.error.MonthError: Month '13' not in range 1-12
+   Traceback (most recent call last):
+   MonthError: Month '13' not in range 1-12
 
 You can also pass a range of non-string inputs to the class, which will
 be handled according to the object type::
 
+.. doctest::
+
    >>> # boolean True indicates the current date
-   >>> chrono.Date(True).get()
+   >>> chrono.Date(True).get() # doctest: +SKIP
    (2010, 1, 23)
 
    >>> # integers are interpreted as UNIX timestamps
@@ -110,7 +125,7 @@ be handled according to the object type::
    (2010, 1, 17)
 
    >>> # fetch data from time.struct_time objects
-   >>> chrono.Date(time.localtime()).get()
+   >>> chrono.Date(time.localtime()).get() # doctest: +SKIP
    (2010, 1, 23)
 
    >>> # fetch data from datetime.date objects
@@ -122,6 +137,8 @@ documentation.
 
 To parse date strings without instantiating a :class:`chrono.Date` object, you
 can use the parser classes directly::
+
+.. doctest::
 
    >>> # parses all supported ISO date formats
    >>> chrono.parser.ISOParser.parse_date("2009-07-23")
@@ -163,6 +180,8 @@ affects functionality related to week numbers or week days.
 :class:`chrono.Date` has a number of methods for retreiving calendar-related
 information about about a date, such as::
 
+.. doctest::
+
    >>> # week that contains the date
    >>> chrono.Date("2009-07-23").week()
    (2009, 30)
@@ -182,11 +201,13 @@ information about about a date, such as::
 To use the US calendar instead, pass the :class:`chrono.calendar.USCalendar`
 class to :class:`chrono.Date`::
 
+.. doctest::
+
    >>> # US week containing date
    >>> chrono.Date("2009-07-23", calendar=chrono.calendar.USCalendar).week()
    (2009, 30)
 
-   >>> US weekday of the date
+   >>> # US weekday of the date
    >>> chrono.Date("2009-07-23", calendar=chrono.calendar.USCalendar).weekday()
    5
 
@@ -196,6 +217,8 @@ documentation.
 If you would like to retreive calendar information without having to
 instantiate a :class:`chrono.Date` object, you can use the underlying
 calendar class directly::
+
+.. doctest::
 
    >>> chrono.calendar.ISOCalendar.yeardays(2008)
    366
@@ -219,6 +242,8 @@ the object will automatically update the attributes to a proper date, by
 incrementing or decrementing values as necessary.
 
 Here are some examples::
+
+.. doctest::
 
    >>> # adding days to a date
    >>> date = chrono.Date("2009-07-26")
@@ -264,6 +289,8 @@ Date formatting is done via the :meth:`chrono.Date.format` method, which
 takes a string containing substitution variables of the form ``$name`` or
 ``${name}``, and replaces them with actual values::
 
+.. doctest::
+
    >>> # full human-readable date
    >>> chrono.Date("2009-07-23").format("$weekdayname $day. $monthname $year")
    'Thursday 23. July 2009'
@@ -281,6 +308,8 @@ Comparison
 Date comparisons can be done using the normal Python comparison operators: ``==``,
 ``!=``, ``>``, and ``<``::
 
+.. doctest::
+
    >>> chrono.Date("2009-07-31") == chrono.Date(year = 2009, month = 7, day = 31)
    True
 
@@ -294,6 +323,8 @@ If the value that is being compared with is not a :class:`chrono.Date` object, i
 be converted to one if possible. This allows for comparisons with strings, UNIX timestamps,
 :class:`time.struct_time` or :class:`datetime.date` objects, and any other value that
 :class:`chrono.Date` is able to process::
+
+.. doctest::
 
    >>> # string with ISO date
    >>> chrono.Date("2009-07-31") == "2009-07-31"
@@ -312,5 +343,5 @@ be converted to one if possible. This allows for comparisons with strings, UNIX 
    False
 
    >>> # datetime.date objects
-   >>> chrono.Date("2009-07-31") < datetime.date(2009, 2, 17)
+   >>> chrono.Date("2009-07-31") >= datetime.date(2009, 2, 17)
    True

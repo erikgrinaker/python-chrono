@@ -22,6 +22,7 @@ templates_path = [
 # extensions
 extensions = [
     "sphinx.ext.autodoc",
+    "sphinx.ext.doctest",
 ]
 
 # document info
@@ -32,3 +33,10 @@ master_doc = "index"
 pygments_style = "sphinx"
 html_theme = "default"
 html_show_sourcelink = False
+
+# doctest setup
+doctest_global_setup = """
+import chrono
+import datetime
+import time
+"""
