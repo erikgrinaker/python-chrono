@@ -3,5 +3,7 @@ include HACKING
 include INSTALL
 include LICENSE
 include NEWS
-recursive-include doc *
-recursive-include tests *.py
+recursive-include doc/ *
+recursive-include tests/ *.py
+prune doc/doctest/
+prune doc/doctrees/
