@@ -34,7 +34,7 @@ pass the proper parser to :class:`chrono.Date`.
 Date parsing is done simply by instantiating a :class:`chrono.Date` object,
 passing the date string to be parsed as input. Once instantiated, the
 attributes :attr:`chrono.Date.year`, :attr:`chrono.Date.month`, and
-:attr:`chrono.Date.day` will contain the respective date parts::
+:attr:`chrono.Date.day` will contain the respective date parts:
 
 .. doctest::
 
@@ -46,7 +46,7 @@ attributes :attr:`chrono.Date.year`, :attr:`chrono.Date.month`, and
    >>> date.day
    23
 
-To retrieve all the attributes at once, use :meth:`chrono.Date.get`::
+To retrieve all the attributes at once, use :meth:`chrono.Date.get`:
 
 .. doctest::
 
@@ -55,7 +55,7 @@ To retrieve all the attributes at once, use :meth:`chrono.Date.get`::
    (2009, 7, 23)
 
 The default :class:`chrono.parser.CommonParser` parser handles most normal
-date formats, such as::
+date formats, such as:
 
 .. doctest::
 
@@ -84,7 +84,7 @@ date formats, such as::
    (2009, 7, 1)
 
 In order to parse all valid date formats for a region, you can pass the
-proper parser class to :class:`chrono.Date`::
+proper parser class to :class:`chrono.Date`:
 
 .. doctest::
 
@@ -99,7 +99,7 @@ proper parser class to :class:`chrono.Date`::
 If :class:`chrono.Date` is passed an invalid date it will raise either
 :exc:`chrono.error.ParseError` for invalid/unknown format, or a subclass
 of :exc:`chrono.error.DateError` (such as :exc:`chrono.error.MonthError`)
-if the date was parsed properly but contained an invalid date value::
+if the date was parsed properly but contained an invalid date value:
 
 .. doctest::
 
@@ -112,7 +112,7 @@ if the date was parsed properly but contained an invalid date value::
    MonthError: Month '13' not in range 1-12
 
 You can also pass a range of non-string inputs to the class, which will
-be handled according to the object type::
+be handled according to the object type:
 
 .. doctest::
 
@@ -136,7 +136,7 @@ For a complete list of all accepted input types, see the :class:`chrono.Date`
 documentation.
 
 To parse date strings without instantiating a :class:`chrono.Date` object, you
-can use the parser classes directly::
+can use the parser classes directly:
 
 .. doctest::
 
@@ -178,7 +178,7 @@ the proper calendar to :class:`chrono.Date`. As can be seen above, this only
 affects functionality related to week numbers or week days.
 
 :class:`chrono.Date` has a number of methods for retreiving calendar-related
-information about about a date, such as::
+information about about a date, such as:
 
 .. doctest::
 
@@ -199,7 +199,7 @@ information about about a date, such as::
    4
 
 To use the US calendar instead, pass the :class:`chrono.calendar.USCalendar`
-class to :class:`chrono.Date`::
+class to :class:`chrono.Date`:
 
 .. doctest::
 
@@ -216,7 +216,7 @@ documentation.
 
 If you would like to retreive calendar information without having to
 instantiate a :class:`chrono.Date` object, you can use the underlying
-calendar class directly::
+calendar class directly:
 
 .. doctest::
 
@@ -241,7 +241,7 @@ attributes. If any of these are set to a value that is outside their valid range
 the object will automatically update the attributes to a proper date, by
 incrementing or decrementing values as necessary.
 
-Here are some examples::
+Here are some examples:
 
 .. doctest::
 
@@ -266,7 +266,9 @@ Here are some examples::
    When the date is on one of the last days of a month, and the :attr:`chrono.Date.month` or
    :attr:`chrono.Date.year` attribute is changed, you may get a result which is in a different
    month than the one you expect. This happens when the day number is out of range
-   for the new month, due to differences in month lengths::
+   for the new month, due to differences in month lengths:
+
+   .. doctest::
 
       >>> date = chrono.Date("2009-07-31")
       >>> date.month -= 1
@@ -275,7 +277,9 @@ Here are some examples::
 
    When :attr:`chrono.Date.month` is set to 6, the date will become 2009-06-31. Since June
    only has 30 days this will trigger the overflow-handling that the date arithmetic relies
-   on, and update the date to a valid date. The same happens with leap years::
+   on, and update the date to a valid date. The same happens with leap years:
+
+   .. doctest::
 
       >>> date = chrono.Date("2008-02-29")
       >>> date.year += 1
@@ -287,7 +291,7 @@ Formatting
 
 Date formatting is done via the :meth:`chrono.Date.format` method, which
 takes a string containing substitution variables of the form ``$name`` or
-``${name}``, and replaces them with actual values::
+``${name}``, and replaces them with actual values:
 
 .. doctest::
 
@@ -306,7 +310,7 @@ Comparison
 ----------
 
 Date comparisons can be done using the normal Python comparison operators: ``==``,
-``!=``, ``>``, and ``<``::
+``!=``, ``>``, and ``<``:
 
 .. doctest::
 
@@ -322,7 +326,7 @@ Date comparisons can be done using the normal Python comparison operators: ``==`
 If the value that is being compared with is not a :class:`chrono.Date` object, it will
 be converted to one if possible. This allows for comparisons with strings, UNIX timestamps,
 :class:`time.struct_time` or :class:`datetime.date` objects, and any other value that
-:class:`chrono.Date` is able to process::
+:class:`chrono.Date` is able to process:
 
 .. doctest::
 
