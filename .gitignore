@@ -1,8 +1,8 @@
-^build/
-^dist/
-^doc/doctest/
-^doc/doctrees/
-^doc/html/
-^MANIFEST$
-\.pyc$
+/build/
+/dist/
+/doc/doctest/
+/doc/doctrees/
+/doc/html/
+/MANIFEST
+*.pyc
 __pycache__/
