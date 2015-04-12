@@ -781,7 +781,7 @@ class Date_get_unixTest(unittest.TestCase):
     def test_unix(self):
         "Date.get_unix() returns unix timestamp"
 
-        self.assertEquals(chrono.Date("2009-12-27").get_unix(), 1261846800)
+        self.assertEquals(chrono.Date("2009-12-27").get_unix(), 1261872000)
 
 
 class Date_is_setTest(unittest.TestCase):

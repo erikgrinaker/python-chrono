@@ -173,7 +173,7 @@ class Time__initTest(unittest.TestCase):
 
         self.assertEquals(
             chrono.Time(time.localtime(1262621257)).get(),
-            (23, 7, 37)
+            (16, 7, 37)
         )
 
     def test_time(self):
@@ -672,7 +672,7 @@ class Time_set_struct_timeTest(unittest.TestCase):
         t = chrono.Time()
         t.set_struct_time(time.localtime(1262621257))
 
-        self.assertEquals(t.get(), (23, 7, 37))
+        self.assertEquals(t.get(), (16, 7, 37))
 
 
 if __name__ == "__main__":
