@@ -115,12 +115,28 @@ class CommonParser_parse_datetimeTest(unittest.TestCase):
             (2010, 8, 27, 16, 27, 43)
         )
 
+    def test_iso_full(self):
+        "CommonParser.parse_datetime() handles ISO datetimes with T separator"
+
+        self.assertEquals(
+            chrono.parser.CommonParser.parse_datetime("2010-08-27T16:27:43"),
+            (2010, 8, 27, 16, 27, 43)
+        )
+
     def test_invalid(self):
         "CommonParser.parse_datetime() raises error for invalid datetime"
 
         self.assertRaises(
             chrono.MonthError,
             chrono.parser.CommonParser.parse_datetime, "13/27/2010 4:27:43 PM"
+        )
+
+    def test_invalid_iso(self):
+        "CommonParser.parse_datetime() raises error for non-ISO datetime with T separator"
+
+        self.assertRaises(
+            chrono.ParseError,
+            chrono.parser.CommonParser.parse_datetime, "08/27/2010T16:27:43"
         )
 
     def test_unknown(self):

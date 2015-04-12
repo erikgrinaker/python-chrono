@@ -118,7 +118,7 @@ class CommonParser(parser.Parser):
 
         match = cls.regexp(cls.re_datetime, datetime)
 
-        if match["sep"].upper() == "t":
+        if match["sep"].upper() == "T":
             return ISOParser.parse_datetime(datetime)
 
         year, month, day = cls.parse_date(match["date"])
