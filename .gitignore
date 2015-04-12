@@ -5,3 +5,4 @@
 ^doc/html/
 ^MANIFEST$
 \.pyc$
+__pycache__/

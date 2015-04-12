@@ -220,7 +220,7 @@ class DateTime__initTest(unittest.TestCase):
 
         self.assertEquals(
             chrono.DateTime(1261892718).get(),
-            (2009, 12, 27, 12, 45, 18)
+            (2009, 12, 27, 5, 45, 18)
         )
 
     def test_kwargs(self):
@@ -318,7 +318,7 @@ class DateTime__initTest(unittest.TestCase):
 
         self.assertEquals(
             chrono.DateTime(time.localtime(1261892718)).get(),
-            (2009, 12, 27, 12, 45, 18)
+            (2009, 12, 27, 5, 45, 18)
         )
 
     def test_true(self):
@@ -863,7 +863,7 @@ class DateTime_formatTest(unittest.TestCase):
             chrono.DateTime(1261892718).format(
                 "$0year-$0month-$0day $0hour:$0minute:$0second"
             ),
-            "2009-12-27 12:45:18"
+            "2009-12-27 05:45:18"
         )
 
 
@@ -985,7 +985,7 @@ class DateTime_get_unixTest(unittest.TestCase):
         "DateTime.get_unix() returns unix timestamp"
 
         self.assertEquals(
-            chrono.DateTime("2009-12-27 16:27:43").get_unix(), 1261906063
+            chrono.DateTime("2009-12-27 16:27:43").get_unix(), 1261931263
         )
 
 
@@ -1188,7 +1188,7 @@ class DateTime_set_struct_timeTest(unittest.TestCase):
         d = chrono.DateTime()
         d.set_struct_time(time.localtime(1261892718))
 
-        self.assertEquals(d.get(), (2009, 12, 27, 12, 45, 18))
+        self.assertEquals(d.get(), (2009, 12, 27, 5, 45, 18))
 
 
 class DateTime_set_unixText(unittest.TestCase):
@@ -1209,7 +1209,7 @@ class DateTime_set_unixText(unittest.TestCase):
         d = chrono.DateTime()
         d.set_unix(1261892718)
 
-        self.assertEquals(d.get(), (2009, 12, 27, 12, 45, 18))
+        self.assertEquals(d.get(), (2009, 12, 27, 5, 45, 18))
 
 
 class DateTime_weekTest(unittest.TestCase):
